@@ -1,6 +1,6 @@
 name: example
 description: "A new Flutter project."
-publish_to: "none"
+publish_to: 'none'
 version: 0.1.0
 
 environment:
@@ -9,16 +9,11 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  developer_tools_riverpod:
-    path: ../packages/developer_tools_riverpod
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
-dependency_overrides:
-  developer_tools:
-    path: ../
+  flutter_lints: ^6.0.0
 
 flutter:
   uses-material-design: true

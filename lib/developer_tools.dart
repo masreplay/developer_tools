@@ -1,36 +1,9 @@
 library developer_tools;
 
-import 'dart:async';
-
+import 'package:developer_tools_core/developer_tools_core.dart';
 import 'package:flutter/material.dart';
 
-/// Signature for a developer tool action.
-///
-/// The [BuildContext] passed in is the context of the overlay itself, so you
-/// can use it to show dialogs, navigate, etc.
-typedef DeveloperToolAction = FutureOr<void> Function(BuildContext context);
-
-/// Simple model describing a single entry in the developer tools overlay.
-class DeveloperToolEntry {
-  const DeveloperToolEntry({
-    required this.title,
-    required this.onTap,
-    this.description,
-    this.icon,
-  });
-
-  /// Title shown in the overlay list.
-  final String title;
-
-  /// Optional longer description shown under the title.
-  final String? description;
-
-  /// Optional icon shown at the start of the list tile.
-  final IconData? icon;
-
-  /// Action executed when the user taps the entry.
-  final DeveloperToolAction onTap;
-}
+export 'package:developer_tools_core/developer_tools_core.dart';
 
 /// Inherited widget that exposes the internal state of [DeveloperTools].
 class _DeveloperToolsScope extends InheritedWidget {
@@ -114,13 +87,19 @@ class DeveloperTools extends StatefulWidget {
   /// ```
   static TransitionBuilder builder({
     List<DeveloperToolEntry> entries = const <DeveloperToolEntry>[],
+    List<DeveloperToolsExtension> extensions =
+        const <DeveloperToolsExtension>[],
     bool enabled = true,
     bool initiallyVisible = false,
-    Alignment buttonAlignment = Alignment.bottomRight, required List<dynamic> extensions,
+    Alignment buttonAlignment = Alignment.bottomRight,
   }) {
     return (BuildContext context, Widget? child) {
+      final allEntries = <DeveloperToolEntry>[
+        ...entries,
+        for (final extension in extensions) ...extension.buildEntries(context),
+      ];
       return DeveloperTools(
-        entries: entries,
+        entries: allEntries,
         enabled: enabled,
         initiallyVisible: initiallyVisible,
         buttonAlignment: buttonAlignment,
@@ -138,8 +117,8 @@ class DeveloperTools extends StatefulWidget {
   /// DeveloperTools.of(context).toggle();
   /// ```
   static _DeveloperToolsState of(BuildContext context) {
-    final scope =
-        context.dependOnInheritedWidgetOfExactType<_DeveloperToolsScope>();
+    final scope = context
+        .dependOnInheritedWidgetOfExactType<_DeveloperToolsScope>();
     assert(scope != null, 'No DeveloperTools found in context');
     return scope!.state;
   }
@@ -286,7 +265,10 @@ class _OverlayHeader extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       child: Row(
         children: <Widget>[
-          Icon(Icons.developer_mode, color: theme.colorScheme.onPrimaryContainer),
+          Icon(
+            Icons.developer_mode,
+            color: theme.colorScheme.onPrimaryContainer,
+          ),
           const SizedBox(width: 8),
           Expanded(
             child: Text(
@@ -297,7 +279,10 @@ class _OverlayHeader extends StatelessWidget {
             ),
           ),
           IconButton(
-            icon: Icon(Icons.close, color: theme.colorScheme.onPrimaryContainer),
+            icon: Icon(
+              Icons.close,
+              color: theme.colorScheme.onPrimaryContainer,
+            ),
             onPressed: onClose,
           ),
         ],
@@ -318,8 +303,11 @@ class _EmptyOverlayBody extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            Icon(Icons.info_outline,
-                size: 40, color: theme.colorScheme.onSurfaceVariant),
+            Icon(
+              Icons.info_outline,
+              size: 40,
+              color: theme.colorScheme.onSurfaceVariant,
+            ),
             const SizedBox(height: 12),
             const Text(
               'No developer tools configured.\n'
@@ -332,4 +320,3 @@ class _EmptyOverlayBody extends StatelessWidget {
     );
   }
 }
-
