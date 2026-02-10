@@ -19,6 +19,7 @@ class DeveloperToolEntry {
     required this.onTap,
     this.description,
     this.icon,
+    this.iconWidget,
   });
 
   /// Title shown in the overlay list.
@@ -29,6 +30,9 @@ class DeveloperToolEntry {
 
   /// Optional icon shown at the start of the list tile.
   final IconData? icon;
+
+  /// Optional widget to show instead of the default icon.
+  final Widget? iconWidget;
 
   /// Action executed when the user taps the entry.
   final DeveloperToolAction onTap;

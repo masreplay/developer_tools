@@ -245,9 +245,11 @@ class _OverlayPanel extends StatelessWidget {
                               itemBuilder: (BuildContext context, int index) {
                                 final entry = entries[index];
                                 return ListTile(
-                                  leading: entry.icon != null
-                                      ? Icon(entry.icon)
-                                      : const Icon(Icons.bolt),
+                                  leading:
+                                      entry.iconWidget ??
+                                      (entry.icon != null
+                                          ? Icon(entry.icon)
+                                          : const Icon(Icons.bolt)),
                                   title: Text(entry.title),
                                   subtitle: entry.description != null
                                       ? Text(entry.description!)

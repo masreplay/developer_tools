@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/experimental/mutation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -42,6 +43,8 @@ class RiverpodProviderLogEntry {
 /// This is intentionally simple and kept in memory only – it resets when
 /// the app restarts. It is exposed so that apps can inspect the log directly
 /// in tests if desired.
+///
+/// Listen to [listenable] to rebuild UI when entries are added or cleared.
 class RiverpodProviderLog {
   RiverpodProviderLog._();
 
@@ -49,16 +52,36 @@ class RiverpodProviderLog {
 
   final List<RiverpodProviderLogEntry> _entries = <RiverpodProviderLogEntry>[];
 
+  final ValueNotifier<int> _version = ValueNotifier<int>(0);
+
+  bool _hasReceivedEvents = false;
+
+  /// Listenable that notifies when [add] or [clear] is called.
+  ///
+  /// Use with [ListenableBuilder] or [ValueListenableBuilder] so the UI
+  /// updates when new provider events are logged.
+  ValueListenable<int> get listenable => _version;
+
+  /// Whether at least one event has been recorded since app start.
+  ///
+  /// Used to detect if [DeveloperToolsRiverpod.observer()] is attached to
+  /// [ProviderScope.observers]. Once true, it stays true until the app
+  /// restarts.
+  bool get hasReceivedEvents => _hasReceivedEvents;
+
   /// Read‑only view of all recorded entries.
   List<RiverpodProviderLogEntry> get entries =>
       List<RiverpodProviderLogEntry>.unmodifiable(_entries);
 
   void add(RiverpodProviderLogEntry entry) {
+    _hasReceivedEvents = true;
     _entries.add(entry);
+    _version.value++;
   }
 
   void clear() {
     _entries.clear();
+    _version.value++;
   }
 }
 
@@ -75,7 +98,10 @@ final RiverpodProviderLog riverpodProviderLog = RiverpodProviderLog.instance;
 ///   child: MyApp(),
 /// );
 /// ```
+@internal
 final class RiverpodDeveloperToolsProviderObserver extends ProviderObserver {
+  const RiverpodDeveloperToolsProviderObserver();
+
   String _providerName(ProviderObserverContext context) {
     return context.provider.name ?? context.provider.runtimeType.toString();
   }
