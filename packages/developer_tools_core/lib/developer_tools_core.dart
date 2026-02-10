@@ -20,6 +20,7 @@ class DeveloperToolEntry {
     this.description,
     this.icon,
     this.iconWidget,
+    this.sectionLabel,
   });
 
   /// Title shown in the overlay list.
@@ -27,6 +28,10 @@ class DeveloperToolEntry {
 
   /// Optional longer description shown under the title.
   final String? description;
+
+  /// Optional section header shown above this entry when entries are grouped
+  /// (e.g. extension display name like "Riverpod").
+  final String? sectionLabel;
 
   /// Optional icon shown at the start of the list tile.
   final IconData? icon;
@@ -48,7 +53,17 @@ class DeveloperToolEntry {
 /// returns an empty box by default – but being a widget allows extensions to
 /// use `BuildContext` and other Flutter APIs naturally.
 abstract class DeveloperToolsExtension extends StatelessWidget {
-  const DeveloperToolsExtension({super.key});
+  const DeveloperToolsExtension({
+    super.key,
+    this.packageName,
+    this.displayName,
+  });
+
+  /// The name of the package that this extension is for.
+  final String? packageName;
+
+  /// Optional display name for this extension in the developer tools UI.
+  final String? displayName;
 
   /// Returns the list of entries contributed by this extension.
   List<DeveloperToolEntry> buildEntries(BuildContext context);
@@ -56,4 +71,3 @@ abstract class DeveloperToolsExtension extends StatelessWidget {
   @override
   Widget build(BuildContext context) => const SizedBox.shrink();
 }
-

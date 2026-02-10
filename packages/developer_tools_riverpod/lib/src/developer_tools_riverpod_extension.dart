@@ -21,15 +21,25 @@ import 'riverpod_provider_log_tool_entry.dart';
 ///
 /// Use [isObserverInitialized] to check if the observer has received events.
 class DeveloperToolsRiverpod extends DeveloperToolsExtension {
-  const DeveloperToolsRiverpod({super.key});
+  const DeveloperToolsRiverpod({
+    super.key,
+    super.packageName = 'riverpod',
+    super.displayName = 'Riverpod',
+    this.enableProviderLog = true,
+  });
+
+  /// Whether to listen to the [riverpodProviderLog.listenable] and rebuild the entries when new events are added.
+  final bool enableProviderLog;
 
   static bool _didWarnMissingObserver = false;
 
   @override
   List<DeveloperToolEntry> buildEntries(BuildContext context) {
     _maybeWarnMissingObserver();
+    final sectionLabel = displayName ?? packageName;
     return <DeveloperToolEntry>[
-      riverpodProviderLogToolEntry(context),
+      if (enableProviderLog)
+        riverpodProviderLogToolEntry(context, sectionLabel: sectionLabel),
       // TODO: Add more entries here in the future, each from its own file.
     ];
   }

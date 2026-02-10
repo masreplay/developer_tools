@@ -204,6 +204,48 @@ class _DeveloperToolsState extends State<DeveloperTools> {
   }
 }
 
+List<Widget> _buildOverlayEntries(
+  BuildContext context,
+  List<DeveloperToolEntry> entries,
+  VoidCallback onClose,
+  GlobalKey<NavigatorState>? navigatorKey,
+) {
+  final theme = Theme.of(context);
+  final list = <Widget>[];
+  String? lastSection;
+  for (final entry in entries) {
+    if (entry.sectionLabel != null && entry.sectionLabel != lastSection) {
+      lastSection = entry.sectionLabel;
+      list.add(
+        Padding(
+          padding: const EdgeInsets.fromLTRB(16, 16, 16, 4),
+          child: Text(
+            lastSection!,
+            style: theme.textTheme.labelLarge?.copyWith(
+              color: theme.colorScheme.primary,
+            ),
+          ),
+        ),
+      );
+    }
+    list.add(
+      ListTile(
+        leading:
+            entry.iconWidget ??
+            (entry.icon != null ? Icon(entry.icon) : const Icon(Icons.bolt)),
+        title: Text(entry.title),
+        subtitle: entry.description != null ? Text(entry.description!) : null,
+        onTap: () async {
+          onClose();
+          final navigatorContext = navigatorKey?.currentContext ?? context;
+          await entry.onTap(navigatorContext);
+        },
+      ),
+    );
+  }
+  return list;
+}
+
 class _OverlayPanel extends StatelessWidget {
   const _OverlayPanel({
     required this.entries,
@@ -240,29 +282,13 @@ class _OverlayPanel extends StatelessWidget {
                     Expanded(
                       child: entries.isEmpty
                           ? const _EmptyOverlayBody()
-                          : ListView.builder(
-                              itemCount: entries.length,
-                              itemBuilder: (BuildContext context, int index) {
-                                final entry = entries[index];
-                                return ListTile(
-                                  leading:
-                                      entry.iconWidget ??
-                                      (entry.icon != null
-                                          ? Icon(entry.icon)
-                                          : const Icon(Icons.bolt)),
-                                  title: Text(entry.title),
-                                  subtitle: entry.description != null
-                                      ? Text(entry.description!)
-                                      : null,
-                                  onTap: () async {
-                                    // Close the panel before running the action.
-                                    onClose();
-                                    final navigatorContext =
-                                        navigatorKey?.currentContext ?? context;
-                                    await entry.onTap(navigatorContext);
-                                  },
-                                );
-                              },
+                          : ListView(
+                              children: _buildOverlayEntries(
+                                context,
+                                entries,
+                                onClose,
+                                navigatorKey,
+                              ),
                             ),
                     ),
                   ],

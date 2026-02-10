@@ -5,9 +5,13 @@ import 'developer_tools_riverpod_base.dart';
 
 /// Single `DeveloperToolEntry` that shows the Riverpod provider log and
 /// allows clearing it.
-DeveloperToolEntry riverpodProviderLogToolEntry(BuildContext context) {
+DeveloperToolEntry riverpodProviderLogToolEntry(
+  BuildContext context, {
+  String? sectionLabel,
+}) {
   return DeveloperToolEntry(
     title: 'Riverpod provider log',
+    sectionLabel: sectionLabel,
     description: riverpodProviderLog.hasReceivedEvents
         ? 'Inspect and clear Riverpod provider lifecycle events.'
         : 'Inspect and clear Riverpod provider lifecycle events. '
