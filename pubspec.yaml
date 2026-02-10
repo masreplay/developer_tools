@@ -1,0 +1,20 @@
+name: developer_tools
+description: "A set of tools for developers to use in their projects."
+version: 0.0.1
+publish_to: "none"
+
+environment:
+  sdk: ^3.10.7
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  generate: true
