@@ -13,7 +13,7 @@ class DeveloperToolsRiverpod extends DeveloperToolsExtension {
   @override
   List<DeveloperToolEntry> buildEntries(BuildContext context) {
     return <DeveloperToolEntry>[
-      riverpodProviderLogToolEntry(),
+      riverpodProviderLogToolEntry(context),
       // TODO: Add more entries here in the future, each from its own file.
     ];
   }

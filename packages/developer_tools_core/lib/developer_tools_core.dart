@@ -1,4 +1,4 @@
-library developer_tools_core;
+library;
 
 import 'dart:async';
 
@@ -6,8 +6,10 @@ import 'package:flutter/widgets.dart';
 
 /// Signature for a developer tool action.
 ///
-/// The [BuildContext] passed in is the context of the overlay itself, so you
-/// can use it to show dialogs, navigate, etc.
+/// The [BuildContext] is a navigator context when [DeveloperTools] is built
+/// with [DeveloperTools.navigatorKey] (or [DeveloperTools.builder]'s
+/// [navigatorKey]). Use it to show dialogs and push routes. Without a
+/// navigator key, the context is the overlay and cannot be used for dialogs.
 typedef DeveloperToolAction = FutureOr<void> Function(BuildContext context);
 
 /// Simple model describing a single entry in the developer tools overlay.

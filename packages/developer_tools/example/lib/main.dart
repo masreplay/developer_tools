@@ -9,14 +9,18 @@ void main() {
 class MainApp extends StatelessWidget {
   const MainApp({super.key});
 
+  static final _navigatorKey = GlobalKey<NavigatorState>();
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      navigatorKey: _navigatorKey,
       home: HomePage(),
       builder: DeveloperTools.builder(
         extensions: const [
           DeveloperToolsRiverpod(),
         ],
+        navigatorKey: _navigatorKey,
         entries: [
           DeveloperToolEntry(
             title: 'Open debug page',

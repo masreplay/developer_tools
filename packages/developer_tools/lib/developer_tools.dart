@@ -1,4 +1,4 @@
-library developer_tools;
+library;
 
 import 'package:developer_tools_core/developer_tools_core.dart';
 import 'package:flutter/material.dart';
@@ -51,10 +51,18 @@ class DeveloperTools extends StatefulWidget {
     this.enabled = true,
     this.initiallyVisible = false,
     this.buttonAlignment = Alignment.bottomRight,
+    this.navigatorKey,
   });
 
   /// Child subtree that the overlay will be drawn on top of.
   final Widget child;
+
+  /// Optional key for the app's [Navigator].
+  ///
+  /// When set, entry [DeveloperToolEntry.onTap] callbacks receive this
+  /// navigator's [BuildContext], so they can show dialogs and push routes.
+  /// Use the same key as [MaterialApp.navigatorKey] (or [ThemeData.navigatorKey]).
+  final GlobalKey<NavigatorState>? navigatorKey;
 
   /// Static list of developer tool entries.
   ///
@@ -85,6 +93,9 @@ class DeveloperTools extends StatefulWidget {
   ///   home: const HomePage(),
   /// );
   /// ```
+  ///
+  /// If entries need to show dialogs (e.g. [showDialog]), pass [navigatorKey]
+  /// and use the same key for [MaterialApp.navigatorKey].
   static TransitionBuilder builder({
     List<DeveloperToolEntry> entries = const <DeveloperToolEntry>[],
     List<DeveloperToolsExtension> extensions =
@@ -92,6 +103,7 @@ class DeveloperTools extends StatefulWidget {
     bool enabled = true,
     bool initiallyVisible = false,
     Alignment buttonAlignment = Alignment.bottomRight,
+    GlobalKey<NavigatorState>? navigatorKey,
   }) {
     return (BuildContext context, Widget? child) {
       final allEntries = <DeveloperToolEntry>[
@@ -103,6 +115,7 @@ class DeveloperTools extends StatefulWidget {
         enabled: enabled,
         initiallyVisible: initiallyVisible,
         buttonAlignment: buttonAlignment,
+        navigatorKey: navigatorKey,
         child: child ?? const SizedBox.shrink(),
       );
     };
@@ -179,7 +192,12 @@ class _DeveloperToolsState extends State<DeveloperTools> {
               ),
             ),
           ),
-          if (_visible) _OverlayPanel(entries: widget.entries, onClose: hide),
+          if (_visible)
+            _OverlayPanel(
+              entries: widget.entries,
+              onClose: hide,
+              navigatorKey: widget.navigatorKey,
+            ),
         ],
       ),
     );
@@ -190,10 +208,12 @@ class _OverlayPanel extends StatelessWidget {
   const _OverlayPanel({
     required this.entries,
     required this.onClose,
+    this.navigatorKey,
   });
 
   final List<DeveloperToolEntry> entries;
   final VoidCallback onClose;
+  final GlobalKey<NavigatorState>? navigatorKey;
 
   @override
   Widget build(BuildContext context) {
@@ -235,7 +255,9 @@ class _OverlayPanel extends StatelessWidget {
                                   onTap: () async {
                                     // Close the panel before running the action.
                                     onClose();
-                                    await entry.onTap(context);
+                                    final navigatorContext =
+                                        navigatorKey?.currentContext ?? context;
+                                    await entry.onTap(navigatorContext);
                                   },
                                 );
                               },

@@ -9,8 +9,14 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+
   flutter_riverpod: ^3.0.3
   riverpod_annotation: 3.0.3
+
+  developer_tools_riverpod:
+    path: ../
+  developer_tools:
+    path: ../../developer_tools
 
 dev_dependencies:
   flutter_test:
@@ -18,6 +24,10 @@ dev_dependencies:
   flutter_lints: ^6.0.0
   build_runner: ^2.4.0
   riverpod_generator: 3.0.3
+
+dependency_overrides: 
+  developer_tools_core:
+    path: ../../developer_tools_core
 
 flutter:
   uses-material-design: true
