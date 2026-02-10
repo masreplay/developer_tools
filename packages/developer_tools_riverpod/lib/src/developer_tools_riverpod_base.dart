@@ -23,6 +23,7 @@ class RiverpodProviderLogEntry {
     required this.providerName,
     required this.message,
     required this.timestamp,
+    required this.context,
   });
 
   /// The type of event that was observed.
@@ -36,6 +37,9 @@ class RiverpodProviderLogEntry {
 
   /// When the event happened.
   final DateTime timestamp;
+
+  /// The context of the event.
+  final ProviderObserverContext context;
 }
 
 /// Global in‑memory log for Riverpod provider events.
@@ -115,6 +119,7 @@ final class RiverpodDeveloperToolsProviderObserver extends ProviderObserver {
       RiverpodProviderLogEntry(
         type: type,
         providerName: _providerName(context),
+        context: context,
         message: message ?? '',
         timestamp: DateTime.now(),
       ),
