@@ -14,8 +14,6 @@ workspace:
   - packages/developer_tools_core
   - packages/developer_tools_get
   - packages/developer_tools_riverpod
-  - packages/developer_tools_riverpod/example
-  - packages/developer_tools/example
 
 dev_dependencies:
   melos: ^7.0.0
