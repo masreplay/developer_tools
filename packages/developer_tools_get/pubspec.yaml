@@ -2,6 +2,8 @@ name: developer_tools_get
 description: "A package for getting developer tools."
 version: 0.0.1
 
+resolution: workspace
+
 environment:
   sdk: ^3.10.7
   flutter: ">=1.17.0"

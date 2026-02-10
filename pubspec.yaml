@@ -1,24 +1,74 @@
-name: developer_tools
-description: "A set of runtime tools for developers to use in their projects."
-version: 0.0.1
+# Workspace root for developer_tools monorepo (Melos + Pub Workspaces).
+# The main package lives at packages/developer_tools.
+name: developer_tools_workspace
+description: "Monorepo root for developer_tools and related packages."
+version: 0.0.0
 publish_to: "none"
-topics: ["development", "debug", "tools", "runtime", "debug-overlay"]
 
 environment:
   sdk: ^3.10.7
-  flutter: ">=1.17.0"
 
-dependencies:
-  flutter:
-    sdk: flutter
-
-  developer_tools_core:
-    path: packages/developer_tools_core
+# Pub workspace: all packages developed together (Dart 3.6+)
+workspace:
+  - packages/developer_tools
+  - packages/developer_tools_core
+  - packages/developer_tools_get
+  - packages/developer_tools_riverpod
 
 dev_dependencies:
-  flutter_test:
-    sdk: flutter
-  flutter_lints: ^6.0.0
+  melos: ^7.0.0
 
-flutter:
-  generate: true
+melos:
+  useRootAsPackage: false
+  repository: https://github.com/masreplay/developer_tools  # set when using linkToCommits / release URLs
+  categories:
+    app:
+      - "example"
+      - "packages/developer_tools_riverpod/example"
+    packages:
+      - "packages/*"
+  ignore:
+    - "packages/**/example"
+  scripts:
+    install:
+      run: melos bootstrap
+      description: Install dependencies and link workspace packages (runs melos bootstrap)
+    clean:
+      run: melos clean
+      description: Clean build artifacts and caches
+    format:
+      run: melos format
+      description: Format all packages
+    analyze:
+      run: melos exec -- dart analyze .
+      description: Analyze all packages
+    test:
+      run: melos exec -- dart test --no-pub
+      description: Run tests in all packages
+    version:
+      run: melos version
+      description: Version packages from conventional commits and update changelogs
+    version:prerelease:
+      run: melos version --prerelease
+      description: Version packages as prerelease
+    version:graduate:
+      run: melos version --graduate
+      description: Graduate prerelease versions to stable
+    publish:dry:
+      run: melos publish --dry-run
+      description: Validate publish (dry run)
+    publish:
+      run: melos publish --no-dry-run
+      description: Publish packages to pub.dev
+  command:
+    version:
+      branch: main
+      changelog: true
+      gitTagVersion: true
+      workspaceChangelog: true
+      linkToCommits: true
+      includeCommitId: false
+      includeScopes: true
+      message: "chore(release): publish packages\n\n{new_package_versions}"
+      changelogFormat:
+        includeDate: true

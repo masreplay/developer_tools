@@ -1,36 +1,40 @@
-<!--
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/tools/pub/writing-package-pages).
 
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/to/develop-packages).
--->
+## Monorepo (Melos)
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+This repo is managed with [Melos](https://melos.invertase.dev) and [Pub Workspaces](https://dart.dev/tools/pub/workspaces). The main package lives at `packages/developer_tools`; the root is the workspace definition only.
 
-## Features
+### Prerequisites
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+- Dart SDK ^3.10.7
+- [Melos](https://melos.invertase.dev/getting-started) (optional: `dart pub global activate melos`, or use `dart run melos` from the repo)
 
-## Getting started
+### Commands
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+From the repo root:
 
-## Usage
+| Command | Description |
+|--------|-------------|
+| `melos bootstrap` | Install dependencies and link workspace packages (run after clone) |
+| `melos run install` | Same as `melos bootstrap` |
+| `melos run clean` | Clean build artifacts |
+| `melos run format` | Format all packages |
+| `melos run analyze` | Run `dart analyze` in all packages |
+| `melos run test` | Run tests in all packages |
+| `melos list` | List workspace packages |
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
+### Versioning and releases
 
-```dart
-const like = 'sample';
-```
+Versioning uses [Conventional Commits](https://www.conventionalcommits.org/). From the `main` branch:
+
+- **Version packages and update changelogs:** `melos version`  
+  Bumps versions from commit history, updates dependency constraints of dependents, and generates/updates `CHANGELOG.md` per package and at workspace root.
+- **Prerelease:** `melos run version:prerelease` (e.g. `0.1.0-dev.0`)
+- **Graduate prerelease:** `melos run version:graduate`
+- **Publish (dry run):** `melos run publish:dry`
+- **Publish to pub.dev:** `melos run publish` (or `melos publish --no-dry-run`)
+
+Configure `melos.repository` in the root `pubspec.yaml` to enable commit links in changelogs and release URL generation.
 
 ## Additional information
 

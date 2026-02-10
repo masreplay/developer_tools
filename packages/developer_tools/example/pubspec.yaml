@@ -1,7 +1,9 @@
 name: example
-description: "A new Flutter project."
+description: "Example app for developer_tools."
 publish_to: "none"
 version: 0.1.0
+
+resolution: workspace
 
 environment:
   sdk: ^3.10.7
@@ -9,16 +11,12 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  developer_tools_riverpod:
-    path: ../packages/developer_tools_riverpod
+  developer_tools: ^0.0.1
+  developer_tools_riverpod: ^0.0.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
-dependency_overrides:
-  developer_tools:
-    path: ../
 
 flutter:
   uses-material-design: true
