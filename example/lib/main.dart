@@ -12,20 +12,30 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
+    return MaterialApp(
       home: HomePage(),
       builder: DeveloperTools.builder(
+        extensions: [],
         entries: [
           DeveloperToolEntry(
             title: 'Open debug page',
             description: 'Navigate to the Other page with toast button.',
             icon: Icons.developer_mode,
-            onTap: (context) {
-              Get.to(Other.new);
-            },
+            onTap: (context) {},
           ),
         ],
       ),
+    );
+  }
+}
+
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Home')),
     );
   }
 }

@@ -1,7 +1,8 @@
 name: developer_tools
-description: "A set of tools for developers to use in their projects."
+description: "A set of runtime tools for developers to use in their projects."
 version: 0.0.1
 publish_to: "none"
+topics: ["development", "debug", "tools", "runtime", "debug-overlay"]
 
 environment:
   sdk: ^3.10.7

@@ -116,7 +116,7 @@ class DeveloperTools extends StatefulWidget {
     List<DeveloperToolEntry> entries = const <DeveloperToolEntry>[],
     bool enabled = true,
     bool initiallyVisible = false,
-    Alignment buttonAlignment = Alignment.bottomRight,
+    Alignment buttonAlignment = Alignment.bottomRight, required List<dynamic> extensions,
   }) {
     return (BuildContext context, Widget? child) {
       return DeveloperTools(

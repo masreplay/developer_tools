@@ -1,7 +1,6 @@
-name: developer_tools_riverpod
-description: "A collection of tools for developers to use in their Flutter projects."
+name: developer_tools_core
+description: "Core package for developer_tools."
 version: 0.0.1
-homepage:
 
 environment:
   sdk: ^3.10.7
@@ -10,7 +9,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  riverpod: ^3.2.1
 
 dev_dependencies:
   flutter_test:
