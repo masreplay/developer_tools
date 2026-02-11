@@ -2,7 +2,7 @@ library;
 
 import 'dart:async';
 
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 
 /// Signature for a developer tool action.
 ///
@@ -13,8 +13,9 @@ import 'package:flutter/widgets.dart';
 typedef DeveloperToolAction = FutureOr<void> Function(BuildContext context);
 
 /// Simple model describing a single entry in the developer tools overlay.
-class DeveloperToolEntry {
+class DeveloperToolEntry extends StatelessWidget {
   const DeveloperToolEntry({
+    super.key,
     required this.title,
     required this.onTap,
     this.description,
@@ -41,6 +42,16 @@ class DeveloperToolEntry {
 
   /// Action executed when the user taps the entry.
   final DeveloperToolAction onTap;
+
+  @override
+  Widget build(BuildContext context) => ListTile(
+    leading: iconWidget ?? (icon != null ? Icon(icon) : const Icon(Icons.bolt)),
+    title: Text(title),
+    subtitle: description != null ? Text(description!) : null,
+    onTap: () async {
+      await onTap(context);
+    },
+  );
 }
 
 /// Base class for pluggable developer tools extensions.
