@@ -9,8 +9,14 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  developer_tools: ^0.0.1
-  developer_tools_riverpod: ^0.0.1
+  developer_tools:
+    path: ../
+  developer_tools_riverpod:
+    path: ../../developer_tools_riverpod
+
+dependency_overrides:
+  developer_tools_core:
+    path: ../../developer_tools_core
 
 dev_dependencies:
   flutter_test:
