@@ -21,7 +21,7 @@ dev_dependencies:
 
 melos:
   useRootAsPackage: false
-  repository: https://github.com/masreplay/developer_tools  # set when using linkToCommits / release URLs
+  repository: https://github.com/masreplay/developer_tools
   categories:
     app:
       - "example"

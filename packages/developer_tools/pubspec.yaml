@@ -1,14 +1,17 @@
 name: developer_tools
 description: "A set of runtime tools for developers to use in their projects."
 version: 0.0.1
-publish_to: "none"
-topics: ["development", "debug", "tools", "runtime", "debug-overlay"]
+topics: ["development", "debug", "tools", "flutter", "debug-overlay"]
+
+repository: https://github.com/ramz/developer_tools
+issue_tracker: https://github.com/ramz/developer_tools/issues
+homepage: https://github.com/ramz/developer_tools/tree/main/packages/developer_tools
+license: MIT
 
 resolution: workspace
 
 environment:
   sdk: ^3.7.0
-  
 
 dependencies:
   flutter:

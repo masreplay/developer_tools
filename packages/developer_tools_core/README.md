@@ -1,7 +1,16 @@
+# developer_tools_core
 
+Core abstractions and utilities for the developer_tools ecosystem.
 
-## Additional information
+## Installation
 
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
+```yaml
+dependencies:
+  developer_tools_core: ^0.0.1
+```
+
+## Related packages
+
+- [developer_tools](https://pub.dev/packages/developer_tools) – Main Flutter overlay
+- [developer_tools_riverpod](https://pub.dev/packages/developer_tools_riverpod) – Riverpod integration
+- [developer_tools_get](https://pub.dev/packages/developer_tools_get) – GetX integration

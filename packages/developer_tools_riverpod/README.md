@@ -1,7 +1,15 @@
+# developer_tools_riverpod
 
+Riverpod integration for developer_tools. Adds tools to inspect and debug Riverpod providers.
 
-## Additional information
+## Installation
 
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
+```yaml
+dependencies:
+  developer_tools_riverpod: ^0.0.1
+```
+
+## Related packages
+
+- [developer_tools](https://pub.dev/packages/developer_tools) – Main Flutter overlay
+- [developer_tools_core](https://pub.dev/packages/developer_tools_core) – Core abstractions
