@@ -40,7 +40,7 @@ melos:
       run: melos format
       description: Format all packages
     analyze:
-      run: melos exec -- dart analyze .
+      run: melos exec -- dart analyze lib test
       description: Analyze all packages
     test:
       run: melos exec -- dart test
@@ -55,10 +55,10 @@ melos:
       run: melos version --graduate
       description: Graduate prerelease versions to stable
     publish:dry:
-      run: melos publish
+      run: melos exec -- dart pub publish --dry-run
       description: Validate publish (dry run)
     publish:
-      run: melos publish --no-dry-run
+      run: melos publish -y
       description: Publish packages to pub.dev
   command:
     version:

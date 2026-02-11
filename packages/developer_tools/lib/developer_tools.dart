@@ -129,6 +129,7 @@ class DeveloperTools extends StatefulWidget {
   /// ```dart
   /// DeveloperTools.of(context).toggle();
   /// ```
+  // ignore: library_private_types_in_public_api
   static _DeveloperToolsState of(BuildContext context) {
     final scope = context
         .dependOnInheritedWidgetOfExactType<_DeveloperToolsScope>();
