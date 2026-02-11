@@ -7,10 +7,7 @@ export 'package:developer_tools_core/developer_tools_core.dart';
 
 /// Inherited widget that exposes the internal state of [DeveloperTools].
 class _DeveloperToolsScope extends InheritedWidget {
-  const _DeveloperToolsScope({
-    required this.state,
-    required super.child,
-  });
+  const _DeveloperToolsScope({required this.state, required super.child});
 
   final _DeveloperToolsState state;
 
@@ -48,6 +45,7 @@ class DeveloperTools extends StatefulWidget {
     super.key,
     required this.child,
     this.entries = const <DeveloperToolEntry>[],
+    this.extensions = const <DeveloperToolsExtension>[],
     this.enabled = true,
     this.initiallyVisible = false,
     this.buttonAlignment = Alignment.bottomRight,
@@ -84,6 +82,12 @@ class DeveloperTools extends StatefulWidget {
   /// Where to place the small floating debug button.
   final Alignment buttonAlignment;
 
+  /// Pluggable extensions that contribute additional overlay entries.
+  ///
+  /// Extensions like [DeveloperToolsRiverpod] implement [DeveloperToolsExtension]
+  /// and return entries via [DeveloperToolsExtension.buildEntries].
+  final List<DeveloperToolsExtension> extensions;
+
   /// Convenience builder you can plug directly into `MaterialApp.builder`
   /// or `GetMaterialApp.builder`, similar to `flutter_debug_overlay`.
   ///
@@ -106,12 +110,9 @@ class DeveloperTools extends StatefulWidget {
     GlobalKey<NavigatorState>? navigatorKey,
   }) {
     return (BuildContext context, Widget? child) {
-      final allEntries = <DeveloperToolEntry>[
-        ...entries,
-        for (final extension in extensions) ...extension.buildEntries(context),
-      ];
       return DeveloperTools(
-        entries: allEntries,
+        entries: entries,
+        extensions: extensions,
         enabled: enabled,
         initiallyVisible: initiallyVisible,
         buttonAlignment: buttonAlignment,
@@ -131,8 +132,8 @@ class DeveloperTools extends StatefulWidget {
   /// ```
   // ignore: library_private_types_in_public_api
   static _DeveloperToolsState of(BuildContext context) {
-    final scope = context
-        .dependOnInheritedWidgetOfExactType<_DeveloperToolsScope>();
+    final scope =
+        context.dependOnInheritedWidgetOfExactType<_DeveloperToolsScope>();
     assert(scope != null, 'No DeveloperTools found in context');
     return scope!.state;
   }
@@ -196,6 +197,7 @@ class _DeveloperToolsState extends State<DeveloperTools> {
           if (_visible)
             _OverlayPanel(
               entries: widget.entries,
+              extensions: widget.extensions,
               onClose: hide,
               navigatorKey: widget.navigatorKey,
             ),
@@ -230,36 +232,77 @@ List<Widget> _buildOverlayEntries(
       );
     }
     list.add(
-      ListTile(
-        leading:
-            entry.iconWidget ??
-            (entry.icon != null ? Icon(entry.icon) : const Icon(Icons.bolt)),
-        title: Text(entry.title),
-        subtitle: entry.description != null ? Text(entry.description!) : null,
-        onTap: () async {
-          onClose();
-          final navigatorContext = navigatorKey?.currentContext ?? context;
-          await entry.onTap(navigatorContext);
-        },
+      _buildOverlayEntryTile(
+        context: context,
+        entry: entry,
+        onClose: onClose,
+        navigatorKey: navigatorKey,
       ),
     );
   }
   return list;
 }
 
+Widget _buildOverlayEntryTile({
+  required BuildContext context,
+  required DeveloperToolEntry entry,
+  required VoidCallback onClose,
+  required GlobalKey<NavigatorState>? navigatorKey,
+}) {
+  final leading =
+      entry.iconWidget ??
+      (entry.icon != null ? Icon(entry.icon) : const Icon(Icons.bolt));
+
+  if (entry.children.isNotEmpty) {
+    return ExpansionTile(
+      leading: leading,
+      title: Text(entry.title),
+      subtitle: entry.description != null ? Text(entry.description!) : null,
+      children: _buildOverlayEntries(
+        context,
+        entry.children,
+        onClose,
+        navigatorKey,
+      ),
+    );
+  }
+
+  return ListTile(
+    leading: leading,
+    title: Text(entry.title),
+    subtitle: entry.description != null ? Text(entry.description!) : null,
+    onTap: () async {
+      onClose();
+      final navigatorContext = navigatorKey?.currentContext ?? context;
+      await entry.onTap(navigatorContext);
+    },
+  );
+}
+
 class _OverlayPanel extends StatelessWidget {
   const _OverlayPanel({
     required this.entries,
+    required this.extensions,
     required this.onClose,
     this.navigatorKey,
   });
 
   final List<DeveloperToolEntry> entries;
+  final List<DeveloperToolsExtension> extensions;
   final VoidCallback onClose;
   final GlobalKey<NavigatorState>? navigatorKey;
 
+  List<DeveloperToolEntry> _allEntries(BuildContext context) {
+    final result = <DeveloperToolEntry>[...entries];
+    for (final extension in extensions) {
+      result.addAll(extension.buildEntries(context));
+    }
+    return result;
+  }
+
   @override
   Widget build(BuildContext context) {
+    final allEntries = _allEntries(context);
     return Positioned.fill(
       child: GestureDetector(
         onTap: onClose,
@@ -267,10 +310,7 @@ class _OverlayPanel extends StatelessWidget {
           color: Colors.black54,
           child: Center(
             child: ConstrainedBox(
-              constraints: const BoxConstraints(
-                maxWidth: 420,
-                maxHeight: 520,
-              ),
+              constraints: const BoxConstraints(maxWidth: 420, maxHeight: 520),
               child: Material(
                 borderRadius: BorderRadius.circular(12),
                 clipBehavior: Clip.antiAlias,
@@ -281,16 +321,17 @@ class _OverlayPanel extends StatelessWidget {
                     _OverlayHeader(onClose: onClose),
                     const Divider(height: 1),
                     Expanded(
-                      child: entries.isEmpty
-                          ? const _EmptyOverlayBody()
-                          : ListView(
-                              children: _buildOverlayEntries(
-                                context,
-                                entries,
-                                onClose,
-                                navigatorKey,
+                      child:
+                          allEntries.isEmpty
+                              ? const _EmptyOverlayBody()
+                              : ListView(
+                                children: _buildOverlayEntries(
+                                  context,
+                                  allEntries,
+                                  onClose,
+                                  navigatorKey,
+                                ),
                               ),
-                            ),
                     ),
                   ],
                 ),

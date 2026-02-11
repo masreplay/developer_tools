@@ -1,5 +1,4 @@
 import 'package:developer_tools/developer_tools.dart';
-import 'package:developer_tools_riverpod/developer_tools_riverpod.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -17,10 +16,10 @@ class MainApp extends StatelessWidget {
       navigatorKey: _navigatorKey,
       home: HomePage(),
       builder: DeveloperTools.builder(
-        extensions: const [
-          DeveloperToolsRiverpod(),
-        ],
         navigatorKey: _navigatorKey,
+        extensions: const [
+          // Develop your own extensions here
+        ],
         entries: [
           DeveloperToolEntry(
             title: 'Open debug page',

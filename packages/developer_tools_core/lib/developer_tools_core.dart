@@ -22,6 +22,7 @@ class DeveloperToolEntry extends StatelessWidget {
     this.icon,
     this.iconWidget,
     this.sectionLabel,
+    this.children = const <DeveloperToolEntry>[],
   });
 
   /// Title shown in the overlay list.
@@ -42,6 +43,14 @@ class DeveloperToolEntry extends StatelessWidget {
 
   /// Action executed when the user taps the entry.
   final DeveloperToolAction onTap;
+
+  /// Optional nested developer tool entries.
+  ///
+  /// When using the `developer_tools` overlay package, entries in [children]
+  /// are rendered as a nested list under this entry (for example inside an
+  /// expansion tile). This allows you to create simple hierarchies/groups of
+  /// actions instead of a single flat list.
+  final List<DeveloperToolEntry> children;
 
   @override
   Widget build(BuildContext context) => ListTile(
