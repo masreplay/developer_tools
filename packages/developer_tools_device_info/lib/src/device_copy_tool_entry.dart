@@ -8,7 +8,12 @@ import 'package:flutter/services.dart';
 
 /// Single [DeveloperToolEntry] that copies all device information to the
 /// clipboard as formatted text. Useful for quick bug reports.
-DeveloperToolEntry deviceCopyToolEntry({String? sectionLabel}) {
+///
+/// If [instance] is provided, it will be used instead of creating a new one.
+DeveloperToolEntry deviceCopyToolEntry({
+  String? sectionLabel,
+  DeviceInfoPlugin? instance,
+}) {
   return DeveloperToolEntry(
     title: 'Copy Device Info',
     sectionLabel: sectionLabel,
@@ -16,7 +21,7 @@ DeveloperToolEntry deviceCopyToolEntry({String? sectionLabel}) {
     icon: Icons.copy_all,
     onTap: (BuildContext context) async {
       try {
-        final info = await DeviceInfoPlugin().deviceInfo;
+        final info = await (instance ?? DeviceInfoPlugin()).deviceInfo;
         final text = _formatAllDeviceInfo(info);
         await Clipboard.setData(ClipboardData(text: text));
         if (context.mounted) {

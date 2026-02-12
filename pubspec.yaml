@@ -17,6 +17,7 @@ workspace:
   - packages/developer_tools_get
   - packages/developer_tools_package_info
   - packages/developer_tools_riverpod
+  - packages/developer_tools_firebase_messaging
   - packages/developer_tools_shared_preferences
 
 dev_dependencies:

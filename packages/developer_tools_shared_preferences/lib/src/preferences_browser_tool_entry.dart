@@ -6,7 +6,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 /// Single [DeveloperToolEntry] that opens a full-featured preferences browser
 /// dialog. Supports viewing, searching, editing, adding, and deleting
 /// individual shared preference entries.
-DeveloperToolEntry preferencesBrowserToolEntry({String? sectionLabel}) {
+///
+/// If [instance] is provided, it will be used instead of calling
+/// [SharedPreferences.getInstance].
+DeveloperToolEntry preferencesBrowserToolEntry({
+  String? sectionLabel,
+  SharedPreferences? instance,
+}) {
   return DeveloperToolEntry(
     title: 'Preferences Browser',
     sectionLabel: sectionLabel,
@@ -16,7 +22,7 @@ DeveloperToolEntry preferencesBrowserToolEntry({String? sectionLabel}) {
       await showDialog<void>(
         context: context,
         builder: (BuildContext dialogContext) {
-          return const _PreferencesBrowserDialog();
+          return _PreferencesBrowserDialog(instance: instance);
         },
       );
     },
@@ -24,7 +30,9 @@ DeveloperToolEntry preferencesBrowserToolEntry({String? sectionLabel}) {
 }
 
 class _PreferencesBrowserDialog extends StatefulWidget {
-  const _PreferencesBrowserDialog();
+  const _PreferencesBrowserDialog({this.instance});
+
+  final SharedPreferences? instance;
 
   @override
   State<_PreferencesBrowserDialog> createState() =>
@@ -44,6 +52,11 @@ class _PreferencesBrowserDialogState extends State<_PreferencesBrowserDialog> {
   }
 
   Future<void> _loadPreferences() async {
+    if (widget.instance != null) {
+      _prefs = widget.instance;
+      setState(() => _loading = false);
+      return;
+    }
     setState(() {
       _loading = true;
       _error = null;

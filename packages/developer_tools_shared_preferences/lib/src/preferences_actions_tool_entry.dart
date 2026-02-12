@@ -7,7 +7,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 /// Single [DeveloperToolEntry] with quick actions for shared preferences:
 /// view summary, export as JSON, and clear all.
-DeveloperToolEntry preferencesActionsToolEntry({String? sectionLabel}) {
+///
+/// If [instance] is provided, it will be used instead of calling
+/// [SharedPreferences.getInstance].
+DeveloperToolEntry preferencesActionsToolEntry({
+  String? sectionLabel,
+  SharedPreferences? instance,
+}) {
   return DeveloperToolEntry(
     title: 'Preferences Actions',
     sectionLabel: sectionLabel,
@@ -17,7 +23,7 @@ DeveloperToolEntry preferencesActionsToolEntry({String? sectionLabel}) {
       await showDialog<void>(
         context: context,
         builder: (BuildContext dialogContext) {
-          return const _PreferencesActionsDialog();
+          return _PreferencesActionsDialog(instance: instance);
         },
       );
     },
@@ -25,7 +31,9 @@ DeveloperToolEntry preferencesActionsToolEntry({String? sectionLabel}) {
 }
 
 class _PreferencesActionsDialog extends StatefulWidget {
-  const _PreferencesActionsDialog();
+  const _PreferencesActionsDialog({this.instance});
+
+  final SharedPreferences? instance;
 
   @override
   State<_PreferencesActionsDialog> createState() =>
@@ -44,6 +52,11 @@ class _PreferencesActionsDialogState extends State<_PreferencesActionsDialog> {
   }
 
   Future<void> _loadPreferences() async {
+    if (widget.instance != null) {
+      _prefs = widget.instance;
+      setState(() => _loading = false);
+      return;
+    }
     setState(() {
       _loading = true;
       _error = null;

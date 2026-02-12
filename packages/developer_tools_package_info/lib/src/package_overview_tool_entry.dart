@@ -6,7 +6,13 @@ import 'package:package_info_plus/package_info_plus.dart';
 /// Single [DeveloperToolEntry] that opens a dialog showing all available
 /// package information: app name, package name, version, build number,
 /// build signature, installer store, and install/update times.
-DeveloperToolEntry packageOverviewToolEntry({String? sectionLabel}) {
+///
+/// If [instance] is provided, it will be used instead of calling
+/// [PackageInfo.fromPlatform].
+DeveloperToolEntry packageOverviewToolEntry({
+  String? sectionLabel,
+  PackageInfo? instance,
+}) {
   return DeveloperToolEntry(
     title: 'Package Info',
     sectionLabel: sectionLabel,
@@ -16,7 +22,7 @@ DeveloperToolEntry packageOverviewToolEntry({String? sectionLabel}) {
       await showDialog<void>(
         context: context,
         builder: (BuildContext dialogContext) {
-          return const _PackageOverviewDialog();
+          return _PackageOverviewDialog(instance: instance);
         },
       );
     },
@@ -24,7 +30,9 @@ DeveloperToolEntry packageOverviewToolEntry({String? sectionLabel}) {
 }
 
 class _PackageOverviewDialog extends StatefulWidget {
-  const _PackageOverviewDialog();
+  const _PackageOverviewDialog({this.instance});
+
+  final PackageInfo? instance;
 
   @override
   State<_PackageOverviewDialog> createState() => _PackageOverviewDialogState();
@@ -36,7 +44,9 @@ class _PackageOverviewDialogState extends State<_PackageOverviewDialog> {
   @override
   void initState() {
     super.initState();
-    _infoFuture = PackageInfo.fromPlatform();
+    _infoFuture = widget.instance != null
+        ? Future.value(widget.instance)
+        : PackageInfo.fromPlatform();
   }
 
   @override

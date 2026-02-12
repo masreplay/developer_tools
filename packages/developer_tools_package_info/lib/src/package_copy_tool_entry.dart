@@ -5,7 +5,13 @@ import 'package:package_info_plus/package_info_plus.dart';
 
 /// Single [DeveloperToolEntry] that copies all package information to the
 /// clipboard as formatted text. Useful for quick bug reports.
-DeveloperToolEntry packageCopyToolEntry({String? sectionLabel}) {
+///
+/// If [instance] is provided, it will be used instead of calling
+/// [PackageInfo.fromPlatform].
+DeveloperToolEntry packageCopyToolEntry({
+  String? sectionLabel,
+  PackageInfo? instance,
+}) {
   return DeveloperToolEntry(
     title: 'Copy Package Info',
     sectionLabel: sectionLabel,
@@ -13,7 +19,7 @@ DeveloperToolEntry packageCopyToolEntry({String? sectionLabel}) {
     icon: Icons.copy_all,
     onTap: (BuildContext context) async {
       try {
-        final info = await PackageInfo.fromPlatform();
+        final info = instance ?? await PackageInfo.fromPlatform();
         final buffer = StringBuffer();
         buffer.writeln(
           '${info.appName} v${info.version} (${info.buildNumber})',

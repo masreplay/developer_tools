@@ -10,7 +10,11 @@ import 'package:flutter/services.dart';
 /// information, organized by category (general, OS, hardware, identifiers).
 ///
 /// Uses [DeviceInfoPlugin] to fetch platform-specific device info.
-DeveloperToolEntry deviceOverviewToolEntry({String? sectionLabel}) {
+/// If [instance] is provided, it will be used instead of creating a new one.
+DeveloperToolEntry deviceOverviewToolEntry({
+  String? sectionLabel,
+  DeviceInfoPlugin? instance,
+}) {
   return DeveloperToolEntry(
     title: 'Device Info',
     sectionLabel: sectionLabel,
@@ -20,7 +24,7 @@ DeveloperToolEntry deviceOverviewToolEntry({String? sectionLabel}) {
       await showDialog<void>(
         context: context,
         builder: (BuildContext dialogContext) {
-          return const _DeviceOverviewDialog();
+          return _DeviceOverviewDialog(instance: instance);
         },
       );
     },
@@ -40,7 +44,9 @@ String _platformDescription() {
 }
 
 class _DeviceOverviewDialog extends StatefulWidget {
-  const _DeviceOverviewDialog();
+  const _DeviceOverviewDialog({this.instance});
+
+  final DeviceInfoPlugin? instance;
 
   @override
   State<_DeviceOverviewDialog> createState() => _DeviceOverviewDialogState();
@@ -52,7 +58,7 @@ class _DeviceOverviewDialogState extends State<_DeviceOverviewDialog> {
   @override
   void initState() {
     super.initState();
-    _infoFuture = DeviceInfoPlugin().deviceInfo;
+    _infoFuture = (widget.instance ?? DeviceInfoPlugin()).deviceInfo;
   }
 
   @override
