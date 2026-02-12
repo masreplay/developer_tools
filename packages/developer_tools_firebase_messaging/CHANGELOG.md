@@ -1,3 +1,7 @@
+## 0.0.4
+
+- Remove redundant tooltip attribute from topic unsubscribe button.
+
 ## 0.0.3
 
 - Add `debugInfo` override to report FCM token and notification permission settings in debug reports.

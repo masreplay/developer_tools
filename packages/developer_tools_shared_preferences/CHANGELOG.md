@@ -1,3 +1,7 @@
+## 0.0.3
+
+- Remove redundant tooltip attributes from copy and delete buttons.
+
 ## 0.0.2
 
 - Add `debugInfo` override to report all stored preferences with type breakdown in debug reports.

@@ -1,3 +1,8 @@
+## 0.0.5
+
+- Remove redundant tooltip attributes from IconButton widgets.
+- Improve code formatting and line breaks for readability.
+
 ## 0.0.4
 
 - Add `exportReport()` method to collect and export debug information from all registered extensions and standalone entries.

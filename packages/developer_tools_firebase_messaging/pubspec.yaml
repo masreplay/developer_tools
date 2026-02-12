@@ -1,6 +1,6 @@
 name: developer_tools_firebase_messaging
 description: "Firebase Messaging integration for developer_tools. View FCM token, manage notification permissions, and subscribe to topics from the debug overlay."
-version: 0.0.3
+version: 0.0.4
 topics: ["development", "debug", "tools", "firebase-messaging", "flutter"]
 
 repository: https://github.com/ramz/developer_tools
