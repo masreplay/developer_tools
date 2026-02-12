@@ -58,9 +58,9 @@ melos:
     publish:dry:
       run: melos exec -- dart pub publish --dry-run
       description: Validate publish (dry run)
-    publish:
-      run: melos publish -y
-      description: Publish packages to pub.dev
+    publish:to-pub:
+      run: melos publish --no-dry-run -y
+      description: Publish packages to pub.dev (run 'melos publish --no-dry-run' directly)
   command:
     version:
       branch: main
