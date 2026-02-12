@@ -64,10 +64,7 @@ class _RouteInspectorDialog extends StatelessWidget {
                 _InfoRow('Match', _safe(() => router.current.match)),
                 _InfoRow('Current Path', _safe(() => router.currentPath)),
                 _InfoRow('Current URL', _safe(() => router.currentUrl)),
-                _InfoRow(
-                  'Fragment',
-                  _safe(() => router.current.fragment),
-                ),
+                _InfoRow('Fragment', _safe(() => router.current.fragment)),
                 _InfoRow(
                   'Is Active',
                   _safe(() => router.current.isActive.toString()),
@@ -76,7 +73,7 @@ class _RouteInspectorDialog extends StatelessWidget {
                 _SectionHeader('Parameters'),
                 _InfoRow(
                   'Path Params',
-                  _safe(() => _formatParams(router.current.pathParams)),
+                  _safe(() => _formatParams(router.current.params)),
                 ),
                 _InfoRow(
                   'Query Params',
@@ -84,9 +81,7 @@ class _RouteInspectorDialog extends StatelessWidget {
                 ),
                 _InfoRow(
                   'Args',
-                  _safe(
-                    () => router.current.args?.toString() ?? '(none)',
-                  ),
+                  _safe(() => router.current.args?.toString() ?? '(none)'),
                 ),
                 _InfoRow(
                   'Meta',

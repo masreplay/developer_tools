@@ -30,7 +30,7 @@ class DeveloperToolsAutoRoute extends DeveloperToolsExtension {
   /// The [router] is typically the generated `RootStackRouter` (e.g.
   /// `AppRouter()`). Since [RoutingController] is a [ChangeNotifier],
   /// the inspector dialogs update live when navigation state changes.
-  DeveloperToolsAutoRoute({
+  const DeveloperToolsAutoRoute({
     super.key,
     super.packageName = 'auto_route',
     super.displayName = 'Auto Route',
@@ -46,18 +46,9 @@ class DeveloperToolsAutoRoute extends DeveloperToolsExtension {
   List<DeveloperToolEntry> buildEntries(BuildContext context) {
     final sectionLabel = displayName ?? packageName;
     return <DeveloperToolEntry>[
-      autoRouteInspectorToolEntry(
-        router,
-        sectionLabel: sectionLabel,
-      ),
-      autoRouteStackToolEntry(
-        router,
-        sectionLabel: sectionLabel,
-      ),
-      autoRouteStateToolEntry(
-        router,
-        sectionLabel: sectionLabel,
-      ),
+      autoRouteInspectorToolEntry(router, sectionLabel: sectionLabel),
+      autoRouteStackToolEntry(router, sectionLabel: sectionLabel),
+      autoRouteStateToolEntry(router, sectionLabel: sectionLabel),
     ];
   }
 }

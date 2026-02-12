@@ -71,26 +71,27 @@ class _NavigationStackDialog extends StatelessWidget {
           content: SizedBox(
             width: 480,
             height: 480,
-            child: stackData.isEmpty
-                ? const Center(
-                    child: Text(
-                      'Stack is empty.\nNo pages have been pushed yet.',
-                      textAlign: TextAlign.center,
+            child:
+                stackData.isEmpty
+                    ? const Center(
+                      child: Text(
+                        'Stack is empty.\nNo pages have been pushed yet.',
+                        textAlign: TextAlign.center,
+                      ),
+                    )
+                    : ListView.builder(
+                      itemCount: stackData.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        final data = stackData[index];
+                        final isCurrent = data.name == currentName;
+                        return _StackEntryTile(
+                          index: index,
+                          routeData: data,
+                          isCurrent: isCurrent,
+                          onTap: () => _showRouteDetails(context, data),
+                        );
+                      },
                     ),
-                  )
-                : ListView.builder(
-                    itemCount: stackData.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      final data = stackData[index];
-                      final isCurrent = data.name == currentName;
-                      return _StackEntryTile(
-                        index: index,
-                        routeData: data,
-                        isCurrent: isCurrent,
-                        onTap: () => _showRouteDetails(context, data),
-                      );
-                    },
-                  ),
           ),
           actions: <Widget>[
             TextButton(
@@ -120,7 +121,7 @@ class _NavigationStackDialog extends StatelessWidget {
                 _DetailRow('Match', _safe(() => data.match)),
                 _DetailRow(
                   'Path Params',
-                  _safe(() => _formatMap(data.pathParams.rawMap)),
+                  _safe(() => _formatMap(data.params.rawMap)),
                 ),
                 _DetailRow(
                   'Query Params',
@@ -138,10 +139,7 @@ class _NavigationStackDialog extends StatelessWidget {
                     return meta.isEmpty ? '(empty)' : meta.toString();
                   }),
                 ),
-                _DetailRow(
-                  'Is Active',
-                  _safe(() => data.isActive.toString()),
-                ),
+                _DetailRow('Is Active', _safe(() => data.isActive.toString())),
                 _DetailRow(
                   'Has Pending Children',
                   _safe(() => data.hasPendingChildren.toString()),
@@ -198,9 +196,10 @@ class _StackEntryTile extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 2),
       child: Material(
-        color: isCurrent
-            ? theme.colorScheme.primaryContainer.withAlpha(128)
-            : theme.colorScheme.surfaceContainerHighest.withAlpha(77),
+        color:
+            isCurrent
+                ? theme.colorScheme.primaryContainer.withAlpha(128)
+                : theme.colorScheme.surfaceContainerHighest.withAlpha(77),
         borderRadius: BorderRadius.circular(8),
         clipBehavior: Clip.antiAlias,
         child: InkWell(
@@ -208,15 +207,16 @@ class _StackEntryTile extends StatelessWidget {
           borderRadius: BorderRadius.circular(8),
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-            decoration: isCurrent
-                ? BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    border: Border.all(
-                      color: theme.colorScheme.primary,
-                      width: 1.5,
-                    ),
-                  )
-                : null,
+            decoration:
+                isCurrent
+                    ? BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(
+                        color: theme.colorScheme.primary,
+                        width: 1.5,
+                      ),
+                    )
+                    : null,
             child: Row(
               children: [
                 Container(
@@ -225,18 +225,20 @@ class _StackEntryTile extends StatelessWidget {
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: isCurrent
-                        ? theme.colorScheme.primary
-                        : theme.colorScheme.surfaceContainerHighest,
+                    color:
+                        isCurrent
+                            ? theme.colorScheme.primary
+                            : theme.colorScheme.surfaceContainerHighest,
                   ),
                   child: Text(
                     '$index',
                     style: TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.bold,
-                      color: isCurrent
-                          ? theme.colorScheme.onPrimary
-                          : theme.colorScheme.onSurfaceVariant,
+                      color:
+                          isCurrent
+                              ? theme.colorScheme.onPrimary
+                              : theme.colorScheme.onSurfaceVariant,
                     ),
                   ),
                 ),
@@ -252,9 +254,10 @@ class _StackEntryTile extends StatelessWidget {
                               routeData.name,
                               style: TextStyle(
                                 fontSize: 14,
-                                fontWeight: isCurrent
-                                    ? FontWeight.bold
-                                    : FontWeight.w500,
+                                fontWeight:
+                                    isCurrent
+                                        ? FontWeight.bold
+                                        : FontWeight.w500,
                               ),
                               overflow: TextOverflow.ellipsis,
                             ),

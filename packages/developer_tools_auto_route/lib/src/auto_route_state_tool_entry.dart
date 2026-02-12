@@ -152,15 +152,16 @@ class _RouterStateDialog extends StatelessWidget {
       }
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: hierarchy.map((segment) {
-          return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-            child: Text(
-              segment.toString(),
-              style: const TextStyle(fontSize: 13, fontFamily: 'monospace'),
-            ),
-          );
-        }).toList(),
+        children:
+            hierarchy.map((segment) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                child: Text(
+                  segment.toString(),
+                  style: const TextStyle(fontSize: 13, fontFamily: 'monospace'),
+                ),
+              );
+            }).toList(),
       );
     } catch (_) {
       return const _EmptyText('N/A');
@@ -385,10 +386,7 @@ class _SegmentTile extends StatelessWidget {
 }
 
 class _ChildControllerTile extends StatelessWidget {
-  const _ChildControllerTile({
-    required this.index,
-    required this.controller,
-  });
+  const _ChildControllerTile({required this.index, required this.controller});
 
   final int index;
   final RoutingController controller;
