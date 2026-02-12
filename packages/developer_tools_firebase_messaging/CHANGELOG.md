@@ -1,3 +1,7 @@
+## 0.0.2 — 2026-02-12
+
+- Bump `firebase_messaging` dependency from `^15.0.0` to `^16.1.1` for improved functionality and compatibility.
+
 ## 0.0.1
 
 - Initial release.
