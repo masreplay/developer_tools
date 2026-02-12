@@ -1,0 +1,27 @@
+name: developer_tools_package_info
+description: "Package Info Plus integration for developer_tools. View app name, version, build number, and copy package info for bug reports."
+version: 0.0.1
+topics: ["development", "debug", "tools", "package-info", "flutter"]
+
+repository: https://github.com/ramz/developer_tools
+issue_tracker: https://github.com/ramz/developer_tools/issues
+homepage: https://github.com/ramz/developer_tools/tree/main/packages/developer_tools_package_info
+license: MIT
+
+resolution: workspace
+
+environment:
+  sdk: ^3.7.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  developer_tools_core: ^0.0.2
+
+  package_info_plus: ^9.0.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0

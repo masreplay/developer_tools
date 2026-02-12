@@ -13,8 +13,11 @@ workspace:
   - packages/developer_tools
   - packages/developer_tools_auto_route
   - packages/developer_tools_core
+  - packages/developer_tools_device_info
   - packages/developer_tools_get
+  - packages/developer_tools_package_info
   - packages/developer_tools_riverpod
+  - packages/developer_tools_shared_preferences
 
 dev_dependencies:
   melos: ^7.0.0
