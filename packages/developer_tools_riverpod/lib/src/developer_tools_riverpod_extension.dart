@@ -73,4 +73,35 @@ class DeveloperToolsRiverpod extends DeveloperToolsExtension {
   /// missing observer configuration.
   static bool get isObserverInitialized =>
       riverpodProviderLog.hasReceivedEvents;
+
+  @override
+  Future<String?> debugInfo(BuildContext context) async {
+    if (!riverpodProviderLog.hasReceivedEvents) {
+      return 'Observer not attached or no events received yet.';
+    }
+
+    final entries = riverpodProviderLog.entries;
+    if (entries.isEmpty) return 'No provider events recorded.';
+
+    final buffer = StringBuffer();
+    buffer.writeln('Total events: ${entries.length}');
+
+    // Show the last 20 events (most recent first)
+    final recent = entries.reversed.take(20).toList();
+    buffer.writeln('Last ${recent.length} events:');
+    for (final entry in recent) {
+      final time =
+          '${entry.timestamp.hour.toString().padLeft(2, '0')}:'
+          '${entry.timestamp.minute.toString().padLeft(2, '0')}:'
+          '${entry.timestamp.second.toString().padLeft(2, '0')}';
+      buffer.writeln(
+        '  [$time] [${entry.type.name.toUpperCase()}] '
+        '${entry.providerName}: ${entry.message}',
+      );
+    }
+    if (entries.length > 20) {
+      buffer.writeln('  ... and ${entries.length - 20} more events');
+    }
+    return buffer.toString();
+  }
 }

@@ -1,4 +1,5 @@
 import 'package:developer_tools_core/developer_tools_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/widgets.dart';
 
 import 'fcm_token_tool_entry.dart';
@@ -33,5 +34,50 @@ class DeveloperToolsFirebaseMessaging extends DeveloperToolsExtension {
       notificationPermissionsToolEntry(sectionLabel: sectionLabel),
       topicSubscriptionToolEntry(sectionLabel: sectionLabel),
     ];
+  }
+
+  @override
+  Future<String?> debugInfo(BuildContext context) async {
+    final buffer = StringBuffer();
+    try {
+      final token = await FirebaseMessaging.instance.getToken();
+      buffer.writeln('FCM Token: ${token ?? "(unavailable)"}');
+    } catch (e) {
+      buffer.writeln('FCM Token: error ($e)');
+    }
+    try {
+      final settings =
+          await FirebaseMessaging.instance.getNotificationSettings();
+      buffer.writeln(
+        'Authorization: ${_authorizationLabel(settings.authorizationStatus)}',
+      );
+      buffer.writeln('Alert: ${_settingLabel(settings.alert)}');
+      buffer.writeln('Badge: ${_settingLabel(settings.badge)}');
+      buffer.writeln('Sound: ${_settingLabel(settings.sound)}');
+      buffer.writeln('Lock Screen: ${_settingLabel(settings.lockScreen)}');
+      buffer.writeln(
+        'Notification Center: ${_settingLabel(settings.notificationCenter)}',
+      );
+    } catch (e) {
+      buffer.writeln('Notification Settings: error ($e)');
+    }
+    return buffer.toString();
+  }
+
+  static String _authorizationLabel(AuthorizationStatus status) {
+    return switch (status) {
+      AuthorizationStatus.authorized => 'Authorized',
+      AuthorizationStatus.denied => 'Denied',
+      AuthorizationStatus.notDetermined => 'Not Determined',
+      AuthorizationStatus.provisional => 'Provisional',
+    };
+  }
+
+  static String _settingLabel(AppleNotificationSetting setting) {
+    return switch (setting) {
+      AppleNotificationSetting.enabled => 'Enabled',
+      AppleNotificationSetting.disabled => 'Disabled',
+      AppleNotificationSetting.notSupported => 'Not Supported',
+    };
   }
 }

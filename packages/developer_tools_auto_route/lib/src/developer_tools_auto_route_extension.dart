@@ -51,4 +51,31 @@ class DeveloperToolsAutoRoute extends DeveloperToolsExtension {
       autoRouteStateToolEntry(router, sectionLabel: sectionLabel),
     ];
   }
+
+  @override
+  Future<String?> debugInfo(BuildContext context) async {
+    final buffer = StringBuffer();
+    try {
+      buffer.writeln('Current Route: ${router.current.name}');
+      buffer.writeln('Current Path: ${router.currentPath}');
+      buffer.writeln('Current URL: ${router.currentUrl}');
+    } catch (_) {
+      buffer.writeln('Current Route: (unavailable)');
+    }
+    try {
+      final stack = router.stackData;
+      buffer.writeln('Stack Depth: ${stack.length}');
+      for (int i = 0; i < stack.length; i++) {
+        buffer.writeln('  [$i] ${stack[i].name} (${stack[i].path})');
+      }
+    } catch (_) {
+      buffer.writeln('Stack: (unavailable)');
+    }
+    try {
+      buffer.writeln('Can Pop: ${router.canPop()}');
+      buffer.writeln('Is Root: ${router.isRoot}');
+      buffer.writeln('Child Controllers: ${router.childControllers.length}');
+    } catch (_) {}
+    return buffer.toString();
+  }
 }

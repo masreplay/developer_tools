@@ -1,7 +1,10 @@
 library;
 
+import 'dart:async';
+
 import 'package:developer_tools_core/developer_tools_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 export 'package:developer_tools_core/developer_tools_core.dart';
 
@@ -240,6 +243,46 @@ class _DeveloperToolsState extends State<DeveloperTools> {
     };
   }
 
+  // ── Debug report support ─────────────────────────────────────────────
+
+  /// Collects debug information from all registered extensions and standalone
+  /// entries and returns it as a single formatted report string.
+  ///
+  /// Each extension's [DeveloperToolsExtension.debugInfo] and each standalone
+  /// entry's [DeveloperToolEntry.debugInfo] is invoked. Non-null results are
+  /// joined under section headers.
+  Future<String> exportReport() async {
+    final buffer = StringBuffer();
+    buffer.writeln('Developer Tools – Debug Report');
+    buffer.writeln('Generated: ${DateTime.now().toIso8601String()}');
+    buffer.writeln('${'=' * 50}\n');
+
+    // Extensions
+    for (final ext in widget.extensions) {
+      final label = ext.displayName ?? ext.packageName ?? ext.runtimeType.toString();
+      final info = await ext.debugInfo(context);
+      if (info != null && info.isNotEmpty) {
+        buffer.writeln('── $label ${'─' * (46 - label.length)}');
+        buffer.writeln(info);
+        buffer.writeln();
+      }
+    }
+
+    // Standalone entries
+    for (final entry in widget.entries) {
+      if (entry.debugInfo != null) {
+        final info = await entry.debugInfo!(context);
+        if (info != null && info.isNotEmpty) {
+          buffer.writeln('── ${entry.title} ${'─' * (46 - entry.title.length)}');
+          buffer.writeln(info);
+          buffer.writeln();
+        }
+      }
+    }
+
+    return buffer.toString();
+  }
+
   void _scheduleQuickActionUpdate() {
     if (_quickActionUpdateScheduled) return;
     _quickActionUpdateScheduled = true;
@@ -317,6 +360,19 @@ class _DeveloperToolsState extends State<DeveloperTools> {
               entries: widget.entries,
               extensions: widget.extensions,
               onClose: hide,
+              onExportReport: () async {
+                final report = await exportReport();
+                await Clipboard.setData(ClipboardData(text: report));
+                if (mounted) {
+                  hide();
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Debug report copied to clipboard'),
+                      duration: Duration(seconds: 2),
+                    ),
+                  );
+                }
+              },
               navigatorKey: widget.navigatorKey,
               activeQuickAction: _activeQuickAction,
             ),
@@ -403,6 +459,7 @@ class _OverlayPanel extends StatelessWidget {
     required this.entries,
     required this.extensions,
     required this.onClose,
+    required this.onExportReport,
     this.navigatorKey,
     this.activeQuickAction,
   });
@@ -410,6 +467,7 @@ class _OverlayPanel extends StatelessWidget {
   final List<DeveloperToolEntry> entries;
   final List<DeveloperToolsExtension> extensions;
   final VoidCallback onClose;
+  final Future<void> Function() onExportReport;
   final GlobalKey<NavigatorState>? navigatorKey;
   final _QuickActionRegistration? activeQuickAction;
 
@@ -439,7 +497,10 @@ class _OverlayPanel extends StatelessWidget {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                    _OverlayHeader(onClose: onClose),
+                    _OverlayHeader(
+                      onClose: onClose,
+                      onExportReport: onExportReport,
+                    ),
                     const Divider(height: 1),
                     if (activeQuickAction != null)
                       _QuickActionTile(
@@ -472,9 +533,13 @@ class _OverlayPanel extends StatelessWidget {
 }
 
 class _OverlayHeader extends StatelessWidget {
-  const _OverlayHeader({required this.onClose});
+  const _OverlayHeader({
+    required this.onClose,
+    required this.onExportReport,
+  });
 
   final VoidCallback onClose;
+  final Future<void> Function() onExportReport;
 
   @override
   Widget build(BuildContext context) {
@@ -497,6 +562,7 @@ class _OverlayHeader extends StatelessWidget {
               ),
             ),
           ),
+          _ExportReportButton(onExportReport: onExportReport),
           IconButton(
             icon: Icon(
               Icons.close,
@@ -506,6 +572,52 @@ class _OverlayHeader extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class _ExportReportButton extends StatefulWidget {
+  const _ExportReportButton({required this.onExportReport});
+
+  final Future<void> Function() onExportReport;
+
+  @override
+  State<_ExportReportButton> createState() => _ExportReportButtonState();
+}
+
+class _ExportReportButtonState extends State<_ExportReportButton> {
+  bool _loading = false;
+
+  Future<void> _handleTap() async {
+    if (_loading) return;
+    setState(() => _loading = true);
+    try {
+      await widget.onExportReport();
+    } finally {
+      if (mounted) setState(() => _loading = false);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return IconButton(
+      tooltip: 'Export debug report',
+      icon:
+          _loading
+              ? SizedBox(
+                width: 20,
+                height: 20,
+                child: CircularProgressIndicator(
+                  strokeWidth: 2,
+                  color: theme.colorScheme.onPrimaryContainer,
+                ),
+              )
+              : Icon(
+                Icons.summarize_outlined,
+                color: theme.colorScheme.onPrimaryContainer,
+              ),
+      onPressed: _loading ? null : _handleTap,
     );
   }
 }
@@ -744,4 +856,13 @@ extension DeveloperToolsBuildContext on BuildContext {
       icon: icon,
     );
   }
+
+  /// Collects debug information from all extensions and entries and returns
+  /// it as a single formatted report string.
+  ///
+  /// ```dart
+  /// final report = await context.exportDeveloperToolsReport();
+  /// ```
+  Future<String> exportDeveloperToolsReport() =>
+      developerTools.exportReport();
 }

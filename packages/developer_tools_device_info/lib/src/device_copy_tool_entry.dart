@@ -14,14 +14,23 @@ DeveloperToolEntry deviceCopyToolEntry({
   String? sectionLabel,
   DeviceInfoPlugin? instance,
 }) {
+  final plugin = instance ?? DeviceInfoPlugin();
   return DeveloperToolEntry(
     title: 'Copy Device Info',
     sectionLabel: sectionLabel,
     description: 'Copy all device info to clipboard',
     icon: Icons.copy_all,
+    debugInfo: (_) async {
+      try {
+        final info = await plugin.deviceInfo;
+        return _formatAllDeviceInfo(info);
+      } catch (e) {
+        return 'Error fetching device info: $e';
+      }
+    },
     onTap: (BuildContext context) async {
       try {
-        final info = await (instance ?? DeviceInfoPlugin()).deviceInfo;
+        final info = await plugin.deviceInfo;
         final text = _formatAllDeviceInfo(info);
         await Clipboard.setData(ClipboardData(text: text));
         if (context.mounted) {

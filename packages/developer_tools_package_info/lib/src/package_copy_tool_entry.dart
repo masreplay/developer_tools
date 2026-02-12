@@ -17,6 +17,31 @@ DeveloperToolEntry packageCopyToolEntry({
     sectionLabel: sectionLabel,
     description: 'Copy app name, version, and build to clipboard',
     icon: Icons.copy_all,
+    debugInfo: (_) async {
+      try {
+        final info = instance ?? await PackageInfo.fromPlatform();
+        final buffer = StringBuffer();
+        buffer.writeln('App Name: ${info.appName}');
+        buffer.writeln('Package Name: ${info.packageName}');
+        buffer.writeln('Version: ${info.version}');
+        buffer.writeln('Build Number: ${info.buildNumber}');
+        if (info.buildSignature.isNotEmpty) {
+          buffer.writeln('Build Signature: ${info.buildSignature}');
+        }
+        if (info.installerStore != null) {
+          buffer.writeln('Installer Store: ${info.installerStore}');
+        }
+        if (info.installTime != null) {
+          buffer.writeln('Install Time: ${info.installTime!.toIso8601String()}');
+        }
+        if (info.updateTime != null) {
+          buffer.writeln('Update Time: ${info.updateTime!.toIso8601String()}');
+        }
+        return buffer.toString();
+      } catch (e) {
+        return 'Error fetching package info: $e';
+      }
+    },
     onTap: (BuildContext context) async {
       try {
         final info = instance ?? await PackageInfo.fromPlatform();
