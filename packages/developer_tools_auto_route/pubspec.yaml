@@ -1,6 +1,6 @@
 name: developer_tools_auto_route
 description: "Auto Route integration for developer_tools. Inspect current route, navigation stack, and router state."
-version: 0.0.1
+version: 0.0.2
 topics: ["development", "debug", "tools", "auto-route", "flutter"]
 
 repository: https://github.com/ramz/developer_tools
@@ -17,7 +17,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  developer_tools_core: ^0.0.1
+  developer_tools_core: ^0.0.2
 
   auto_route: ^11.0.0
 

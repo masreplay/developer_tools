@@ -1,6 +1,6 @@
 name: developer_tools_get
 description: "GetX integration for developer_tools."
-version: 0.0.1
+version: 0.0.2
 topics: ["development", "debug", "tools", "getx", "flutter"]
 
 repository: https://github.com/ramz/developer_tools
