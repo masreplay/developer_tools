@@ -13,7 +13,7 @@ Shared Preferences integration for [developer_tools](https://pub.dev/packages/de
 ```yaml
 dependencies:
   developer_tools: ^0.0.1
-  developer_tools_shared_preferences: ^0.0.1
+  developer_tools_shared_preferences:
   shared_preferences: ^2.5.0
 ```
 
