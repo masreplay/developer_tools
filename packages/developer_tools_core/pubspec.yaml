@@ -1,6 +1,6 @@
 name: developer_tools_core
 description: "Core abstractions and utilities for developer_tools."
-version: 0.0.2
+version: 0.0.3
 topics: ["development", "debug", "tools", "runtime", "flutter"]
 
 repository: https://github.com/ramz/developer_tools

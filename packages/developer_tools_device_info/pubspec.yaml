@@ -1,6 +1,6 @@
 name: developer_tools_device_info
 description: "Device Info Plus integration for developer_tools. View detailed device information, hardware specs, and copy device info for bug reports."
-version: 0.0.1
+version: 0.0.2
 topics: ["development", "debug", "tools", "device-info", "flutter"]
 
 repository: https://github.com/ramz/developer_tools
@@ -17,7 +17,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  developer_tools_core: ^0.0.2
+  developer_tools_core: ^0.0.3
 
   device_info_plus: ^12.0.0
 

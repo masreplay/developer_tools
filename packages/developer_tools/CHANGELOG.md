@@ -1,3 +1,10 @@
+## 0.0.4
+
+- Add `exportReport()` method to collect and export debug information from all registered extensions and standalone entries.
+- Add export debug report button to the overlay header with clipboard support.
+- Add `exportDeveloperToolsReport()` convenience method on the `BuildContext` extension.
+- Bump `developer_tools_core` to `^0.0.3`.
+
 ## 0.0.3
 
 - Add `DeveloperToolsBuildContext` extension on `BuildContext` for convenient access to `DeveloperTools` state and common actions (`showDeveloperTools`, `hideDeveloperTools`, `toggleDeveloperTools`, `registerDeveloperToolQuickAction`).

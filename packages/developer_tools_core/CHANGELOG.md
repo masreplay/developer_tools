@@ -1,3 +1,9 @@
+## 0.0.3
+
+- Add `DebugInfoCallback` typedef for debug report contributions.
+- Add optional `debugInfo` callback to `DeveloperToolEntry` for per-entry debug information.
+- Add `debugInfo` method to `DeveloperToolsExtension` with default implementation that collects info from all entries.
+
 ## 0.0.2
 
 - Refactor `DeveloperToolEntry` to extend `StatelessWidget` with a `build` method for rendering `ListTile`.
