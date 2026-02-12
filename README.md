@@ -1,5 +1,3 @@
-
-
 ## Monorepo (Melos)
 
 This repo is managed with [Melos](https://melos.invertase.dev) and [Pub Workspaces](https://dart.dev/tools/pub/workspaces). The main package lives at `packages/developer_tools`; the root is the workspace definition only.
@@ -13,15 +11,15 @@ This repo is managed with [Melos](https://melos.invertase.dev) and [Pub Workspac
 
 From the repo root:
 
-| Command | Description |
-|--------|-------------|
-| `melos bootstrap` | Install dependencies and link workspace packages (run after clone) |
-| `melos run install` | Same as `melos bootstrap` |
-| `melos run clean` | Clean build artifacts |
-| `melos run format` | Format all packages |
-| `melos run analyze` | Run `dart analyze` in all packages |
-| `melos run test` | Run tests in all packages |
-| `melos list` | List workspace packages |
+| Command             | Description                                                        |
+| ------------------- | ------------------------------------------------------------------ |
+| `melos bootstrap`   | Install dependencies and link workspace packages (run after clone) |
+| `melos run install` | Same as `melos bootstrap`                                          |
+| `melos run clean`   | Clean build artifacts                                              |
+| `melos run format`  | Format all packages                                                |
+| `melos run analyze` | Run `dart analyze` in all packages                                 |
+| `melos run test`    | Run tests in all packages                                          |
+| `melos list`        | List workspace packages                                            |
 
 ### Versioning and releases
 
@@ -41,3 +39,16 @@ Configure `melos.repository` in the root `pubspec.yaml` to enable commit links i
 TODO: Tell users more about the package: where to find more information, how to
 contribute to the package, how to file issues, what response they can expect
 from the package authors, and more.
+
+# TODOS:
+
+- Support firebase_crashlytics
+  example
+  ```dart
+  FirebaseCrashlytics.instance.crash();
+  ```
+- Support sentry:
+  example
+  ```dart
+  Sentry.captureException(Exception('Test message'));
+  ```
