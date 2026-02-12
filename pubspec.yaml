@@ -11,12 +11,12 @@ environment:
 # Pub workspace: all packages developed together (Dart 3.6+)
 workspace:
   - packages/developer_tools
-  - packages/developer_tools_auto_route
   - packages/developer_tools_core
-  - packages/developer_tools_device_info
   - packages/developer_tools_get
-  - packages/developer_tools_package_info
   - packages/developer_tools_riverpod
+  - packages/developer_tools_auto_route
+  - packages/developer_tools_device_info
+  - packages/developer_tools_package_info
   - packages/developer_tools_firebase_messaging
   - packages/developer_tools_shared_preferences
 
