@@ -207,7 +207,7 @@ packages:
       path: "../../developer_tools"
       relative: true
     source: path
-    version: "0.0.2"
+    version: "0.0.3"
   developer_tools_core:
     dependency: "direct overridden"
     description:

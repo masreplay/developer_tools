@@ -1,3 +1,7 @@
+## 0.0.3
+
+- Add `DeveloperToolsBuildContext` extension on `BuildContext` for convenient access to `DeveloperTools` state and common actions (`showDeveloperTools`, `hideDeveloperTools`, `toggleDeveloperTools`, `registerDeveloperToolQuickAction`).
+
 ## 0.0.2
 
 - Add pluggable extensions support to `DeveloperTools` widget for improved customization.
