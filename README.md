@@ -4,18 +4,14 @@ A set of runtime developer tools for Flutter apps. Inspect device info, shared p
 
 ## Packages
 
-| Package | Version | Description |
-| ------- | ------- | ----------- |
-| [`developer_tools`](packages/developer_tools/) | 0.0.5 | Main package — runtime debug overlay and tool registry. |
-| [`developer_tools_core`](packages/developer_tools_core/) | 0.0.3 | Core abstractions and utilities shared across all packages. |
-| [`developer_tools_get`](packages/developer_tools_get/) | 0.0.2 | GetX integration for developer_tools. |
-| [`developer_tools_riverpod`](packages/developer_tools_riverpod/) | 0.0.3 | Riverpod integration for developer_tools. |
-| [`developer_tools_auto_route`](packages/developer_tools_auto_route/) | 0.0.3 | Auto Route integration — inspect routes, navigation stack, and router state. |
-| [`developer_tools_device_info`](packages/developer_tools_device_info/) | 0.0.2 | Device Info Plus integration — view hardware specs and copy device info. |
-| [`developer_tools_package_info`](packages/developer_tools_package_info/) | 0.0.2 | Package Info Plus integration — view app name, version, and build number. |
-| [`developer_tools_firebase_messaging`](packages/developer_tools_firebase_messaging/) | 0.0.5 | Firebase Messaging integration — view FCM token, manage permissions, and subscribe to topics. |
-| [`developer_tools_shared_preferences`](packages/developer_tools_shared_preferences/) | 0.0.3 | Shared Preferences integration — browse, search, edit, add, delete, and export preferences. |
-| [`developer_tools_local_auth`](packages/developer_tools_local_auth/) | 0.0.1 | Local Auth integration — check biometric support, test authentication. |
+[`developer_tools_riverpod`](https://pub.dev/packages/developer_tools_riverpod/)
+[`developer_tools_get`](https://pub.dev/packages/developer_tools_get/)
+[`developer_tools_auto_route`](https://pub.dev/packages/developer_tools_auto_route/)
+[`developer_tools_device_info`](https://pub.dev/packages/developer_tools_device_info/)
+[`developer_tools_package_info`](https://pub.dev/packages/developer_tools_package_info/)
+[`developer_tools_firebase_messaging`](https://pub.dev/packages/developer_tools_firebase_messaging/)
+[`developer_tools_shared_preferences`](https://pub.dev/packages/developer_tools_shared_preferences/)
+[`developer_tools_local_auth`](https://pub.dev/packages/developer_tools_local_auth/)
 
 ## Monorepo (Melos)
 
