@@ -2,6 +2,8 @@ import 'package:developer_tools_core/developer_tools_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/widgets.dart';
 
+import 'apns_token_tool_entry.dart';
+import 'delete_fcm_token_tool_entry.dart';
 import 'fcm_token_tool_entry.dart';
 import 'notification_permissions_tool_entry.dart';
 import 'topic_subscription_tool_entry.dart';
@@ -31,6 +33,8 @@ class DeveloperToolsFirebaseMessaging extends DeveloperToolsExtension {
     final sectionLabel = displayName ?? packageName;
     return <DeveloperToolEntry>[
       fcmTokenToolEntry(sectionLabel: sectionLabel),
+      apnsTokenToolEntry(sectionLabel: sectionLabel),
+      deleteFcmTokenToolEntry(sectionLabel: sectionLabel),
       notificationPermissionsToolEntry(sectionLabel: sectionLabel),
       topicSubscriptionToolEntry(sectionLabel: sectionLabel),
     ];
@@ -44,6 +48,12 @@ class DeveloperToolsFirebaseMessaging extends DeveloperToolsExtension {
       buffer.writeln('FCM Token: ${token ?? "(unavailable)"}');
     } catch (e) {
       buffer.writeln('FCM Token: error ($e)');
+    }
+    try {
+      final apnsToken = await FirebaseMessaging.instance.getAPNSToken();
+      buffer.writeln('APNS Token: ${apnsToken ?? "(unavailable)"}');
+    } catch (e) {
+      buffer.writeln('APNS Token: error ($e)');
     }
     try {
       final settings =
