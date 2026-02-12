@@ -209,7 +209,6 @@ class _TopicSubscriptionDialogState extends State<_TopicSubscriptionDialog> {
                                         Icons.remove_circle_outline,
                                         size: 20,
                                       ),
-                                      tooltip: 'Unsubscribe',
                                       onPressed:
                                           _isLoading
                                               ? null

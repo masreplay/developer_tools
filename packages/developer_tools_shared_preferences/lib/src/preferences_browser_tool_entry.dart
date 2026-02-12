@@ -541,7 +541,6 @@ class _PreferenceItem extends StatelessWidget {
             IconButton(
               icon: const Icon(Icons.copy, size: 16),
               onPressed: onCopy,
-              tooltip: 'Copy',
               visualDensity: VisualDensity.compact,
               padding: EdgeInsets.zero,
               constraints: const BoxConstraints(minWidth: 28, minHeight: 28),
@@ -553,7 +552,6 @@ class _PreferenceItem extends StatelessWidget {
                 color: theme.colorScheme.error,
               ),
               onPressed: onDelete,
-              tooltip: 'Delete',
               visualDensity: VisualDensity.compact,
               padding: EdgeInsets.zero,
               constraints: const BoxConstraints(minWidth: 28, minHeight: 28),

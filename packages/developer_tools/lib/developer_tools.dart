@@ -259,7 +259,8 @@ class _DeveloperToolsState extends State<DeveloperTools> {
 
     // Extensions
     for (final ext in widget.extensions) {
-      final label = ext.displayName ?? ext.packageName ?? ext.runtimeType.toString();
+      final label =
+          ext.displayName ?? ext.packageName ?? ext.runtimeType.toString();
       final info = await ext.debugInfo(context);
       if (info != null && info.isNotEmpty) {
         buffer.writeln('── $label ${'─' * (46 - label.length)}');
@@ -273,7 +274,9 @@ class _DeveloperToolsState extends State<DeveloperTools> {
       if (entry.debugInfo != null) {
         final info = await entry.debugInfo!(context);
         if (info != null && info.isNotEmpty) {
-          buffer.writeln('── ${entry.title} ${'─' * (46 - entry.title.length)}');
+          buffer.writeln(
+            '── ${entry.title} ${'─' * (46 - entry.title.length)}',
+          );
           buffer.writeln(info);
           buffer.writeln();
         }
@@ -602,7 +605,6 @@ class _ExportReportButtonState extends State<_ExportReportButton> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return IconButton(
-      tooltip: 'Export debug report',
       icon:
           _loading
               ? SizedBox(
@@ -863,6 +865,5 @@ extension DeveloperToolsBuildContext on BuildContext {
   /// ```dart
   /// final report = await context.exportDeveloperToolsReport();
   /// ```
-  Future<String> exportDeveloperToolsReport() =>
-      developerTools.exportReport();
+  Future<String> exportDeveloperToolsReport() => developerTools.exportReport();
 }
