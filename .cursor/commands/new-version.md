@@ -91,4 +91,5 @@ Then suggest the user review the changes and run:
 - **Multiple packages changed independently**: bump each with its own appropriate version.
 - **No git history available**: fall back to asking the user which packages to bump.
 
+and ask me if i need run to publish changes to pub if not published to run the command `melos publish:to-pub`
 at the end of command print all packages and it's remote pub version as table

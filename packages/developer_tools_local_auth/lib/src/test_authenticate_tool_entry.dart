@@ -77,7 +77,7 @@ class _TestAuthenticateDialogState extends State<_TestAuthenticateDialog> {
           _result = _AuthResult(
             success: false,
             message: 'LocalAuthException: ${e.code.name}',
-            detail: e.message,
+            detail: e.description,
           );
           _isLoading = false;
         });

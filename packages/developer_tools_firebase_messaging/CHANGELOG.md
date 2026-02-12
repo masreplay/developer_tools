@@ -1,3 +1,9 @@
+## 0.0.5
+
+- Add APNS token viewer tool entry with copy-to-clipboard support (iOS/macOS).
+- Add Delete FCM Token tool entry with confirmation dialog.
+- Include APNS token in debug info report.
+
 ## 0.0.4
 
 - Remove redundant tooltip attribute from topic unsubscribe button.
