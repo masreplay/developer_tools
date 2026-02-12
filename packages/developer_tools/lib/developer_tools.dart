@@ -684,3 +684,64 @@ class _DeveloperToolQuickActionState extends State<DeveloperToolQuickAction> {
   @override
   Widget build(BuildContext context) => widget.child;
 }
+
+// ── BuildContext extension ──────────────────────────────────────────────
+
+/// Convenience extension on [BuildContext] for quick access to
+/// [DeveloperTools] state and common actions.
+///
+/// Instead of:
+/// ```dart
+/// DeveloperTools.of(context).show();
+/// ```
+///
+/// You can write:
+/// ```dart
+/// context.showDeveloperTools();
+/// ```
+extension DeveloperToolsBuildContext on BuildContext {
+  /// Returns the nearest [DeveloperTools] state, equivalent to
+  /// `DeveloperTools.of(context)`.
+  ///
+  /// Throws if no [DeveloperTools] ancestor is found.
+  // ignore: library_private_types_in_public_api
+  _DeveloperToolsState get developerTools => DeveloperTools.of(this);
+
+  /// Returns the nearest [DeveloperTools] state, or `null` if none exists.
+  ///
+  /// Equivalent to `DeveloperTools.maybeOf(context)`.
+  // ignore: library_private_types_in_public_api
+  _DeveloperToolsState? get maybeDeveloperTools => DeveloperTools.maybeOf(this);
+
+  /// Shows the developer tools overlay panel.
+  void showDeveloperTools() => developerTools.show();
+
+  /// Hides the developer tools overlay panel.
+  void hideDeveloperTools() => developerTools.hide();
+
+  /// Toggles the developer tools overlay panel visibility.
+  void toggleDeveloperTools() => developerTools.toggle();
+
+  /// Registers a quick action with the nearest [DeveloperTools].
+  ///
+  /// Returns a callback that unregisters the action – call it when the
+  /// action is no longer relevant (e.g. in [State.dispose]).
+  ///
+  /// ```dart
+  /// final remove = context.registerDeveloperToolQuickAction(
+  ///   label: 'Auto‑fill credentials',
+  ///   onAction: () { /* ... */ },
+  /// );
+  /// ```
+  VoidCallback registerDeveloperToolQuickAction({
+    required String label,
+    required VoidCallback onAction,
+    IconData? icon,
+  }) {
+    return developerTools.registerQuickAction(
+      label: label,
+      onAction: onAction,
+      icon: icon,
+    );
+  }
+}
