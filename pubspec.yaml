@@ -19,6 +19,7 @@ workspace:
   - packages/developer_tools_package_info
   - packages/developer_tools_firebase_messaging
   - packages/developer_tools_shared_preferences
+  - packages/developer_tools_local_auth
 
 dev_dependencies:
   melos: ^7.0.0
