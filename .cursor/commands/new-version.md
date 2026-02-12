@@ -69,6 +69,19 @@ Then suggest the user review the changes and run:
 - `melos run publish:dry` — to verify everything is publishable
 - `melos run publish:to-pub` — when ready to publish
 
+### Step 7 — Ask about git commit & push
+
+1. Run `git status` to check if there are any uncommitted changes (staged or unstaged) resulting from the version bumps.
+2. If there are **no changes** (e.g. everything was already committed or something went wrong), inform the user and skip this step.
+3. If there **are changes**, ask the user:
+   - **"Would you like me to commit and push these version changes to git?"**
+4. If the user says **yes**:
+   - Stage all changed files: `git add .`
+   - Commit with a descriptive message summarizing which packages were bumped, e.g.:
+     `chore: bump developer_tools_core 0.0.2 → 0.0.3, developer_tools 0.0.2 → 0.0.3`
+   - Push to the current branch: `git push`
+5. If the user says **no**, skip and let them handle git manually.
+
 ### Edge cases to handle
 
 - **Only `pubspec.yaml` changed** (e.g. bumping an external dependency like `device_info_plus`): still counts as a patch bump for that package.

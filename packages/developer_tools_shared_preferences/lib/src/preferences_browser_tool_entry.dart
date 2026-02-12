@@ -190,7 +190,7 @@ class _PreferencesBrowserDialogState extends State<_PreferencesBrowserDialog> {
                   )
                   : ListView.separated(
                     itemCount: _filteredKeys.length,
-                    separatorBuilder: (_, __) => const Divider(height: 1),
+                    separatorBuilder: (_, _) => const Divider(height: 1),
                     itemBuilder: (context, index) {
                       final key = _filteredKeys[index];
                       return _PreferenceItem(
@@ -381,7 +381,9 @@ class _PreferencesBrowserDialogState extends State<_PreferencesBrowserDialog> {
             FilledButton(
               onPressed: () async {
                 await _savePreference(key, controller.text, typeLabel);
-                if (context.mounted) Navigator.of(context).pop();
+                if (context.mounted) {
+                  Navigator.of(context).pop();
+                }
               },
               child: const Text('Save'),
             ),

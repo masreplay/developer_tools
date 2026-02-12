@@ -125,7 +125,7 @@ class _PreferencesActionsDialogState extends State<_PreferencesActionsDialog> {
                       onTap: () async {
                         await _prefs!.reload();
                         setState(() {});
-                        if (mounted) {
+                        if (context.mounted) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
                               content: Text('Preferences reloaded'),

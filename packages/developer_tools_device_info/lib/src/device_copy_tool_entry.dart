@@ -51,7 +51,7 @@ String _formatAllDeviceInfo(BaseDeviceInfo info) {
   final timestamp = DateTime.now().toIso8601String();
   buffer.writeln('Device Info Report');
   buffer.writeln('Generated: $timestamp');
-  buffer.writeln('${'=' * 40}');
+  buffer.writeln('=' * 40);
   buffer.writeln();
 
   // Platform identifier

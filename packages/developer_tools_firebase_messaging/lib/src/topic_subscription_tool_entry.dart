@@ -174,7 +174,7 @@ class _TopicSubscriptionDialogState extends State<_TopicSubscriptionDialog> {
                       )
                       : ListView.separated(
                         itemCount: _history.length,
-                        separatorBuilder: (_, __) => const Divider(height: 1),
+                        separatorBuilder: (_, _) => const Divider(height: 1),
                         itemBuilder: (context, index) {
                           final entry = _history[index];
                           final isSubscribed =
