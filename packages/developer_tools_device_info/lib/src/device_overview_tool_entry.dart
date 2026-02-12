@@ -174,7 +174,6 @@ class _DeviceOverviewDialogState extends State<_DeviceOverviewDialog> {
       const _SectionHeader('Identifiers'),
       _InfoRow('ID', info.id),
       _InfoRow('Fingerprint', info.fingerprint),
-      _InfoRow('Serial', info.serialNumber),
       _InfoRow('Tags', info.tags),
       _InfoRow('Type', info.type),
     ];
@@ -266,7 +265,7 @@ class _DeviceOverviewDialogState extends State<_DeviceOverviewDialog> {
       _InfoRow('CSD Version', info.csdVersion),
       _InfoRow('Service Pack Major', info.servicePackMajor.toString()),
       _InfoRow('Service Pack Minor', info.servicePackMinor.toString()),
-      _InfoRow('Edition ID', info.editionId ?? 'N/A'),
+      _InfoRow('Edition ID', info.editionId),
       _InfoRow('Product ID', info.productId),
       _InfoRow('Display Version', info.displayVersion),
       const SizedBox(height: 8),
@@ -281,16 +280,16 @@ class _DeviceOverviewDialogState extends State<_DeviceOverviewDialog> {
       const _SectionHeader('Browser'),
       _InfoRow('Browser Name', info.browserName.name),
       _InfoRow('User Agent', info.userAgent ?? 'N/A'),
-      _InfoRow('App Name', info.appName),
-      _InfoRow('App Version', info.appVersion),
-      _InfoRow('App Code Name', info.appCodeName),
+      _InfoRow('App Name', info.appName ?? 'N/A'),
+      _InfoRow('App Version', info.appVersion ?? 'N/A'),
+      _InfoRow('App Code Name', info.appCodeName ?? 'N/A'),
       const SizedBox(height: 8),
       const _SectionHeader('Platform'),
       _InfoRow('Platform', info.platform ?? 'N/A'),
-      _InfoRow('Product', info.product),
+      _InfoRow('Product', info.product ?? 'N/A'),
       _InfoRow('Product Sub', info.productSub ?? 'N/A'),
-      _InfoRow('Vendor', info.vendor),
-      _InfoRow('Vendor Sub', info.vendorSub),
+      _InfoRow('Vendor', info.vendor ?? 'N/A'),
+      _InfoRow('Vendor Sub', info.vendorSub ?? 'N/A'),
       const SizedBox(height: 8),
       const _SectionHeader('Capabilities'),
       _InfoRow('Language', info.language ?? 'N/A'),
@@ -332,7 +331,6 @@ String _formatDeviceInfoForCopy(BaseDeviceInfo info) {
     buffer.writeln('Fingerprint: ${info.fingerprint}');
     buffer.writeln('Supported ABIs: ${info.supportedAbis.join(", ")}');
     buffer.writeln('ID: ${info.id}');
-    buffer.writeln('Serial: ${info.serialNumber}');
   } else if (info is IosDeviceInfo) {
     buffer.writeln('Platform: iOS');
     buffer.writeln('Name: ${info.name}');
