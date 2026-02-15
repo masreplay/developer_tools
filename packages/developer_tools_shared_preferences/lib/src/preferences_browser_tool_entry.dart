@@ -236,7 +236,7 @@ class _PreferencesBrowserDialogState extends State<_PreferencesBrowserDialog> {
                     ),
                     const SizedBox(height: 12),
                     DropdownButtonFormField<String>(
-                      value: selectedType,
+                      initialValue: selectedType,
                       decoration: const InputDecoration(
                         labelText: 'Type',
                         isDense: true,
@@ -265,7 +265,7 @@ class _PreferencesBrowserDialogState extends State<_PreferencesBrowserDialog> {
                     const SizedBox(height: 12),
                     if (selectedType == 'bool')
                       DropdownButtonFormField<String>(
-                        value: 'true',
+                        initialValue: 'true',
                         decoration: const InputDecoration(
                           labelText: 'Value',
                           isDense: true,
@@ -344,7 +344,7 @@ class _PreferencesBrowserDialogState extends State<_PreferencesBrowserDialog> {
                 const SizedBox(height: 12),
                 if (value is bool)
                   DropdownButtonFormField<String>(
-                    value: value.toString(),
+                    initialValue: value.toString(),
                     decoration: const InputDecoration(
                       labelText: 'Value',
                       isDense: true,

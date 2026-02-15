@@ -40,50 +40,51 @@ class _ConsoleLogDialog extends StatelessWidget {
           return SizedBox(
             width: 480,
             height: 400,
-            child: entries.isEmpty
-                ? Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        'No errors captured yet.\n\n'
-                        'FlutterError.onError and PlatformDispatcher.onError '
-                        'are hooked when you add DeveloperToolsConsole.',
-                        style: TextStyle(fontSize: 14),
-                      ),
-                    ],
-                  )
-                : ListView.builder(
-                    itemCount: entries.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      final entry = entries[index];
-                      final time =
-                          '${entry.timestamp.hour.toString().padLeft(2, '0')}:'
-                          '${entry.timestamp.minute.toString().padLeft(2, '0')}:'
-                          '${entry.timestamp.second.toString().padLeft(2, '0')}';
+            child:
+                entries.isEmpty
+                    ? Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'No errors captured yet.\n\n'
+                          'FlutterError.onError and PlatformDispatcher.onError '
+                          'are hooked when you add DeveloperToolsConsole.',
+                          style: TextStyle(fontSize: 14),
+                        ),
+                      ],
+                    )
+                    : ListView.builder(
+                      itemCount: entries.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        final entry = entries[index];
+                        final time =
+                            '${entry.timestamp.hour.toString().padLeft(2, '0')}:'
+                            '${entry.timestamp.minute.toString().padLeft(2, '0')}:'
+                            '${entry.timestamp.second.toString().padLeft(2, '0')}';
 
-                      return ListTile(
-                        dense: true,
-                        leading: Icon(
-                          _iconForLevel(entry.level),
-                          size: 20,
-                          color: _colorForLevel(context, entry.level),
-                        ),
-                        title: SelectableText(
-                          entry.message,
-                          style: const TextStyle(
-                            fontSize: 13,
-                            fontFamily: 'monospace',
+                        return ListTile(
+                          dense: true,
+                          leading: Icon(
+                            _iconForLevel(entry.level),
+                            size: 20,
+                            color: _colorForLevel(context, entry.level),
                           ),
-                        ),
-                        subtitle: Text(
-                          '$time  •  ${entry.level.name}',
-                          style: const TextStyle(fontSize: 11),
-                        ),
-                        onTap: () => _showEntryDetails(context, entry),
-                      );
-                    },
-                  ),
+                          title: SelectableText(
+                            entry.message,
+                            style: const TextStyle(
+                              fontSize: 13,
+                              fontFamily: 'monospace',
+                            ),
+                          ),
+                          subtitle: Text(
+                            '$time  •  ${entry.level.name}',
+                            style: const TextStyle(fontSize: 11),
+                          ),
+                          onTap: () => _showEntryDetails(context, entry),
+                        );
+                      },
+                    ),
           );
         },
       ),
@@ -133,35 +134,36 @@ class _ConsoleLogDialog extends StatelessWidget {
 
     showDialog<void>(
       context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Error details'),
-        content: SingleChildScrollView(
-          child: SelectableText(
-            text.toString(),
-            style: const TextStyle(
-              fontSize: 12,
-              fontFamily: 'monospace',
+      builder:
+          (context) => AlertDialog(
+            title: const Text('Error details'),
+            content: SingleChildScrollView(
+              child: SelectableText(
+                text.toString(),
+                style: const TextStyle(
+                  fontSize: 12,
+                  fontFamily: 'monospace',
+                ),
+              ),
             ),
+            actions: [
+              TextButton(
+                onPressed: () async {
+                  await Clipboard.setData(ClipboardData(text: text.toString()));
+                  if (context.mounted) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Copied to clipboard')),
+                    );
+                  }
+                },
+                child: const Text('Copy'),
+              ),
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: const Text('Close'),
+              ),
+            ],
           ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () async {
-              await Clipboard.setData(ClipboardData(text: text.toString()));
-              if (context.mounted) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Copied to clipboard')),
-                );
-              }
-            },
-            child: const Text('Copy'),
-          ),
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Close'),
-          ),
-        ],
-      ),
     );
   }
 }

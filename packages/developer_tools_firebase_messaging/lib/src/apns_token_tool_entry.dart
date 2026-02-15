@@ -97,9 +97,7 @@ class _ApnsTokenDialogState extends State<_ApnsTokenDialog> {
                     'APNS tokens are only available on iOS/macOS.\n'
                     'Ensure notification permissions are granted.',
                     textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: theme.colorScheme.onSurfaceVariant,
-                    ),
+                    style: TextStyle(color: theme.colorScheme.onSurfaceVariant),
                   ),
                 ),
               );

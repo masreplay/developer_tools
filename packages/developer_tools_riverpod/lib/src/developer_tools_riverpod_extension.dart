@@ -37,7 +37,9 @@ class DeveloperToolsRiverpod extends DeveloperToolsExtension {
   @override
   List<DeveloperToolEntry> buildEntries(BuildContext context) {
     _maybeWarnMissingObserver();
-    DeveloperToolsLogSourceRegistry.instance.register(const RiverpodLogSource());
+    DeveloperToolsLogSourceRegistry.instance.register(
+      const RiverpodLogSource(),
+    );
     final sectionLabel = displayName ?? packageName;
     return <DeveloperToolEntry>[
       if (enableProviderLog)

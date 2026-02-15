@@ -19,9 +19,7 @@ class MainApp extends StatelessWidget {
       home: const HomePage(),
       builder: DeveloperTools.builder(
         navigatorKey: _navigatorKey,
-        extensions: const [
-          DeveloperToolsConsole(),
-        ],
+        extensions: const [DeveloperToolsConsole()],
         dockConfig: DeveloperToolsDockConfig(
           enabled: true,
           position: DeveloperToolsDockPosition.bottom,

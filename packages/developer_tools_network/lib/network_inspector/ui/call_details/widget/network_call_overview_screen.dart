@@ -46,10 +46,14 @@ class NetworkCallOverviewScreen extends StatelessWidget {
             ),
             NetworkCallListRow(
               name: context.i18n(NetworkTranslationKey.callOverviewBytesSent),
-              value: NetworkConversionHelper.formatBytes(call.request?.size ?? 0),
+              value: NetworkConversionHelper.formatBytes(
+                call.request?.size ?? 0,
+              ),
             ),
             NetworkCallListRow(
-              name: context.i18n(NetworkTranslationKey.callOverviewBytesReceived),
+              name: context.i18n(
+                NetworkTranslationKey.callOverviewBytesReceived,
+              ),
               value: NetworkConversionHelper.formatBytes(
                 call.response?.size ?? 0,
               ),

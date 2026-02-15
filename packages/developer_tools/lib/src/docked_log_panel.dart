@@ -17,10 +17,11 @@ class DockedLogPanel extends StatelessWidget {
     }
 
     final registry = DeveloperToolsLogSourceRegistry.instance;
-    final sources = config.enabledLogSourceIds
-        .map((id) => registry.get(id))
-        .whereType<DeveloperToolsLogSource>()
-        .toList();
+    final sources =
+        config.enabledLogSourceIds
+            .map((id) => registry.get(id))
+            .whereType<DeveloperToolsLogSource>()
+            .toList();
 
     if (sources.isEmpty) {
       return const SizedBox.shrink();
@@ -49,7 +50,9 @@ class DockedLogPanel extends StatelessWidget {
         final maxHeight = 160.0;
 
         return Material(
-          color: theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.95),
+          color: theme.colorScheme.surfaceContainerHighest.withValues(
+            alpha: 0.95,
+          ),
           elevation: 4,
           child: Container(
             constraints: BoxConstraints(maxHeight: maxHeight),

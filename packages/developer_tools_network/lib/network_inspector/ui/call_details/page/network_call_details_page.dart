@@ -45,7 +45,8 @@ class _NetworkCallDetailsPageState extends State<NetworkCallDetailsPage>
         builder: (context, AsyncSnapshot<List<NetworkHttpCall>> callsSnapshot) {
           if (callsSnapshot.hasData && !callsSnapshot.hasError) {
             final NetworkHttpCall? call = callsSnapshot.data?.firstWhereOrNull(
-              (NetworkHttpCall snapshotCall) => snapshotCall.id == widget.call.id,
+              (NetworkHttpCall snapshotCall) =>
+                  snapshotCall.id == widget.call.id,
             );
             if (call != null) {
               return DefaultTabController(

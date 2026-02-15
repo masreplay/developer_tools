@@ -17,7 +17,8 @@ class ConsoleLogSource extends DeveloperToolsLogSource {
   bool get hasReceivedEvents => ConsoleLog.instance.hasReceivedEvents;
 
   @override
-  List<DeveloperToolsLogEntry> get entries => ConsoleLog.instance.unifiedEntries;
+  List<DeveloperToolsLogEntry> get entries =>
+      ConsoleLog.instance.unifiedEntries;
 
   @override
   Listenable get listenable => ConsoleLog.instance.listenable;

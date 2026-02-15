@@ -32,7 +32,9 @@ DeveloperToolEntry packageCopyToolEntry({
           buffer.writeln('Installer Store: ${info.installerStore}');
         }
         if (info.installTime != null) {
-          buffer.writeln('Install Time: ${info.installTime!.toIso8601String()}');
+          buffer.writeln(
+            'Install Time: ${info.installTime!.toIso8601String()}',
+          );
         }
         if (info.updateTime != null) {
           buffer.writeln('Update Time: ${info.updateTime!.toIso8601String()}');

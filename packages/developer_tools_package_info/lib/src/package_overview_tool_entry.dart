@@ -44,9 +44,10 @@ class _PackageOverviewDialogState extends State<_PackageOverviewDialog> {
   @override
   void initState() {
     super.initState();
-    _infoFuture = widget.instance != null
-        ? Future.value(widget.instance)
-        : PackageInfo.fromPlatform();
+    _infoFuture =
+        widget.instance != null
+            ? Future.value(widget.instance)
+            : PackageInfo.fromPlatform();
   }
 
   @override

@@ -59,7 +59,8 @@ class NetworkCallRequestScreen extends StatelessWidget {
       ]);
     }
 
-    final List<NetworkFormDataFile>? formDataFiles = call.request!.formDataFiles;
+    final List<NetworkFormDataFile>? formDataFiles =
+        call.request!.formDataFiles;
     if (formDataFiles?.isNotEmpty ?? false) {
       rows.add(
         NetworkCallListRow(
@@ -98,7 +99,9 @@ class NetworkCallRequestScreen extends StatelessWidget {
     final Map<String, dynamic>? queryParameters = call.request?.queryParameters;
     final String queryParametersContent =
         queryParameters?.isEmpty ?? true
-            ? context.i18n(NetworkTranslationKey.callRequestQueryParametersEmpty)
+            ? context.i18n(
+              NetworkTranslationKey.callRequestQueryParametersEmpty,
+            )
             : '';
     rows.add(
       NetworkCallListRow(

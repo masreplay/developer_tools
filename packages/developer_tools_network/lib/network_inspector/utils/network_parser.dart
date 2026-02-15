@@ -106,6 +106,6 @@ class NetworkParser {
       return headers.map((key, value) => MapEntry(key, value.toString()));
     }
 
-    throw ArgumentError("Invalid headers value.");
+    throw ArgumentError('Invalid headers value.');
   }
 }

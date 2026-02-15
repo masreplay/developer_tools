@@ -5,5 +5,6 @@ mixin NetworkAdapter {
   late final NetworkInspectorCore networkCore;
 
   /// Injects [NetworkInspectorCore] into adapter.
-  void injectCore(NetworkInspectorCore networkCore) => this.networkCore = networkCore;
+  void injectCore(NetworkInspectorCore networkCore) =>
+      this.networkCore = networkCore;
 }

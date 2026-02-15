@@ -63,7 +63,9 @@ class DeveloperToolsSharedPreferences extends DeveloperToolsExtension {
       if (keys.isEmpty) return 'No stored preferences.';
 
       final buffer = StringBuffer();
-      buffer.writeln('Total: ${keys.length} preference${keys.length == 1 ? '' : 's'}');
+      buffer.writeln(
+        'Total: ${keys.length} preference${keys.length == 1 ? '' : 's'}',
+      );
 
       // Type breakdown
       int stringCount = 0, intCount = 0, doubleCount = 0;

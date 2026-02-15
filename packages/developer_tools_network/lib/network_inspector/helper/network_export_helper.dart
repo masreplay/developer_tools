@@ -125,7 +125,9 @@ class NetworkExportHelper {
   }
 
   /// Builds log string based on data collected from package info.
-  static Future<String> _buildNetworkLog({required BuildContext context}) async {
+  static Future<String> _buildNetworkLog({
+    required BuildContext context,
+  }) async {
     final PackageInfo packageInfo = await PackageInfo.fromPlatform();
 
     return '${context.i18n(NetworkTranslationKey.saveHeaderTitle)}\n'

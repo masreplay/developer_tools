@@ -98,7 +98,7 @@ class _RequestPermissionDialogState extends State<_RequestPermissionDialog> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             DropdownButtonFormField<Permission>(
-              value: _selectedPermission,
+              initialValue: _selectedPermission,
               decoration: const InputDecoration(
                 labelText: 'Permission',
                 isDense: true,

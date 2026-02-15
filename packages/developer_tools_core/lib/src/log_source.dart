@@ -1,11 +1,7 @@
 import 'package:flutter/foundation.dart';
 
 /// Severity/level of a log entry for display purposes.
-enum DeveloperToolsLogLevel {
-  info,
-  warning,
-  error,
-}
+enum DeveloperToolsLogLevel { info, warning, error }
 
 /// Unified representation of a log entry for display in the dock or overlay.
 ///
@@ -35,10 +31,7 @@ class DeveloperToolsLogEntry {
 }
 
 /// Position of the docked log panel.
-enum DeveloperToolsDockPosition {
-  top,
-  bottom,
-}
+enum DeveloperToolsDockPosition { top, bottom }
 
 /// Configuration for the docked log panel.
 class DeveloperToolsDockConfig {

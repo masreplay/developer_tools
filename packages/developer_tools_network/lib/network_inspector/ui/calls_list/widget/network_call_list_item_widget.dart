@@ -147,7 +147,9 @@ class _ResponseStatus extends StatelessWidget {
               width: 20,
               height: 20,
               child: CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(NetworkTheme.lightRed),
+                valueColor: AlwaysStoppedAnimation<Color>(
+                  NetworkTheme.lightRed,
+                ),
               ),
             ),
             const SizedBox(height: 4),

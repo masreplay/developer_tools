@@ -61,7 +61,8 @@ class _NetworkLogListWidgetState extends State<NetworkLogListWidget> {
             shrinkWrap: true,
             padding: const EdgeInsets.symmetric(vertical: 8),
             itemCount: filteredLogs.length,
-            itemBuilder: (context, i) => _NetworkLogEntryWidget(filteredLogs[i]),
+            itemBuilder:
+                (context, i) => _NetworkLogEntryWidget(filteredLogs[i]),
           ),
         );
       },

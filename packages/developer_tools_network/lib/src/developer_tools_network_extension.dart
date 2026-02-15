@@ -64,7 +64,9 @@ class DeveloperToolsNetwork extends DeveloperToolsExtension {
       }
       final inspector = instance!;
       buffer.writeln('Inspector opened: ${inspector.isInspectorOpened}');
-      buffer.writeln('Navigator key set: ${inspector.getNavigatorKey() != null}');
+      buffer.writeln(
+        'Navigator key set: ${inspector.getNavigatorKey() != null}',
+      );
     } catch (e) {
       buffer.writeln('Error: $e');
     }

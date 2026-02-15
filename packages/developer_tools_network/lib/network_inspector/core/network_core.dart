@@ -137,7 +137,8 @@ class NetworkInspectorCore {
   void addLog(NetworkLog log) => _configuration.networkLogger.add(log);
 
   /// Adds list of logs to NetworkInspector logger
-  void addLogs(List<NetworkLog> logs) => _configuration.networkLogger.addAll(logs);
+  void addLogs(List<NetworkLog> logs) =>
+      _configuration.networkLogger.addAll(logs);
 
   /// Returns flag which determines whether inspector is opened
   bool get isInspectorOpened => _isInspectorOpened;

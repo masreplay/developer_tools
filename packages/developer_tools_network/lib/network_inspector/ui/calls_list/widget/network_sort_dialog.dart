@@ -54,9 +54,11 @@ class NetworkSortDialog extends StatelessWidget {
                         });
                       },
                       activeTrackColor: Colors.grey,
-                      activeColor: Colors.white,
+                      activeThumbColor: Colors.white,
                     ),
-                    Text(context.i18n(NetworkTranslationKey.sortDialogAscending)),
+                    Text(
+                      context.i18n(NetworkTranslationKey.sortDialogAscending),
+                    ),
                   ],
                 ),
               ],
@@ -64,7 +66,9 @@ class NetworkSortDialog extends StatelessWidget {
             actions: [
               TextButton(
                 onPressed: Navigator.of(context).pop,
-                child: Text(context.i18n(NetworkTranslationKey.sortDialogCancel)),
+                child: Text(
+                  context.i18n(NetworkTranslationKey.sortDialogCancel),
+                ),
               ),
               TextButton(
                 onPressed: () {
@@ -75,7 +79,9 @@ class NetworkSortDialog extends StatelessWidget {
                     ),
                   );
                 },
-                child: Text(context.i18n(NetworkTranslationKey.sortDialogAccept)),
+                child: Text(
+                  context.i18n(NetworkTranslationKey.sortDialogAccept),
+                ),
               ),
             ],
           );

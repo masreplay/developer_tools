@@ -292,10 +292,14 @@ class _LargeTextBody extends StatelessWidget {
           const SizedBox(height: 8),
           TextButton(
             onPressed: onShowLargeBodyPressed,
-            child: Text(context.i18n(NetworkTranslationKey.callResponseBodyShow)),
+            child: Text(
+              context.i18n(NetworkTranslationKey.callResponseBodyShow),
+            ),
           ),
           Text(
-            context.i18n(NetworkTranslationKey.callResponseLargeBodyShowWarning),
+            context.i18n(
+              NetworkTranslationKey.callResponseLargeBodyShowWarning,
+            ),
           ),
         ],
       );

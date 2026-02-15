@@ -35,7 +35,8 @@ class _NetworkCallsListPageState extends State<NetworkCallsListPage>
     with SingleTickerProviderStateMixin {
   final TextEditingController _queryTextEditingController =
       TextEditingController();
-  final List<NetworkCallsListTabItem> _tabItems = NetworkCallsListTabItem.values;
+  final List<NetworkCallsListTabItem> _tabItems =
+      NetworkCallsListTabItem.values;
   final ScrollController _scrollController = ScrollController();
   late final TabController? _tabController;
 
@@ -256,7 +257,7 @@ class _NetworkCallsListPageState extends State<NetworkCallsListPage>
         title: context.i18n(NetworkTranslationKey.saveSuccessTitle),
         description: context
             .i18n(NetworkTranslationKey.saveSuccessDescription)
-            .replaceAll("[path]", result.path!),
+            .replaceAll('[path]', result.path!),
         secondButtonTitle:
             OperatingSystem.isAndroid
                 ? context.i18n(NetworkTranslationKey.saveSuccessView)
@@ -285,9 +286,11 @@ class _NetworkCallsListPageState extends State<NetworkCallsListPage>
         ],
         NetworkExportResultError.file => [
           context.i18n(NetworkTranslationKey.saveDialogFileSaveErrorTitle),
-          context.i18n(NetworkTranslationKey.saveDialogFileSaveErrorDescription),
+          context.i18n(
+            NetworkTranslationKey.saveDialogFileSaveErrorDescription,
+          ),
         ],
-        _ => ["", ""],
+        _ => ['', ''],
       };
 
       NetworkGeneralDialog.show(
@@ -391,7 +394,10 @@ class _ContextMenuButton extends StatelessWidget {
                 value: item,
                 child: Row(
                   children: [
-                    Icon(_getIcon(itemType: item), color: NetworkTheme.lightRed),
+                    Icon(
+                      _getIcon(itemType: item),
+                      color: NetworkTheme.lightRed,
+                    ),
                     const Padding(padding: EdgeInsets.only(left: 10)),
                     Text(_getTitle(context: context, itemType: item)),
                   ],

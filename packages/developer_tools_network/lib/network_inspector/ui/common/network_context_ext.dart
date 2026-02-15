@@ -9,7 +9,10 @@ extension NetworkContextExt on BuildContext {
   String i18n(NetworkTranslationKey key) {
     try {
       final locale = Localizations.localeOf(this);
-      return NetworkTranslations.get(languageCode: locale.languageCode, key: key);
+      return NetworkTranslations.get(
+        languageCode: locale.languageCode,
+        key: key,
+      );
     } catch (error) {
       return key.toString();
     }

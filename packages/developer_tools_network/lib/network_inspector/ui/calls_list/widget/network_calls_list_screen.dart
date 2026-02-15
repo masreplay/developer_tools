@@ -85,8 +85,10 @@ class NetworkCallsListScreen extends StatelessWidget {
       child: ListView.builder(
         itemCount: calls.length,
         itemBuilder:
-            (_, int index) =>
-                NetworkCallListItemWidget(_sortedCalls[index], onListItemClicked),
+            (_, int index) => NetworkCallListItemWidget(
+              _sortedCalls[index],
+              onListItemClicked,
+            ),
       ),
     );
   }

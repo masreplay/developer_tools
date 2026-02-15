@@ -8,7 +8,9 @@ import 'package:flutter/material.dart';
 /// Simple navigation helper class for NetworkInspector.
 class NetworkNavigation {
   /// Navigates to calls list page.
-  static Future<void> navigateToCallsList({required NetworkInspectorCore core}) {
+  static Future<void> navigateToCallsList({
+    required NetworkInspectorCore core,
+  }) {
     return _navigateToPage(core: core, child: NetworkCallsListPage(core: core));
   }
 
@@ -36,7 +38,7 @@ class NetworkNavigation {
   }) {
     var context = core.getContext();
     if (context == null) {
-      throw StateError("Context is null in NetworkInspectorCore.");
+      throw StateError('Context is null in NetworkInspectorCore.');
     }
     return Navigator.push<void>(
       context,

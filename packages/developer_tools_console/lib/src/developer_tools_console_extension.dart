@@ -65,7 +65,8 @@ class DeveloperToolsConsole extends DeveloperToolsExtension {
 
     final sectionLabel = displayName ?? packageName;
     return <DeveloperToolEntry>[
-      if (enableConsoleLog) consoleLogToolEntry(context, sectionLabel: sectionLabel),
+      if (enableConsoleLog)
+        consoleLogToolEntry(context, sectionLabel: sectionLabel),
     ];
   }
 
