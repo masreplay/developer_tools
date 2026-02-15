@@ -8,6 +8,11 @@ publish_to: "none"
 environment:
   sdk: ^3.7.0
 
+# Unify transitive versions that differ across workspace packages (e.g. alice
+# wants package_info_plus ^8, developer_tools_package_info uses ^9).
+dependency_overrides:
+  package_info_plus: ^9.0.0
+
 # Pub workspace: all packages developed together (Dart 3.6+)
 workspace:
   - packages/developer_tools
@@ -21,6 +26,7 @@ workspace:
   - packages/developer_tools_shared_preferences
   - packages/developer_tools_local_auth
   - packages/developer_tools_permission_handler
+  - packages/developer_tools_alice
 
 dev_dependencies:
   melos: ^7.0.0
