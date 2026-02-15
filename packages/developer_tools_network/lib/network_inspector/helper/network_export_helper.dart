@@ -20,7 +20,7 @@ import 'package:share_plus/share_plus.dart';
 
 class NetworkExportHelper {
   static const JsonEncoder _encoder = JsonEncoder.withIndent('  ');
-  static const String _fileName = "network_log";
+  static const String _fileName = 'network_log';
 
   /// Format log based on [call] and tries to share it.
   static Future<NetworkExportResult> shareCall({
@@ -222,7 +222,7 @@ class NetworkExportHelper {
       return await _buildNetworkLog(context: context) +
           _buildCallLog(call: call, context: context);
     } catch (exception) {
-      NetworkUtils.log("Failed to generate call log: $exception");
+      NetworkUtils.log('Failed to generate call log: $exception');
       return null;
     }
   }

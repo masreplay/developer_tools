@@ -1,6 +1,6 @@
 # Developer Tools
 
-A set of runtime developer tools for Flutter apps. Inspect device info, shared preferences, routes, FCM tokens, and more — all from a debug overlay inside your app.
+A set of runtime developer tools for Flutter apps. Inspect device info, shared preferences, routes, FCM tokens, and more — all from a debug overlay inside your app (Written with the help of AI **Claude 4.6 Opus** and Community contributions)
 
 ## Packages
 

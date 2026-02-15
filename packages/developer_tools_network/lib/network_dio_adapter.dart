@@ -17,14 +17,6 @@ class NetworkDioAdapter extends InterceptorsWrapper with NetworkAdapter {
   NetworkDioAdapter();
 
   @override
-  late NetworkInspectorCore networkCore;
-
-  @override
-  void injectCore(NetworkInspectorCore core) {
-    networkCore = core;
-  }
-
-  @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
     final call = NetworkHttpCall(options.hashCode);
 
@@ -44,7 +36,9 @@ class NetworkDioAdapter extends InterceptorsWrapper with NetworkAdapter {
 
     final dynamic data = options.data;
     if (data == null) {
-      request..size = 0..body = '';
+      request
+        ..size = 0
+        ..body = '';
     } else {
       if (data is FormData) {
         request.body += 'Form data';
@@ -81,7 +75,9 @@ class NetworkDioAdapter extends InterceptorsWrapper with NetworkAdapter {
       ..contentType = options.contentType.toString()
       ..queryParameters = uri.queryParameters;
 
-    call..request = request..response = NetworkHttpResponse();
+    call
+      ..request = request
+      ..response = NetworkHttpResponse();
 
     networkCore.addCall(call);
     handler.next(options);
@@ -95,7 +91,9 @@ class NetworkDioAdapter extends InterceptorsWrapper with NetworkAdapter {
     final httpResponse = NetworkHttpResponse()..status = response.statusCode;
 
     if (response.data == null) {
-      httpResponse..body = ''..size = 0;
+      httpResponse
+        ..body = ''
+        ..size = 0;
     } else {
       httpResponse
         ..body = response.data
@@ -136,7 +134,9 @@ class NetworkDioAdapter extends InterceptorsWrapper with NetworkAdapter {
       httpResponse.status = err.response!.statusCode;
 
       if (err.response!.data == null) {
-        httpResponse..body = ''..size = 0;
+        httpResponse
+          ..body = ''
+          ..size = 0;
       } else {
         httpResponse
           ..body = err.response!.data

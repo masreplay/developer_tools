@@ -362,7 +362,7 @@ class _VideoBody extends StatelessWidget {
 
 /// Widget which renders unknown body message.
 class _UnknownBody extends StatelessWidget {
-  static const _contentType = "[contentType]";
+  static const _contentType = '[contentType]';
 
   const _UnknownBody({
     required this.call,
