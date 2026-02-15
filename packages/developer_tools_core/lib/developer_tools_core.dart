@@ -4,6 +4,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+export 'src/log_source.dart';
+export 'src/memory_log.dart';
+
 /// Signature for a developer tool action.
 ///
 /// The [BuildContext] is a navigator context when [DeveloperTools] is built

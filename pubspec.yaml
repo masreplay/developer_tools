@@ -27,6 +27,8 @@ workspace:
   - packages/developer_tools_local_auth
   - packages/developer_tools_permission_handler
   - packages/developer_tools_alice
+  - packages/developer_tools_console
+  - packages/developer_tools_network
 
 dev_dependencies:
   melos: ^7.0.0

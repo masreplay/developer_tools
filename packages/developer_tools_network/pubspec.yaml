@@ -1,0 +1,27 @@
+name: developer_tools_network
+description: "Network HTTP Inspector integration for developer_tools. Open the HTTP inspector and view status from the debug overlay. Uses Alice under the hood (inlined/forked)."
+version: 0.0.1
+topics: ["development", "debug", "tools", "network", "http", "inspector", "flutter"]
+
+repository: https://github.com/ramz/developer_tools
+issue_tracker: https://github.com/ramz/developer_tools/issues
+homepage: https://github.com/ramz/developer_tools/tree/main/packages/developer_tools_network
+license: MIT
+
+resolution: workspace
+
+environment:
+  sdk: ^3.7.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  developer_tools_core: ^0.0.3
+
+  alice: ^1.0.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0

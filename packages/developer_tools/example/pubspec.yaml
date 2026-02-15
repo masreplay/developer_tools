@@ -11,6 +11,8 @@ dependencies:
     sdk: flutter
   developer_tools:
     path: ../
+  developer_tools_console:
+    path: ../../developer_tools_console
 
 dependency_overrides:
   developer_tools_core:

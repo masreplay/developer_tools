@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
 import 'developer_tools_riverpod_base.dart';
+import 'riverpod_log_source.dart';
 import 'riverpod_provider_log_tool_entry.dart';
 
 /// Riverpod integration for `developer_tools`.
@@ -36,6 +37,7 @@ class DeveloperToolsRiverpod extends DeveloperToolsExtension {
   @override
   List<DeveloperToolEntry> buildEntries(BuildContext context) {
     _maybeWarnMissingObserver();
+    DeveloperToolsLogSourceRegistry.instance.register(const RiverpodLogSource());
     final sectionLabel = displayName ?? packageName;
     return <DeveloperToolEntry>[
       if (enableProviderLog)

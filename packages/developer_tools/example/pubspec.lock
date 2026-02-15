@@ -48,6 +48,13 @@ packages:
       relative: true
     source: path
     version: "0.0.5"
+  developer_tools_console:
+    dependency: "direct main"
+    description:
+      path: "../../developer_tools_console"
+      relative: true
+    source: path
+    version: "0.0.1"
   developer_tools_core:
     dependency: "direct overridden"
     description:

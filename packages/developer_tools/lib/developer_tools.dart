@@ -6,6 +6,8 @@ import 'package:developer_tools_core/developer_tools_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'src/docked_log_panel.dart';
+
 export 'package:developer_tools_core/developer_tools_core.dart';
 
 /// Inherited widget that exposes the internal state of [DeveloperTools].
@@ -71,6 +73,7 @@ class DeveloperTools extends StatefulWidget {
     this.initiallyVisible = false,
     this.buttonAlignment = Alignment.bottomRight,
     this.navigatorKey,
+    this.dockConfig,
   });
 
   /// Child subtree that the overlay will be drawn on top of.
@@ -109,6 +112,13 @@ class DeveloperTools extends StatefulWidget {
   /// and return entries via [DeveloperToolsExtension.buildEntries].
   final List<DeveloperToolsExtension> extensions;
 
+  /// Optional configuration for the docked log panel.
+  ///
+  /// When set with [DeveloperToolsDockConfig.enabled] true, a log panel is
+  /// shown at the top or bottom of the app with entries from enabled sources
+  /// (e.g. riverpod, console).
+  final DeveloperToolsDockConfig? dockConfig;
+
   /// Convenience builder you can plug directly into `MaterialApp.builder`
   /// or `GetMaterialApp.builder`, similar to `flutter_debug_overlay`.
   ///
@@ -129,6 +139,7 @@ class DeveloperTools extends StatefulWidget {
     bool initiallyVisible = false,
     Alignment buttonAlignment = Alignment.bottomRight,
     GlobalKey<NavigatorState>? navigatorKey,
+    DeveloperToolsDockConfig? dockConfig,
   }) {
     return (BuildContext context, Widget? child) {
       return DeveloperTools(
@@ -138,6 +149,7 @@ class DeveloperTools extends StatefulWidget {
         initiallyVisible: initiallyVisible,
         buttonAlignment: buttonAlignment,
         navigatorKey: navigatorKey,
+        dockConfig: dockConfig,
         child: child ?? const SizedBox.shrink(),
       );
     };
@@ -301,11 +313,48 @@ class _DeveloperToolsState extends State<DeveloperTools> {
       return widget.child;
     }
 
+    final dockConfig = widget.dockConfig;
+    final showDock =
+        dockConfig != null &&
+        dockConfig.enabled &&
+        dockConfig.enabledLogSourceIds.isNotEmpty;
+
     return _DeveloperToolsScope(
       state: this,
       child: Stack(
         children: <Widget>[
           widget.child,
+          if (showDock) ...[
+            // Ensure extensions register their log sources (run buildEntries)
+            Positioned(
+              left: -10000,
+              child: Builder(
+                builder: (BuildContext ctx) {
+                  for (final ext in widget.extensions) {
+                    ext.buildEntries(ctx);
+                  }
+                  return const SizedBox.shrink();
+                },
+              ),
+            ),
+            Positioned(
+              left: 0,
+              right: 0,
+              bottom:
+                  dockConfig!.position == DeveloperToolsDockPosition.bottom
+                      ? 0
+                      : null,
+              top: dockConfig.position == DeveloperToolsDockPosition.top
+                  ? 0
+                  : null,
+              child: SafeArea(
+                top: dockConfig.position != DeveloperToolsDockPosition.top,
+                bottom:
+                    dockConfig.position != DeveloperToolsDockPosition.bottom,
+                child: DockedLogPanel(config: dockConfig),
+              ),
+            ),
+          ],
           // Small floating debug button.
           Positioned.fill(
             child: SafeArea(
