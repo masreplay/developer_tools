@@ -36,7 +36,12 @@ class DeveloperToolEntry extends StatelessWidget {
     this.sectionLabel,
     this.children = const <DeveloperToolEntry>[],
     this.debugInfo,
+    this.pinned = false,
   });
+
+  /// When true, this entry is shown at the top of its section in the
+  /// developer tools overlay. Set by the developer for frequently used tools.
+  final bool pinned;
 
   /// Title shown in the overlay list.
   final String title;
@@ -104,6 +109,7 @@ abstract class DeveloperToolsExtension extends StatelessWidget {
     super.key,
     this.packageName,
     this.displayName,
+    this.pinned = false,
   });
 
   /// The name of the package that this extension is for.
@@ -111,6 +117,10 @@ abstract class DeveloperToolsExtension extends StatelessWidget {
 
   /// Optional display name for this extension in the developer tools UI.
   final String? displayName;
+
+  /// When true, this extension's section is shown at the top of the
+  /// developer tools overlay. Set by the developer for frequently used tools.
+  final bool pinned;
 
   /// Returns the list of entries contributed by this extension.
   List<DeveloperToolEntry> buildEntries(BuildContext context);

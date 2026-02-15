@@ -1,15 +1,14 @@
-import 'package:alice/alice.dart';
 import 'package:developer_tools_core/developer_tools_core.dart';
+import 'package:developer_tools_network/network_inspector/network_inspector.dart';
 import 'package:flutter/material.dart';
 
 /// A [DeveloperToolEntry] that opens the Network HTTP Inspector fullscreen page.
 ///
-/// When the user taps this entry, [Alice.showInspector] is called so they can
-/// view all captured HTTP requests and responses. Requires an [Alice] instance
-/// to be passed via the extension; if [instance] is null, a message is shown.
+/// When the user taps this entry, [NetworkInspector.showInspector] is called so
+/// they can view all captured HTTP requests and responses.
 DeveloperToolEntry openNetworkInspectorToolEntry({
   String? sectionLabel,
-  Alice? instance,
+  NetworkInspector? instance,
 }) {
   return DeveloperToolEntry(
     title: 'Open HTTP Inspector',
@@ -23,7 +22,7 @@ DeveloperToolEntry openNetworkInspectorToolEntry({
             const SnackBar(
               content: Text(
                 'Network inspector instance not provided. '
-                'Pass it to DeveloperToolsNetwork(instance: alice).',
+                'Pass it to DeveloperToolsNetwork(instance: networkInspector).',
               ),
               duration: Duration(seconds: 4),
             ),

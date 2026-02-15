@@ -1,5 +1,5 @@
-import 'package:alice/alice.dart';
 import 'package:developer_tools_core/developer_tools_core.dart';
+import 'package:developer_tools_network/network_inspector/network_inspector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -7,7 +7,7 @@ import 'package:flutter/services.dart';
 /// (e.g. whether the inspector is currently opened) with copy-to-clipboard.
 DeveloperToolEntry networkInspectorStatusOverviewToolEntry({
   String? sectionLabel,
-  Alice? instance,
+  NetworkInspector? instance,
 }) {
   return DeveloperToolEntry(
     title: 'Inspector Status Overview',
@@ -34,7 +34,7 @@ DeveloperToolEntry networkInspectorStatusOverviewToolEntry({
 class _InspectorStatusOverviewDialog extends StatelessWidget {
   const _InspectorStatusOverviewDialog({this.instance});
 
-  final Alice? instance;
+  final NetworkInspector? instance;
 
   @override
   Widget build(BuildContext context) {
@@ -52,8 +52,8 @@ class _InspectorStatusOverviewDialog extends StatelessWidget {
         ),
         content: SelectableText(
           'Network inspector instance was not provided to DeveloperToolsNetwork.\n\n'
-          'Pass your Alice instance when building the extension:\n'
-          'DeveloperToolsNetwork(instance: alice)',
+          'Pass your NetworkInspector instance when building the extension:\n'
+          'DeveloperToolsNetwork(instance: networkInspector)',
           style: theme.textTheme.bodyMedium?.copyWith(
             fontFamily: 'monospace',
           ),
@@ -67,9 +67,9 @@ class _InspectorStatusOverviewDialog extends StatelessWidget {
       );
     }
 
-    final alice = instance!;
-    final isOpened = alice.isInspectorOpened;
-    final hasNavigatorKey = alice.getNavigatorKey() != null;
+    final inspector = instance!;
+    final isOpened = inspector.isInspectorOpened;
+    final hasNavigatorKey = inspector.getNavigatorKey() != null;
 
     final buffer = StringBuffer();
     buffer.writeln('Inspector opened: $isOpened');

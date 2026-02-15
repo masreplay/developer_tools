@@ -341,12 +341,13 @@ class _DeveloperToolsState extends State<DeveloperTools> {
               left: 0,
               right: 0,
               bottom:
-                  dockConfig!.position == DeveloperToolsDockPosition.bottom
+                  dockConfig.position == DeveloperToolsDockPosition.bottom
                       ? 0
                       : null,
-              top: dockConfig.position == DeveloperToolsDockPosition.top
-                  ? 0
-                  : null,
+              top:
+                  dockConfig.position == DeveloperToolsDockPosition.top
+                      ? 0
+                      : null,
               child: SafeArea(
                 top: dockConfig.position != DeveloperToolsDockPosition.top,
                 bottom:
@@ -506,7 +507,40 @@ Widget _buildOverlayEntryTile({
   );
 }
 
-class _OverlayPanel extends StatelessWidget {
+/// Returns whether [entry] matches [query] (case-insensitive) by title,
+/// description, or sectionLabel.
+bool _entryMatchesSearch(DeveloperToolEntry entry, String query) {
+  if (query.isEmpty) return true;
+  final q = query.toLowerCase();
+  if (entry.title.toLowerCase().contains(q)) return true;
+  if (entry.description != null &&
+      entry.description!.toLowerCase().contains(q)) {
+    return true;
+  }
+  if (entry.sectionLabel != null &&
+      entry.sectionLabel!.toLowerCase().contains(q)) {
+    return true;
+  }
+  for (final child in entry.children) {
+    if (_entryMatchesSearch(child, query)) return true;
+  }
+  return false;
+}
+
+/// Returns whether [extension] or any of its entries match [query].
+bool _extensionMatchesSearch(
+  DeveloperToolsExtension extension,
+  List<DeveloperToolEntry> extensionEntries,
+  String query,
+) {
+  if (query.isEmpty) return true;
+  final q = query.toLowerCase();
+  final name = extension.displayName ?? extension.packageName ?? '';
+  if (name.toLowerCase().contains(q)) return true;
+  return extensionEntries.any((e) => _entryMatchesSearch(e, query));
+}
+
+class _OverlayPanel extends StatefulWidget {
   const _OverlayPanel({
     required this.entries,
     required this.extensions,
@@ -523,20 +557,146 @@ class _OverlayPanel extends StatelessWidget {
   final GlobalKey<NavigatorState>? navigatorKey;
   final _QuickActionRegistration? activeQuickAction;
 
-  List<DeveloperToolEntry> _allEntries(BuildContext context) {
-    final result = <DeveloperToolEntry>[...entries];
-    for (final extension in extensions) {
-      result.addAll(extension.buildEntries(context));
-    }
-    return result;
+  @override
+  State<_OverlayPanel> createState() => _OverlayPanelState();
+}
+
+class _OverlayPanelState extends State<_OverlayPanel> {
+  final TextEditingController _searchController = TextEditingController();
+  final FocusNode _searchFocusNode = FocusNode();
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    _searchFocusNode.dispose();
+    super.dispose();
+  }
+
+  List<DeveloperToolEntry> _sortEntries(List<DeveloperToolEntry> list) {
+    final pinned = list.where((e) => e.pinned).toList();
+    final unpinned = list.where((e) => !e.pinned).toList();
+    return [...pinned, ...unpinned];
+  }
+
+  List<DeveloperToolsExtension> _sortExtensions(
+    List<DeveloperToolsExtension> list,
+  ) {
+    final pinned = list.where((e) => e.pinned).toList();
+    final unpinned = list.where((e) => !e.pinned).toList();
+    return [...pinned, ...unpinned];
   }
 
   @override
   Widget build(BuildContext context) {
-    final allEntries = _allEntries(context);
+    final query = _searchController.text.trim();
+    final theme = Theme.of(context);
+
+    // Build extension entries once per extension (sorted by pinned).
+    final sortedExtensions = _sortExtensions(widget.extensions);
+    final extensionEntriesMap =
+        <DeveloperToolsExtension, List<DeveloperToolEntry>>{};
+    for (final ext in sortedExtensions) {
+      final list = ext.buildEntries(context);
+      extensionEntriesMap[ext] = _sortEntries(list);
+    }
+
+    final sortedStandalone = _sortEntries([...widget.entries]);
+
+    // When searching: filter and show flat list. Otherwise: show expansion tiles.
+    final hasSearch = query.isNotEmpty;
+
+    final List<Widget> bodyChildren = [];
+    if (hasSearch) {
+      // Flat filtered list: standalone entries + extension entries that match.
+      final List<DeveloperToolEntry> flat = [];
+      for (final entry in sortedStandalone) {
+        if (_entryMatchesSearch(entry, query)) flat.add(entry);
+      }
+      for (final ext in sortedExtensions) {
+        final list = extensionEntriesMap[ext]!;
+        if (!_extensionMatchesSearch(ext, list, query)) continue;
+        for (final entry in list) {
+          if (_entryMatchesSearch(entry, query)) flat.add(entry);
+        }
+      }
+      if (flat.isEmpty) {
+        bodyChildren.add(
+          Padding(
+            padding: const EdgeInsets.all(24),
+            child: Center(
+              child: Text(
+                'No tools match "$query"',
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  color: theme.colorScheme.onSurfaceVariant,
+                ),
+              ),
+            ),
+          ),
+        );
+      } else {
+        bodyChildren.addAll(
+          _buildOverlayEntries(
+            context,
+            flat,
+            widget.onClose,
+            widget.navigatorKey,
+          ),
+        );
+      }
+    } else {
+      // Collapsible sections: one ExpansionTile per extension + standalone.
+      if (sortedStandalone.isNotEmpty) {
+        bodyChildren.add(
+          ExpansionTile(
+            initiallyExpanded: true,
+            leading: Icon(Icons.list, color: theme.colorScheme.primary),
+            title: Text(
+              'General',
+              style: theme.textTheme.titleSmall?.copyWith(
+                color: theme.colorScheme.primary,
+              ),
+            ),
+            children: _buildOverlayEntries(
+              context,
+              sortedStandalone,
+              widget.onClose,
+              widget.navigatorKey,
+            ),
+          ),
+        );
+      }
+      for (final ext in sortedExtensions) {
+        final list = extensionEntriesMap[ext]!;
+        if (list.isEmpty) continue;
+        final displayName =
+            ext.displayName ?? ext.packageName ?? ext.runtimeType.toString();
+        bodyChildren.add(
+          ExpansionTile(
+            initiallyExpanded: ext.pinned || sortedExtensions.length <= 2,
+            leading: Icon(Icons.extension, color: theme.colorScheme.primary),
+            title: Text(
+              displayName,
+              style: theme.textTheme.titleSmall?.copyWith(
+                color: theme.colorScheme.primary,
+              ),
+            ),
+            children: _buildOverlayEntries(
+              context,
+              list,
+              widget.onClose,
+              widget.navigatorKey,
+            ),
+          ),
+        );
+      }
+      if (bodyChildren.isEmpty) {
+        bodyChildren.add(const _EmptyOverlayBody());
+      }
+    }
+
     return Positioned.fill(
       child: GestureDetector(
-        onTap: onClose,
+        onTap: widget.onClose,
         child: Container(
           color: Colors.black54,
           child: Center(
@@ -545,32 +705,57 @@ class _OverlayPanel extends StatelessWidget {
               child: Material(
                 borderRadius: BorderRadius.circular(12),
                 clipBehavior: Clip.antiAlias,
-                color: Theme.of(context).colorScheme.surface,
+                color: theme.colorScheme.surface,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     _OverlayHeader(
-                      onClose: onClose,
-                      onExportReport: onExportReport,
+                      onClose: widget.onClose,
+                      onExportReport: widget.onExportReport,
                     ),
                     const Divider(height: 1),
-                    if (activeQuickAction != null)
-                      _QuickActionTile(
-                        action: activeQuickAction!,
-                        onClose: onClose,
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(12, 8, 12, 4),
+                      child: TextField(
+                        controller: _searchController,
+                        focusNode: _searchFocusNode,
+                        decoration: InputDecoration(
+                          hintText: 'Search tools…',
+                          prefixIcon: const Icon(Icons.search, size: 20),
+                          suffixIcon:
+                              query.isNotEmpty
+                                  ? IconButton(
+                                    icon: const Icon(Icons.clear, size: 20),
+                                    onPressed: () {
+                                      _searchController.clear();
+                                      setState(() {});
+                                    },
+                                  )
+                                  : null,
+                          isDense: true,
+                          border: const OutlineInputBorder(),
+                          contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 12,
+                            vertical: 8,
+                          ),
+                        ),
+                        onChanged: (_) => setState(() {}),
                       ),
-                    if (activeQuickAction != null) const Divider(height: 1),
+                    ),
+                    if (widget.activeQuickAction != null)
+                      _QuickActionTile(
+                        action: widget.activeQuickAction!,
+                        onClose: widget.onClose,
+                      ),
+                    if (widget.activeQuickAction != null)
+                      const Divider(height: 1),
                     Expanded(
                       child:
-                          allEntries.isEmpty
+                          bodyChildren.isEmpty
                               ? const _EmptyOverlayBody()
                               : ListView(
-                                children: _buildOverlayEntries(
-                                  context,
-                                  allEntries,
-                                  onClose,
-                                  navigatorKey,
-                                ),
+                                shrinkWrap: true,
+                                children: bodyChildren,
                               ),
                     ),
                   ],

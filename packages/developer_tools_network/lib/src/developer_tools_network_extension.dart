@@ -1,5 +1,5 @@
-import 'package:alice/alice.dart';
 import 'package:developer_tools_core/developer_tools_core.dart';
+import 'package:developer_tools_network/network_inspector/network_inspector.dart';
 import 'package:flutter/widgets.dart';
 
 import 'inspector_status_overview_tool_entry.dart';
@@ -10,20 +10,20 @@ import 'open_inspector_tool_entry.dart';
 /// This class extends the core [DeveloperToolsExtension] so it can be passed to
 /// `DeveloperTools.builder(extensions: [...])` in your `MaterialApp.builder`.
 ///
-/// Pass your [Alice] instance (from package:alice) so that "Open HTTP Inspector"
+/// Pass your [NetworkInspector] instance so that "Open HTTP Inspector"
 /// and status tools work. If [instance] is null, those entries will show a
 /// message asking for it.
 ///
 /// ```dart
-/// final alice = Alice(
-///   configuration: AliceConfiguration(
+/// final networkInspector = NetworkInspector(
+///   configuration: NetworkInspectorConfiguration(
 ///     navigatorKey: navigatorKey,
 ///   ),
 /// );
 ///
 /// MaterialApp(
 ///   builder: DeveloperTools.builder(
-///     extensions: [DeveloperToolsNetwork(instance: alice)],
+///     extensions: [DeveloperToolsNetwork(instance: networkInspector)],
 ///   ),
 /// );
 /// ```
@@ -35,8 +35,8 @@ class DeveloperToolsNetwork extends DeveloperToolsExtension {
     super.displayName = 'Network',
   });
 
-  /// Optional [Alice] instance. When set, open inspector and status entries work.
-  final Alice? instance;
+  /// Optional [NetworkInspector] instance. When set, open inspector and status entries work.
+  final NetworkInspector? instance;
 
   @override
   List<DeveloperToolEntry> buildEntries(BuildContext context) {
@@ -62,9 +62,9 @@ class DeveloperToolsNetwork extends DeveloperToolsExtension {
         buffer.writeln('Instance: not provided.');
         return buffer.toString();
       }
-      final alice = instance!;
-      buffer.writeln('Inspector opened: ${alice.isInspectorOpened}');
-      buffer.writeln('Navigator key set: ${alice.getNavigatorKey() != null}');
+      final inspector = instance!;
+      buffer.writeln('Inspector opened: ${inspector.isInspectorOpened}');
+      buffer.writeln('Navigator key set: ${inspector.getNavigatorKey() != null}');
     } catch (e) {
       buffer.writeln('Error: $e');
     }

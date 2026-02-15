@@ -1,7 +1,7 @@
 name: developer_tools_alice
 description: "Alice HTTP Inspector integration for developer_tools. Open the HTTP inspector and view status from the debug overlay."
 version: 0.0.1
-topics: ["development", "debug", "tools", "alice", "flutter"]
+topics: ["development", "debug", "network", "alice", "flutter"]
 
 repository: https://github.com/ramz/developer_tools
 issue_tracker: https://github.com/ramz/developer_tools/issues

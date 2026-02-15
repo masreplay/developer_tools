@@ -33,6 +33,7 @@ class MainApp extends StatelessWidget {
             title: 'Trigger error',
             description: 'Throws an error to test the console log.',
             icon: Icons.bug_report,
+            pinned: true, // Pinned entries appear at the top of their section
             onTap: (_) => throw Exception('Test error from developer tools'),
           ),
         ],
