@@ -1,6 +1,6 @@
 name: developer_tools_permission_handler
 description: "Permission Handler integration for developer_tools. Inspect permission statuses, request permissions, and open app settings for debugging."
-version: 0.0.1
+version: 0.0.2
 topics: ["development", "debug", "tools", "permissions", "flutter"]
 
 repository: https://github.com/ramz/developer_tools
@@ -17,7 +17,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  developer_tools_core: ^0.0.3
+  developer_tools_core: ^0.0.4
 
   permission_handler: ^12.0.1
 

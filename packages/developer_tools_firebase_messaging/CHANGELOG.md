@@ -1,3 +1,8 @@
+## 0.0.6
+
+- Refactor APNS token tool entry for readability and consistency.
+- Bump `developer_tools_core` to `^0.0.4`.
+
 ## 0.0.5
 
 - Add APNS token viewer tool entry with copy-to-clipboard support (iOS/macOS).

@@ -1,3 +1,8 @@
+## 0.0.6
+
+- Refactor main library and docked log panel for readability and consistency.
+- Bump `developer_tools_core` to `^0.0.4`.
+
 ## 0.0.5
 
 - Remove redundant tooltip attributes from IconButton widgets.

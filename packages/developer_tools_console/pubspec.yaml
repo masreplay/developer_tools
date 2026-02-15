@@ -1,6 +1,6 @@
 name: developer_tools_console
 description: "Console/global error logging integration for developer_tools. Captures FlutterError, WidgetsBinding errors, and PlatformDispatcher errors."
-version: 0.0.1
+version: 0.0.2
 topics: ["development", "debug", "tools", "console", "flutter"]
 
 repository: https://github.com/ramz/developer_tools
@@ -17,7 +17,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  developer_tools_core: ^0.0.3
+  developer_tools_core: ^0.0.4
 
 dev_dependencies:
   flutter_test:

@@ -1,3 +1,7 @@
+## 0.0.4
+
+- Refactor and improve code readability and consistency (log sources, memory log, formatting).
+
 ## 0.0.3
 
 - Add `DebugInfoCallback` typedef for debug report contributions.

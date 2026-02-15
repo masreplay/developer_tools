@@ -1,6 +1,6 @@
 name: developer_tools_shared_preferences
 description: "Shared Preferences integration for developer_tools. Browse, search, edit, add, delete, and export stored preferences."
-version: 0.0.3
+version: 0.0.4
 topics: ["development", "debug", "tools", "shared-preferences", "flutter"]
 
 repository: https://github.com/ramz/developer_tools
@@ -17,7 +17,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  developer_tools_core: ^0.0.3
+  developer_tools_core: ^0.0.4
 
   shared_preferences: ^2.5.0
 

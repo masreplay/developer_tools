@@ -1,6 +1,6 @@
 name: developer_tools_riverpod
 description: "Riverpod integration for developer_tools."
-version: 0.0.3
+version: 0.0.4
 topics: ["development", "debug", "tools", "riverpod", "flutter"]
 
 repository: https://github.com/ramz/developer_tools
@@ -17,7 +17,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  developer_tools_core: ^0.0.3
+  developer_tools_core: ^0.0.4
 
   flutter_riverpod: ^3.0.3
   riverpod_annotation: ^3.0.3

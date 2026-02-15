@@ -1,3 +1,7 @@
+## 0.0.3
+
+- Bump `developer_tools_core` to `^0.0.4` (dependency cascade).
+
 ## 0.0.2
 
 - Add `debugInfo` callback to device copy tool entry for including device info in debug reports.

@@ -1,3 +1,8 @@
+## 0.0.4
+
+- Refactor Riverpod extension and log source for readability and consistency.
+- Bump `developer_tools_core` to `^0.0.4`.
+
 ## 0.0.3
 
 - Add `debugInfo` override to report recent provider events and observer status in debug reports.
