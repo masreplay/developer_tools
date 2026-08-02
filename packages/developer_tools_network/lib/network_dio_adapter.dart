@@ -103,7 +103,7 @@ class NetworkDioAdapter extends InterceptorsWrapper with NetworkAdapter {
     httpResponse.time = DateTime.now();
     final headers = <String, String>{};
     response.headers.forEach((header, values) {
-      headers[header] = values.toString();
+      headers[header] = values.join(', ');
     });
     httpResponse.headers = headers;
 
@@ -144,7 +144,7 @@ class NetworkDioAdapter extends InterceptorsWrapper with NetworkAdapter {
       }
       final headers = <String, String>{};
       err.response!.headers.forEach((header, values) {
-        headers[header] = values.toString();
+        headers[header] = values.join(', ');
       });
       httpResponse.headers = headers;
       networkCore.addResponse(

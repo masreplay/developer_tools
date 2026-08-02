@@ -74,6 +74,8 @@ enum NetworkTranslationKey {
   callsListDelete,
   callsListStats,
   callsListSave,
+  callsListExportPostman,
+  callsListCopyPostman,
   logsEmpty,
   logsError,
   logsItemError,

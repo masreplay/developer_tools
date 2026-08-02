@@ -39,12 +39,27 @@ class NetworkExportHelper {
       );
     }
 
-    await SharePlus.instance.share(
-      ShareParams(
-        text: callLog,
-        subject: context.i18n(NetworkTranslationKey.emailSubject),
-      ),
-    );
+    try {
+      // sharePositionOrigin is required for the share popover on iPad and is
+      // harmless on iPhone. Wrapping in try/catch so a native share failure
+      // surfaces via the log and result instead of vanishing silently.
+      final box = context.findRenderObject() as RenderBox?;
+      await SharePlus.instance.share(
+        ShareParams(
+          text: callLog,
+          subject: context.i18n(NetworkTranslationKey.emailSubject),
+          sharePositionOrigin: box != null && box.hasSize
+              ? box.localToGlobal(Offset.zero) & box.size
+              : null,
+        ),
+      );
+    } catch (exception) {
+      NetworkUtils.log('Failed to share call log: $exception');
+      return NetworkExportResult(
+        success: false,
+        error: NetworkExportResultError.file,
+      );
+    }
 
     return NetworkExportResult(success: true);
   }

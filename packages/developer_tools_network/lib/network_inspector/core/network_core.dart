@@ -3,6 +3,7 @@ import 'dart:async' show FutureOr, StreamSubscription;
 import 'package:developer_tools_network/network_inspector/core/network_storage.dart';
 import 'package:developer_tools_network/network_inspector/core/network_utils.dart';
 import 'package:developer_tools_network/network_inspector/helper/network_export_helper.dart';
+import 'package:developer_tools_network/network_inspector/helper/network_postman_export_helper.dart';
 import 'package:developer_tools_network/network_inspector/core/network_notification.dart';
 import 'package:developer_tools_network/network_inspector/helper/operating_system.dart';
 import 'package:developer_tools_network/network_inspector/model/network_configuration.dart';
@@ -131,6 +132,21 @@ class NetworkInspectorCore {
       NetworkExportHelper.saveCallsToFile(
         context,
         _configuration.networkStorage.getCalls(),
+      );
+
+  /// Builds a Postman Collection (v2.1) from all captured calls and opens the
+  /// share sheet so it can be saved or imported into Postman.
+  Future<NetworkExportResult> exportPostmanCollection(BuildContext context) =>
+      NetworkPostmanExportHelper.exportCalls(
+        context: context,
+        calls: _configuration.networkStorage.getCalls(),
+      );
+
+  /// Builds a Postman Collection (v2.1) from all captured calls and copies the
+  /// raw JSON to the clipboard.
+  Future<NetworkExportResult> copyPostmanCollection() =>
+      NetworkPostmanExportHelper.copyCalls(
+        calls: _configuration.networkStorage.getCalls(),
       );
 
   /// Adds new log to NetworkInspector logger.

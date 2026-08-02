@@ -111,6 +111,20 @@ class _NetworkCallsListPageState extends State<NetworkCallsListPage>
                       icon: const Icon(Icons.search),
                       onPressed: _onSearchPressed,
                     ),
+                    IconButton(
+                      icon: const Icon(Icons.copy),
+                      tooltip: context.i18n(
+                        NetworkTranslationKey.callsListCopyPostman,
+                      ),
+                      onPressed: _copyPostman,
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.ios_share),
+                      tooltip: context.i18n(
+                        NetworkTranslationKey.callsListExportPostman,
+                      ),
+                      onPressed: _exportPostman,
+                    ),
                     _ContextMenuButton(onMenuItemSelected: _onMenuItemSelected),
                   ],
           bottom: TabBar(
@@ -299,6 +313,67 @@ class _NetworkCallsListPageState extends State<NetworkCallsListPage>
         description: description,
       );
     }
+  }
+
+  /// Called when the Postman export button has been pressed. It builds a
+  /// Postman Collection from all captured calls and opens the share sheet.
+  /// On success the share sheet handles feedback; failures surface a dialog.
+  void _exportPostman() async {
+    if (!mounted) return;
+    final result = await networkCore.exportPostmanCollection(context);
+    if (!mounted || result.success) return;
+
+    final [String title, String description] = switch (result.error) {
+      NetworkExportResultError.empty => [
+        context.i18n(NetworkTranslationKey.saveDialogEmptyErrorTitle),
+        context.i18n(NetworkTranslationKey.saveDialogEmptyErrorDescription),
+      ],
+      _ => [
+        context.i18n(NetworkTranslationKey.saveDialogFileSaveErrorTitle),
+        context.i18n(NetworkTranslationKey.saveDialogFileSaveErrorDescription),
+      ],
+    };
+
+    NetworkGeneralDialog.show(
+      context: context,
+      title: title,
+      description: description,
+    );
+  }
+
+  /// Called when the Postman copy button has been pressed. It builds a Postman
+  /// Collection from all captured calls and copies the raw JSON to the
+  /// clipboard, confirming with a snackbar. Failures surface a dialog.
+  void _copyPostman() async {
+    if (!mounted) return;
+    final result = await networkCore.copyPostmanCollection();
+    if (!mounted) return;
+
+    if (result.success) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(context.i18n(NetworkTranslationKey.logsCopied)),
+        ),
+      );
+      return;
+    }
+
+    final [String title, String description] = switch (result.error) {
+      NetworkExportResultError.empty => [
+        context.i18n(NetworkTranslationKey.saveDialogEmptyErrorTitle),
+        context.i18n(NetworkTranslationKey.saveDialogEmptyErrorDescription),
+      ],
+      _ => [
+        context.i18n(NetworkTranslationKey.saveDialogFileSaveErrorTitle),
+        context.i18n(NetworkTranslationKey.saveDialogFileSaveErrorDescription),
+      ],
+    };
+
+    NetworkGeneralDialog.show(
+      context: context,
+      title: title,
+      description: description,
+    );
   }
 
   /// Filters calls based on query.
