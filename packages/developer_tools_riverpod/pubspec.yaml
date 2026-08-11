@@ -3,9 +3,9 @@ description: "Riverpod integration for developer_tools."
 version: 0.0.4
 topics: ["development", "debug", "tools", "riverpod", "flutter"]
 
-repository: https://github.com/ramz/developer_tools
-issue_tracker: https://github.com/ramz/developer_tools/issues
-homepage: https://github.com/ramz/developer_tools/tree/main/packages/developer_tools_riverpod
+repository: https://github.com/masreplay/developer_tools
+issue_tracker: https://github.com/masreplay/developer_tools/issues
+homepage: https://github.com/masreplay/developer_tools/tree/main/packages/developer_tools_riverpod
 license: MIT
 
 resolution: workspace

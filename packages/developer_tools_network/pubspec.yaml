@@ -3,9 +3,9 @@ description: "Network HTTP Inspector for developer_tools. Inlined fork of Alice 
 version: 0.0.4
 topics: ["development", "debug", "tools", "network", "http"]
 
-repository: https://github.com/ramz/developer_tools
-issue_tracker: https://github.com/ramz/developer_tools/issues
-homepage: https://github.com/ramz/developer_tools/tree/main/packages/developer_tools_network
+repository: https://github.com/masreplay/developer_tools
+issue_tracker: https://github.com/masreplay/developer_tools/issues
+homepage: https://github.com/masreplay/developer_tools/tree/main/packages/developer_tools_network
 license: MIT
 
 resolution: workspace

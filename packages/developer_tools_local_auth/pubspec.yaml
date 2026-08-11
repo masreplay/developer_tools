@@ -3,9 +3,9 @@ description: "Local Auth integration for developer_tools. Check biometric suppor
 version: 0.0.2
 topics: ["development", "debug", "tools", "local-auth", "flutter"]
 
-repository: https://github.com/ramz/developer_tools
-issue_tracker: https://github.com/ramz/developer_tools/issues
-homepage: https://github.com/ramz/developer_tools/tree/main/packages/developer_tools_local_auth
+repository: https://github.com/masreplay/developer_tools
+issue_tracker: https://github.com/masreplay/developer_tools/issues
+homepage: https://github.com/masreplay/developer_tools/tree/main/packages/developer_tools_local_auth
 license: MIT
 
 resolution: workspace

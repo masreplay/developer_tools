@@ -86,9 +86,9 @@ description: "DISPLAY_NAME integration for developer_tools. <Describe what debug
 version: 0.0.1
 topics: ["development", "debug", "tools", "<relevant-topic>", "flutter"]
 
-repository: https://github.com/ramz/developer_tools
-issue_tracker: https://github.com/ramz/developer_tools/issues
-homepage: https://github.com/ramz/developer_tools/tree/main/packages/developer_tools_PACKAGE_NAME
+repository: https://github.com/masreplay/developer_tools
+issue_tracker: https://github.com/masreplay/developer_tools/issues
+homepage: https://github.com/masreplay/developer_tools/tree/main/packages/developer_tools_PACKAGE_NAME
 license: MIT
 
 resolution: workspace

@@ -3,9 +3,9 @@ description: "Firebase Messaging integration for developer_tools. View FCM token
 version: 0.0.6
 topics: ["development", "debug", "tools", "firebase-messaging", "flutter"]
 
-repository: https://github.com/ramz/developer_tools
-issue_tracker: https://github.com/ramz/developer_tools/issues
-homepage: https://github.com/ramz/developer_tools/tree/main/packages/developer_tools_firebase_messaging
+repository: https://github.com/masreplay/developer_tools
+issue_tracker: https://github.com/masreplay/developer_tools/issues
+homepage: https://github.com/masreplay/developer_tools/tree/main/packages/developer_tools_firebase_messaging
 license: MIT
 
 resolution: workspace

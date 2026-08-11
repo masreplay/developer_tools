@@ -3,9 +3,9 @@ description: "Permission Handler integration for developer_tools. Inspect permis
 version: 0.0.2
 topics: ["development", "debug", "tools", "permissions", "flutter"]
 
-repository: https://github.com/ramz/developer_tools
-issue_tracker: https://github.com/ramz/developer_tools/issues
-homepage: https://github.com/ramz/developer_tools/tree/main/packages/developer_tools_permission_handler
+repository: https://github.com/masreplay/developer_tools
+issue_tracker: https://github.com/masreplay/developer_tools/issues
+homepage: https://github.com/masreplay/developer_tools/tree/main/packages/developer_tools_permission_handler
 license: MIT
 
 resolution: workspace

@@ -3,9 +3,9 @@ description: "Console/global error logging integration for developer_tools. Capt
 version: 0.0.2
 topics: ["development", "debug", "tools", "console", "flutter"]
 
-repository: https://github.com/ramz/developer_tools
-issue_tracker: https://github.com/ramz/developer_tools/issues
-homepage: https://github.com/ramz/developer_tools/tree/main/packages/developer_tools_console
+repository: https://github.com/masreplay/developer_tools
+issue_tracker: https://github.com/masreplay/developer_tools/issues
+homepage: https://github.com/masreplay/developer_tools/tree/main/packages/developer_tools_console
 license: MIT
 
 resolution: workspace
