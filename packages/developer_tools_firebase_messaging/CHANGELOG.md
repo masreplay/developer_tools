@@ -1,3 +1,10 @@
+## 0.0.7
+
+- Point `repository`, `homepage` and `issue_tracker` at the real
+  repository (github.com/masreplay/developer_tools). The previous
+  URLs referenced a non-existent org, so every package page on
+  pub.dev showed broken links.
+
 ## 0.0.6
 
 - Refactor APNS token tool entry for readability and consistency.

@@ -1,3 +1,10 @@
+## 0.0.4
+
+- Point `repository`, `homepage` and `issue_tracker` at the real
+  repository (github.com/masreplay/developer_tools). The previous
+  URLs referenced a non-existent org, so every package page on
+  pub.dev showed broken links.
+
 ## 0.0.3
 
 - Refactor package tool entries for readability and consistency.

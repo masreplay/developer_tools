@@ -1,6 +1,6 @@
 name: developer_tools_core
 description: "Core abstractions and utilities for developer_tools."
-version: 0.0.4
+version: 0.0.5
 topics: ["development", "debug", "tools", "runtime", "flutter"]
 
 repository: https://github.com/masreplay/developer_tools

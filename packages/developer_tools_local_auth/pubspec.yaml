@@ -1,6 +1,6 @@
 name: developer_tools_local_auth
 description: "Local Auth integration for developer_tools. Check biometric support, view enrolled biometrics, test authentication, and copy auth status from the debug overlay."
-version: 0.0.2
+version: 0.0.3
 topics: ["development", "debug", "tools", "local-auth", "flutter"]
 
 repository: https://github.com/masreplay/developer_tools
@@ -17,7 +17,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  developer_tools_core: ^0.0.4
+  developer_tools_core: ^0.0.5
 
   local_auth: ^3.0.0
 

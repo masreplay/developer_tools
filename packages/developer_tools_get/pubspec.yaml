@@ -1,6 +1,6 @@
 name: developer_tools_get
 description: "GetX integration for developer_tools."
-version: 0.0.2
+version: 0.0.3
 topics: ["development", "debug", "tools", "getx", "flutter"]
 
 repository: https://github.com/masreplay/developer_tools

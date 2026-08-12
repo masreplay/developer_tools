@@ -1,3 +1,10 @@
+## 0.0.5
+
+- Point `repository`, `homepage` and `issue_tracker` at the real
+  repository (github.com/masreplay/developer_tools). The previous
+  URLs referenced a non-existent org, so every package page on
+  pub.dev showed broken links.
+
 ## 0.0.4
 
 - Bump `developer_tools_core` to `^0.0.4` (dependency cascade).
