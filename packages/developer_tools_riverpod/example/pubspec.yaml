@@ -4,26 +4,27 @@ publish_to: "none"
 version: 0.1.0
 
 environment:
-  sdk: ^3.7.0
+  sdk: ^3.13.0
 
 dependencies:
   flutter:
     sdk: flutter
 
   flutter_riverpod: ^3.0.3
-  riverpod_annotation: ^3.0.3
+  riverpod_annotation: ^4.0.7
 
   developer_tools_riverpod:
     path: ../
   developer_tools:
     path: ../../developer_tools
 
+  material_ui: ^1.6.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^6.0.0
   build_runner: ^2.4.0
-  riverpod_generator: ^3.0.3
+  riverpod_generator: ^4.0.9
 
 dependency_overrides: 
   developer_tools_core:

@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Scroll behavior for NetworkInspector.
 class NetworkScrollBehavior extends MaterialScrollBehavior {

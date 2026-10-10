@@ -1,6 +1,6 @@
 name: developer_tools_core
 description: "Core abstractions and utilities for developer_tools."
-version: 0.0.5
+version: 0.0.6
 topics: ["development", "debug", "tools", "runtime", "flutter"]
 
 repository: https://github.com/masreplay/developer_tools
@@ -11,12 +11,13 @@ license: MIT
 resolution: workspace
 
 environment:
-  sdk: ^3.7.0
+  sdk: ^3.13.0
 
 dependencies:
   flutter:
     sdk: flutter
 
+  material_ui: ^1.6.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

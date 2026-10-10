@@ -7,8 +7,8 @@ import 'package:developer_tools_network/network_inspector/ui/call_details/widget
 import 'package:developer_tools_network/network_inspector/ui/common/network_context_ext.dart';
 import 'package:developer_tools_network/network_inspector/utils/network_parser.dart';
 import 'package:developer_tools_network/network_inspector/ui/common/network_scroll_behavior.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+import 'package:cupertino_ui/cupertino_ui.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Screen which displays information about call request: content, transfer,
 /// headers.

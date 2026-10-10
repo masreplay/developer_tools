@@ -11,7 +11,7 @@ part of 'providers.dart';
 /// Sync provider – generated [Provider].
 
 @ProviderFor(generatedLabel)
-const generatedLabelProvider = GeneratedLabelProvider._();
+final generatedLabelProvider = GeneratedLabelProvider._();
 
 /// Sync provider – generated [Provider].
 
@@ -19,7 +19,7 @@ final class GeneratedLabelProvider
     extends $FunctionalProvider<String, String, String>
     with $Provider<String> {
   /// Sync provider – generated [Provider].
-  const GeneratedLabelProvider._()
+  GeneratedLabelProvider._()
     : super(
         from: null,
         argument: null,
@@ -57,7 +57,7 @@ String _$generatedLabelHash() => r'6cfbe2499e04e6c731eb48d5cfc30ab3cbf3ba8a';
 /// Async provider – generated [FutureProvider].
 
 @ProviderFor(fetchGeneratedMessage)
-const fetchGeneratedMessageProvider = FetchGeneratedMessageProvider._();
+final fetchGeneratedMessageProvider = FetchGeneratedMessageProvider._();
 
 /// Async provider – generated [FutureProvider].
 
@@ -65,7 +65,7 @@ final class FetchGeneratedMessageProvider
     extends $FunctionalProvider<AsyncValue<String>, String, FutureOr<String>>
     with $FutureModifier<String>, $FutureProvider<String> {
   /// Async provider – generated [FutureProvider].
-  const FetchGeneratedMessageProvider._()
+  FetchGeneratedMessageProvider._()
     : super(
         from: null,
         argument: null,
@@ -96,7 +96,7 @@ String _$fetchGeneratedMessageHash() =>
 /// Stream provider – generated [StreamProvider].
 
 @ProviderFor(generatedTicks)
-const generatedTicksProvider = GeneratedTicksProvider._();
+final generatedTicksProvider = GeneratedTicksProvider._();
 
 /// Stream provider – generated [StreamProvider].
 
@@ -104,7 +104,7 @@ final class GeneratedTicksProvider
     extends $FunctionalProvider<AsyncValue<int>, int, Stream<int>>
     with $FutureModifier<int>, $StreamProvider<int> {
   /// Stream provider – generated [StreamProvider].
-  const GeneratedTicksProvider._()
+  GeneratedTicksProvider._()
     : super(
         from: null,
         argument: null,
@@ -131,16 +131,16 @@ final class GeneratedTicksProvider
 
 String _$generatedTicksHash() => r'eb5d5195c0d42d129070e23285691a4abcc814b3';
 
-/// Class-based notifier – generated [NotifierProvider].
+/// Class-based notifier – generated [NotifierPr  ovider].
 
 @ProviderFor(GeneratedCounter)
-const generatedCounterProvider = GeneratedCounterProvider._();
+final generatedCounterProvider = GeneratedCounterProvider._();
 
-/// Class-based notifier – generated [NotifierProvider].
+/// Class-based notifier – generated [NotifierPr  ovider].
 final class GeneratedCounterProvider
     extends $NotifierProvider<GeneratedCounter, int> {
-  /// Class-based notifier – generated [NotifierProvider].
-  const GeneratedCounterProvider._()
+  /// Class-based notifier – generated [NotifierPr  ovider].
+  GeneratedCounterProvider._()
     : super(
         from: null,
         argument: null,
@@ -169,14 +169,13 @@ final class GeneratedCounterProvider
 
 String _$generatedCounterHash() => r'cadd6d299e7a11146e5d1410549f978ff0594794';
 
-/// Class-based notifier – generated [NotifierProvider].
+/// Class-based notifier – generated [NotifierPr  ovider].
 
 abstract class _$GeneratedCounter extends $Notifier<int> {
   int build();
   @$mustCallSuper
   @override
-  void runBuild() {
-    final created = build();
+  WhenComplete runBuild() {
     final ref = this.ref as $Ref<int, int>;
     final element =
         ref.element
@@ -186,20 +185,20 @@ abstract class _$GeneratedCounter extends $Notifier<int> {
               Object?,
               Object?
             >;
-    element.handleValue(ref, created);
+    return element.handleCreate(ref, build);
   }
 }
 
 /// Async class-based – generated [AsyncNotifierProvider].
 
 @ProviderFor(GeneratedAsyncCount)
-const generatedAsyncCountProvider = GeneratedAsyncCountProvider._();
+final generatedAsyncCountProvider = GeneratedAsyncCountProvider._();
 
 /// Async class-based – generated [AsyncNotifierProvider].
 final class GeneratedAsyncCountProvider
     extends $AsyncNotifierProvider<GeneratedAsyncCount, int> {
   /// Async class-based – generated [AsyncNotifierProvider].
-  const GeneratedAsyncCountProvider._()
+  GeneratedAsyncCountProvider._()
     : super(
         from: null,
         argument: null,
@@ -227,8 +226,7 @@ abstract class _$GeneratedAsyncCount extends $AsyncNotifier<int> {
   FutureOr<int> build();
   @$mustCallSuper
   @override
-  void runBuild() {
-    final created = build();
+  WhenComplete runBuild() {
     final ref = this.ref as $Ref<AsyncValue<int>, int>;
     final element =
         ref.element
@@ -238,6 +236,6 @@ abstract class _$GeneratedAsyncCount extends $AsyncNotifier<int> {
               Object?,
               Object?
             >;
-    element.handleValue(ref, created);
+    return element.handleCreate(ref, build);
   }
 }

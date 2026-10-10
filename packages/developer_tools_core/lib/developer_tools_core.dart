@@ -2,7 +2,7 @@ library;
 
 import 'dart:async';
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 export 'src/log_source.dart';
 export 'src/memory_log.dart';

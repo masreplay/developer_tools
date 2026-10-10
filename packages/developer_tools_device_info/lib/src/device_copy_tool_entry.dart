@@ -3,7 +3,7 @@ import 'dart:io' show Platform;
 import 'package:developer_tools_core/developer_tools_core.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter/services.dart';
 
 /// Single [DeveloperToolEntry] that copies all device information to the

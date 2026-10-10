@@ -3,7 +3,7 @@ import 'package:developer_tools_network/network_inspector/core/network_core.dart
 import 'package:developer_tools_network/network_inspector/model/network_configuration.dart';
 import 'package:developer_tools_network/network_inspector/model/network_http_call.dart';
 import 'package:developer_tools_network/network_inspector/model/network_log.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter/widgets.dart';
 
 export 'package:developer_tools_network/network_inspector/core/network_adapter.dart';

@@ -6,7 +6,7 @@ import 'package:developer_tools_network/network_inspector/ui/common/network_cont
 import 'package:developer_tools_network/network_inspector/utils/network_parser.dart';
 import 'package:developer_tools_network/network_inspector/ui/common/network_scroll_behavior.dart';
 import 'package:developer_tools_network/network_inspector/utils/num_comparison.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 /// Screen which displays information about HTTP call response.

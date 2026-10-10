@@ -1,6 +1,6 @@
 import 'package:developer_tools_core/developer_tools_core.dart';
 import 'package:developer_tools_network/network_inspector/network_inspector.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// A [DeveloperToolEntry] that opens the Network HTTP Inspector fullscreen page.
 ///

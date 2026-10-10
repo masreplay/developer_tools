@@ -1,6 +1,6 @@
 import 'package:developer_tools_core/developer_tools_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// A [DeveloperToolEntry] that provides a dialog to subscribe and unsubscribe
 /// from FCM topics at runtime.

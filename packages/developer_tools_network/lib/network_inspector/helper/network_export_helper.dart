@@ -12,7 +12,7 @@ import 'package:developer_tools_network/network_inspector/model/network_translat
 import 'package:developer_tools_network/network_inspector/ui/common/network_context_ext.dart';
 import 'package:developer_tools_network/network_inspector/utils/network_parser.dart';
 import 'package:developer_tools_network/network_inspector/utils/curl.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';

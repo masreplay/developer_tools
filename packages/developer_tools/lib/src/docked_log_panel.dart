@@ -1,5 +1,5 @@
 import 'package:developer_tools_core/developer_tools_core.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Docked log panel that shows recent entries from enabled log sources.
 class DockedLogPanel extends StatelessWidget {

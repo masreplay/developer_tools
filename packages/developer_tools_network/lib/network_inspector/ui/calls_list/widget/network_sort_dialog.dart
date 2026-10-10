@@ -1,7 +1,7 @@
 import 'package:developer_tools_network/network_inspector/model/network_translation.dart';
 import 'package:developer_tools_network/network_inspector/ui/calls_list/model/network_calls_list_sort_option.dart';
 import 'package:developer_tools_network/network_inspector/ui/common/network_context_ext.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Dialog which can be used to sort network calls.
 class NetworkSortDialog extends StatelessWidget {

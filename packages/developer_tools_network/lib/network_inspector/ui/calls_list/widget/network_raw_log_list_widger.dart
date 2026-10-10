@@ -2,7 +2,7 @@ import 'package:developer_tools_network/network_inspector/model/network_translat
 import 'package:developer_tools_network/network_inspector/ui/calls_list/widget/network_empty_logs_widget.dart';
 import 'package:developer_tools_network/network_inspector/ui/calls_list/widget/network_error_logs_widget.dart';
 import 'package:developer_tools_network/network_inspector/ui/common/network_context_ext.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter/services.dart';
 
 /// Widget which displays raw logs list (logs collected with ADB).

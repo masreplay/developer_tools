@@ -1,6 +1,6 @@
 import 'package:developer_tools_network/network_inspector/core/network_core.dart';
 import 'package:developer_tools_network/network_inspector/ui/common/network_theme.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Common page widget which is used across NetworkInspector pages.
 class NetworkPage extends StatelessWidget {

@@ -1,6 +1,6 @@
 import 'package:developer_tools_network/network_inspector/model/network_translation.dart';
 import 'package:developer_tools_network/network_inspector/core/network_translations.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Extension for [BuildContext].
 extension NetworkContextExt on BuildContext {

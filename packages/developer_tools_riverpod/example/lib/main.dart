@@ -1,7 +1,7 @@
 import 'package:developer_tools/developer_tools.dart';
 import 'package:developer_tools_riverpod/developer_tools_riverpod.dart';
 import 'package:example/home_page.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void main() {

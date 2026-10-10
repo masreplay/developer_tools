@@ -1,6 +1,6 @@
 import 'package:developer_tools/developer_tools.dart';
 import 'package:developer_tools_console/developer_tools_console.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 void main() {
   DeveloperToolsConsole.installErrorHandlers();

@@ -2,7 +2,7 @@ import 'package:developer_tools_network/network_inspector/core/network_logger.da
 import 'package:developer_tools_network/network_inspector/ui/calls_list/widget/network_empty_logs_widget.dart';
 import 'package:developer_tools_network/network_inspector/ui/calls_list/widget/network_log_list_widget.dart';
 import 'package:developer_tools_network/network_inspector/ui/calls_list/widget/network_raw_log_list_widger.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Screen hosted in calls list which displays logs list.
 class NetworkLogsScreen extends StatelessWidget {

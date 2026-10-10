@@ -4,7 +4,7 @@ import 'package:developer_tools_network/network_inspector/ui/call_details/widget
 import 'package:developer_tools_network/network_inspector/ui/call_details/widget/network_call_list_row.dart';
 import 'package:developer_tools_network/network_inspector/ui/common/network_context_ext.dart';
 import 'package:developer_tools_network/network_inspector/ui/common/network_scroll_behavior.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Call error screen which displays info on HTTP call error.
 class NetworkCallErrorScreen extends StatelessWidget {

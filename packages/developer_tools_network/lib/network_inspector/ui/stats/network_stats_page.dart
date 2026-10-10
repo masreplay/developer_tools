@@ -6,7 +6,7 @@ import 'package:developer_tools_network/network_inspector/ui/common/network_cont
 import 'package:developer_tools_network/network_inspector/ui/common/network_page.dart';
 import 'package:developer_tools_network/network_inspector/ui/widget/network_stats_row.dart';
 import 'package:developer_tools_network/network_inspector/utils/num_comparison.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// General stats page for currently caught HTTP calls.
 class NetworkStatsPage extends StatelessWidget {

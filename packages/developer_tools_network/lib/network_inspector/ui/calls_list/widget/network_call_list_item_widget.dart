@@ -2,7 +2,7 @@ import 'package:developer_tools_network/network_inspector/helper/network_convers
 import 'package:developer_tools_network/network_inspector/model/network_http_call.dart';
 import 'package:developer_tools_network/network_inspector/model/network_http_response.dart';
 import 'package:developer_tools_network/network_inspector/ui/common/network_theme.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 const int _endpointMaxLines = 10;
 const int _serverMaxLines = 5;

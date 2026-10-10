@@ -14,7 +14,7 @@ import 'package:developer_tools_network/network_inspector/model/network_http_res
 import 'package:developer_tools_network/network_inspector/model/network_log.dart';
 import 'package:developer_tools_network/network_inspector/ui/common/network_navigation.dart';
 import 'package:developer_tools_network/network_inspector/utils/shake_detector.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class NetworkInspectorCore {
   /// Configuration of network inspector

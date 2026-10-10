@@ -1,7 +1,7 @@
 import 'package:developer_tools_network/network_inspector/model/network_translation.dart';
 import 'package:developer_tools_network/network_inspector/ui/common/network_context_ext.dart';
 import 'package:developer_tools_network/network_inspector/ui/common/network_theme.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// General dialogs used in NetworkInspector.
 class NetworkGeneralDialog {

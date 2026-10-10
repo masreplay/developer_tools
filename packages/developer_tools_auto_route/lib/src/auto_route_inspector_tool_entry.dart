@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:developer_tools_core/developer_tools_core.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Single [DeveloperToolEntry] that opens a dialog showing the current route
 /// information including name, path, URL, params, query params, fragment, args,

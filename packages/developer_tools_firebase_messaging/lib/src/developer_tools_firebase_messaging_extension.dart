@@ -78,6 +78,7 @@ class DeveloperToolsFirebaseMessaging extends DeveloperToolsExtension {
     return switch (status) {
       AuthorizationStatus.authorized => 'Authorized',
       AuthorizationStatus.denied => 'Denied',
+      AuthorizationStatus.deniedPermanently => 'Denied Permanently',
       AuthorizationStatus.notDetermined => 'Not Determined',
       AuthorizationStatus.provisional => 'Provisional',
     };

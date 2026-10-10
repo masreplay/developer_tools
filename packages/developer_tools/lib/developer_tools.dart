@@ -3,7 +3,7 @@ library;
 import 'dart:async';
 
 import 'package:developer_tools_core/developer_tools_core.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter/services.dart';
 
 import 'src/docked_log_panel.dart';

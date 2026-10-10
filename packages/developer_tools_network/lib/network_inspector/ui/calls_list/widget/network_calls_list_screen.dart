@@ -2,7 +2,7 @@ import 'package:developer_tools_network/network_inspector/model/network_http_cal
 import 'package:developer_tools_network/network_inspector/ui/calls_list/model/network_calls_list_sort_option.dart';
 import 'package:developer_tools_network/network_inspector/ui/calls_list/widget/network_call_list_item_widget.dart';
 import 'package:developer_tools_network/network_inspector/ui/common/network_scroll_behavior.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Widget which displays calls list. It's hosted in tab in calls list page.
 class NetworkCallsListScreen extends StatelessWidget {

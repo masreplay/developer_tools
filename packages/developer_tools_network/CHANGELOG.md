@@ -1,3 +1,10 @@
+## 0.0.6
+
+- Migrate from `package:flutter/material.dart` to `package:material_ui` (Flutter 3.47 decoupled Material library). Requires Dart 3.13 / Flutter 3.47.
+- Require `flutter_local_notifications` ^22.3.1 and migrate to its named-parameter `initialize`/`show` API.
+- Require `permission_handler` ^13.0.2, `package_info_plus` ^10.2.2, `sensors_plus` ^7.1.1, `share_plus` ^13.3.1.
+- Require `developer_tools_core` ^0.0.6.
+
 ## 0.0.5
 
 - Point `repository`, `homepage` and `issue_tracker` at the real

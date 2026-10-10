@@ -1,6 +1,6 @@
 import 'package:developer_tools_core/developer_tools_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// A [DeveloperToolEntry] that shows the current notification permission status
 /// and provides a button to request permissions.
@@ -151,6 +151,7 @@ class _NotificationPermissionsDialogState
     return switch (status) {
       AuthorizationStatus.authorized => 'Authorized',
       AuthorizationStatus.denied => 'Denied',
+      AuthorizationStatus.deniedPermanently => 'Denied Permanently',
       AuthorizationStatus.notDetermined => 'Not Determined',
       AuthorizationStatus.provisional => 'Provisional',
     };
@@ -162,7 +163,8 @@ class _NotificationPermissionsDialogState
   ) {
     return switch (status) {
       AuthorizationStatus.authorized => Colors.green,
-      AuthorizationStatus.denied => theme.colorScheme.error,
+      AuthorizationStatus.denied ||
+      AuthorizationStatus.deniedPermanently => theme.colorScheme.error,
       AuthorizationStatus.notDetermined => Colors.orange,
       AuthorizationStatus.provisional => Colors.blue,
     };

@@ -1,5 +1,5 @@
 import 'package:developer_tools_core/developer_tools_core.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 /// A [DeveloperToolEntry] that opens the app's system settings page.

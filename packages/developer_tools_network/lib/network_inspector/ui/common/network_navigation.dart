@@ -3,7 +3,7 @@ import 'package:developer_tools_network/network_inspector/model/network_http_cal
 import 'package:developer_tools_network/network_inspector/ui/call_details/page/network_call_details_page.dart';
 import 'package:developer_tools_network/network_inspector/ui/calls_list/page/network_calls_list_page.dart';
 import 'package:developer_tools_network/network_inspector/ui/stats/network_stats_page.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Simple navigation helper class for NetworkInspector.
 class NetworkNavigation {

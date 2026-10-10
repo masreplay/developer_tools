@@ -1,5 +1,5 @@
 import 'package:developer_tools_core/developer_tools_core.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:local_auth/local_auth.dart';
 
 /// A [DeveloperToolEntry] that opens a dialog showing the full local

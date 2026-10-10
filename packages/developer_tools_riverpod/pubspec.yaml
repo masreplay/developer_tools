@@ -1,6 +1,6 @@
 name: developer_tools_riverpod
 description: "Riverpod integration for developer_tools."
-version: 0.0.5
+version: 0.0.6
 topics: ["development", "debug", "tools", "riverpod", "flutter"]
 
 repository: https://github.com/masreplay/developer_tools
@@ -11,17 +11,18 @@ license: MIT
 resolution: workspace
 
 environment:
-  sdk: ^3.7.0
+  sdk: ^3.13.0
 
 dependencies:
   flutter:
     sdk: flutter
 
-  developer_tools_core: ^0.0.5
+  developer_tools_core: ^0.0.6
 
-  flutter_riverpod: ^3.0.3
-  riverpod_annotation: ^3.0.3
+  flutter_riverpod: ^3.4.3
+  riverpod_annotation: ^4.0.7
 
+  material_ui: ^1.6.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

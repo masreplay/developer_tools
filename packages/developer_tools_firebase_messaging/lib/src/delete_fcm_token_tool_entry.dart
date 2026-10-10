@@ -1,6 +1,6 @@
 import 'package:developer_tools_core/developer_tools_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// A [DeveloperToolEntry] that deletes the current FCM token after a
 /// confirmation dialog.

@@ -3,7 +3,7 @@ import 'package:developer_tools_network/network_inspector/core/network_utils.dar
 import 'package:developer_tools_network/network_inspector/helper/operating_system.dart';
 import 'package:developer_tools_network/network_inspector/model/network_translation.dart';
 import 'package:developer_tools_network/network_inspector/ui/common/network_context_ext.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:cupertino_ui/cupertino_ui.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 /// Helper for displaying local notifications.
@@ -60,7 +60,7 @@ class NetworkNotification {
           macOS: initializationSettingsMacOS,
         );
     _flutterLocalNotificationsPlugin?.initialize(
-      initializationSettings,
+      settings: initializationSettings,
       onDidReceiveNotificationResponse: _onDidReceiveNotificationResponse,
     );
     _requestNotificationPermissions();
@@ -130,12 +130,12 @@ class NetworkNotification {
       _isNotificationProcessing = true;
 
       await _flutterLocalNotificationsPlugin?.show(
-        0,
-        context
+        id: 0,
+        title: context
             .i18n(NetworkTranslationKey.notificationTotalRequests)
             .replaceAll(_callCount, stats.total.toString()),
-        message,
-        _notificationDetails,
+        body: message,
+        notificationDetails: _notificationDetails,
         payload: _payload,
       );
 

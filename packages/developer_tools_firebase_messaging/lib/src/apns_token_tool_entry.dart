@@ -1,6 +1,6 @@
 import 'package:developer_tools_core/developer_tools_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter/services.dart';
 
 /// A [DeveloperToolEntry] that displays the current APNS token in a dialog,

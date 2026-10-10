@@ -16,7 +16,7 @@ import 'package:developer_tools_network/network_inspector/ui/common/network_navi
 import 'package:developer_tools_network/network_inspector/ui/common/network_page.dart';
 import 'package:developer_tools_network/network_inspector/ui/calls_list/widget/network_logs_screen.dart';
 import 'package:developer_tools_network/network_inspector/ui/common/network_theme.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:open_filex/open_filex.dart';
 
 /// Page which displays list of calls caught by NetworkInspector. It displays tab view
