@@ -7,6 +7,7 @@ import 'package:developer_tools_network/network_inspector/helper/network_postman
 import 'package:developer_tools_network/network_inspector/model/network_configuration.dart';
 import 'package:developer_tools_network/network_inspector/model/network_http_call.dart';
 import 'package:developer_tools_network/network_inspector/ui/call_details/widget/network_call_request_screen.dart';
+import 'package:archive/archive.dart' show ZipDecoder;
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
@@ -21,7 +22,8 @@ class _RecordingServer implements HttpClientAdapter {
     Stream<Uint8List>? requestStream,
     Future<void>? cancelFuture,
   ) async {
-    await for (final chunk in requestStream ?? const Stream<Uint8List>.empty()) {
+    await for (final chunk
+        in requestStream ?? const Stream<Uint8List>.empty()) {
       received.addAll(chunk);
     }
     return ResponseBody.fromString(
@@ -68,7 +70,13 @@ void main() {
   NetworkHttpCall lastCall() => configuration.networkStorage.getCalls().last;
 
   test('keeps the uploaded file and still sends it whole', () async {
-    final photo = Uint8List.fromList([0xFF, 0xD8, 0xFF, 0xE0, ...List.filled(5000, 9)]);
+    final photo = Uint8List.fromList([
+      0xFF,
+      0xD8,
+      0xFF,
+      0xE0,
+      ...List.filled(5000, 9),
+    ]);
 
     await dio.post(
       '/api/core/documents',
@@ -92,7 +100,9 @@ void main() {
   test('turns a base64 selfie in a JSON body into a file', () async {
     await dio.post(
       '/api/core/liveness/verify/passive',
-      data: {'selfie_base64': base64Encode([..._png, ...List.filled(1200, 0)])},
+      data: {
+        'selfie_base64': base64Encode([..._png, ...List.filled(1200, 0)]),
+      },
     );
 
     final files = NetworkPostmanExportHelper.buildAttachments([lastCall()]);
@@ -111,7 +121,9 @@ void main() {
     );
 
     await tester.pumpWidget(
-      MaterialApp(home: Scaffold(body: NetworkCallRequestScreen(call: lastCall()))),
+      MaterialApp(
+        home: Scaffold(body: NetworkCallRequestScreen(call: lastCall())),
+      ),
     );
 
     expect(find.textContaining('000_front_image_front.png'), findsOneWidget);
@@ -119,11 +131,44 @@ void main() {
   });
 
   test('labels a base64 image in the body instead of showing it', () {
-    final body = {'selfie_base64': base64Encode([..._png, ...List.filled(1200, 0)]), 'uid': 'u1'};
+    final body = {
+      'selfie_base64': base64Encode([..._png, ...List.filled(1200, 0)]),
+      'uid': 'u1',
+    };
 
     final labelled = NetworkPostmanExportHelper.labelBase64Media(body) as Map;
 
     expect(labelled['selfie_base64'], startsWith('<png file,'));
     expect(labelled['uid'], 'u1');
+  });
+
+  test('zips the collection with its files side by side', () async {
+    final photo = Uint8List.fromList([
+      0xFF,
+      0xD8,
+      0xFF,
+      0xE0,
+      ...List.filled(5000, 9),
+    ]);
+    await dio.post(
+      '/api/core/documents',
+      data: FormData.fromMap({
+        'front_image': MultipartFile.fromBytes(photo, filename: 'front.jpg'),
+      }),
+    );
+
+    final zip = ZipDecoder().decodeBytes(
+      NetworkPostmanExportHelper.buildZip(
+        name: 'app_network_1',
+        json: '{}',
+        calls: [lastCall()],
+      ),
+    );
+
+    expect(zip.files.map((f) => f.name), [
+      'app_network_1.postman_collection.json',
+      '000_front_image_front.jpg',
+    ]);
+    expect(zip.findFile('000_front_image_front.jpg')!.content, photo);
   });
 }

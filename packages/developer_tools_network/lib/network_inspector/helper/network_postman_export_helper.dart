@@ -4,6 +4,7 @@ import 'dart:convert' show JsonEncoder, base64Decode, jsonDecode;
 import 'dart:io' show Directory, File;
 import 'dart:typed_data' show Uint8List;
 
+import 'package:archive/archive.dart' show Archive, ArchiveFile, ZipEncoder;
 import 'package:developer_tools_network/network_inspector/core/network_utils.dart';
 import 'package:developer_tools_network/network_inspector/model/network_export_result.dart';
 import 'package:developer_tools_network/network_inspector/model/network_form_data_file.dart';
@@ -121,31 +122,19 @@ class NetworkPostmanExportHelper {
       );
 
       final Directory dir = await getApplicationCacheDirectory();
-      final String fileName =
+      final String baseName =
           '${_sanitizeFileName(packageInfo.appName)}_network_'
-          '${DateTime.now().millisecondsSinceEpoch}.postman_collection.json';
-      final File file = File('${dir.path}/$fileName')
+          '${DateTime.now().millisecondsSinceEpoch}';
+      final File file = File('${dir.path}/$baseName.zip')
         ..createSync(recursive: true)
-        ..writeAsStringSync(json);
-
-      final Directory filesDir = Directory(
-        '${dir.path}/${fileName.replaceAll('.postman_collection.json', '_files')}',
-      )..createSync(recursive: true);
-      final List<XFile> shared = [XFile(file.path)];
-      for (final NetworkExportAttachment attachment in buildAttachments(
-        calls,
-      )) {
-        final File out = File('${filesDir.path}/${attachment.name}')
-          ..writeAsBytesSync(attachment.bytes);
-        shared.add(XFile(out.path));
-      }
+        ..writeAsBytesSync(buildZip(name: baseName, json: json, calls: calls));
 
       // sharePositionOrigin is required for the share popover on iPad and is
       // harmless on iPhone.
       final box = context.findRenderObject() as RenderBox?;
       await SharePlus.instance.share(
         ShareParams(
-          files: shared,
+          files: [XFile(file.path)],
           subject: name,
           sharePositionOrigin: box != null && box.hasSize
               ? box.localToGlobal(Offset.zero) & box.size
@@ -161,6 +150,25 @@ class NetworkPostmanExportHelper {
         error: NetworkExportResultError.file,
       );
     }
+  }
+
+  /// One zip with the collection and every file it refers to, side by side, so
+  /// unzipping into Postman's working directory makes every upload replayable.
+  static List<int> buildZip({
+    required String name,
+    required String json,
+    required List<NetworkHttpCall> calls,
+  }) {
+    final Archive archive = Archive()
+      ..add(
+        ArchiveFile.string('$name.postman_collection.json', json),
+      );
+    for (final NetworkExportAttachment attachment in buildAttachments(calls)) {
+      archive.add(
+        ArchiveFile.bytes(attachment.name, attachment.bytes),
+      );
+    }
+    return ZipEncoder().encodeBytes(archive);
   }
 
   /// Builds a Postman collection from [calls] and copies the raw JSON to the

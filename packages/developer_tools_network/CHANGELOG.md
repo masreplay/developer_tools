@@ -1,7 +1,8 @@
 ## 0.0.7
 
-- Postman export carries the uploaded files. The Dio adapter keeps a copy of each multipart file (up to 15 MB, read from a clone so the request is untouched) and its form field name. Share now sends the collection plus every upload, named as the form-data `src`, so Postman finds the files on replay.
-- Images, videos and PDFs sent or received as base64 inside JSON bodies (e.g. a selfie or a signature) are shared as raw files next to the collection.
+- Export to Postman shares one `.zip`: the collection plus every uploaded file and every base64 image, video or PDF found in the bodies, side by side. Unzip into Postman's working directory and uploads replay with their real files. Adds `archive`.
+- The Dio adapter keeps a copy of each multipart file (up to 15 MB, read from a clone so the request is untouched) and its form field name.
+- The request screen has a Files section that previews uploads and base64 images, and the body shows a short label instead of pages of base64.
 - Form-data file entries use the field name as the key, not the file name.
 
 ## 0.0.6
