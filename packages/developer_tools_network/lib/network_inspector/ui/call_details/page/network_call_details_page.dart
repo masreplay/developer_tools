@@ -55,13 +55,12 @@ class _NetworkCallDetailsPageState extends State<NetworkCallDetailsPage>
                   appBar: AppBar(
                     bottom: TabBar(
                       indicatorColor: NetworkTheme.lightRed,
-                      tabs:
-                          NetworkCallDetailsTabItem.values.map((item) {
-                            return Tab(
-                              icon: _getTabIcon(item: item),
-                              text: _getTabName(item: item),
-                            );
-                          }).toList(),
+                      tabs: NetworkCallDetailsTabItem.values.map((item) {
+                        return Tab(
+                          icon: _getTabIcon(item: item),
+                          text: _getTabName(item: item),
+                        );
+                      }).toList(),
                     ),
                     title: Text(
                       '${context.i18n(NetworkTranslationKey.networkInspector)} -'
@@ -78,16 +77,16 @@ class _NetworkCallDetailsPageState extends State<NetworkCallDetailsPage>
                   ),
                   floatingActionButton:
                       widget.core.configuration.showShareButton
-                          ? FloatingActionButton(
-                            backgroundColor: NetworkTheme.lightRed,
-                            key: const Key('share_key'),
-                            onPressed: _shareCall,
-                            child: const Icon(
-                              Icons.share,
-                              color: NetworkTheme.white,
-                            ),
-                          )
-                          : null,
+                      ? FloatingActionButton(
+                          backgroundColor: NetworkTheme.lightRed,
+                          key: const Key('share_key'),
+                          onPressed: _shareCall,
+                          child: const Icon(
+                            Icons.share,
+                            color: NetworkTheme.white,
+                          ),
+                        )
+                      : null,
                 ),
               );
             }

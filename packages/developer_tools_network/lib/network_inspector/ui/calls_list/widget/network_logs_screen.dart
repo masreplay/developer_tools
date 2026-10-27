@@ -18,16 +18,15 @@ class NetworkLogsScreen extends StatelessWidget {
   final bool isAndroidRawLogsEnabled;
 
   @override
-  Widget build(BuildContext context) =>
-      networkLogger != null
-          ? isAndroidRawLogsEnabled
-              ? NetworkRawLogListWidget(
+  Widget build(BuildContext context) => networkLogger != null
+      ? isAndroidRawLogsEnabled
+            ? NetworkRawLogListWidget(
                 scrollController: scrollController,
                 getRawLogs: networkLogger?.getAndroidRawLogs(),
               )
-              : NetworkLogListWidget(
+            : NetworkLogListWidget(
                 logsStream: networkLogger?.logsStream,
                 scrollController: scrollController,
               )
-          : const NetworkEmptyLogsWidget();
+      : const NetworkEmptyLogsWidget();
 }

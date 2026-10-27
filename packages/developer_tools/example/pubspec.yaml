@@ -13,6 +13,9 @@ dependencies:
     path: ../
   developer_tools_console:
     path: ../../developer_tools_console
+  developer_tools_network:
+    path: ../../developer_tools_network
+  dio: ^5.7.0
 
   material_ui: ^1.6.0
 dependency_overrides:

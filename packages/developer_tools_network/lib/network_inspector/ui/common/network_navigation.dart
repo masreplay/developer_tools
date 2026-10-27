@@ -11,7 +11,10 @@ class NetworkNavigation {
   static Future<void> navigateToCallsList({
     required NetworkInspectorCore core,
   }) {
-    return _navigateToPage(core: core, child: NetworkCallsListPage(core: core));
+    return _navigateToPage(
+      core: core,
+      child: NetworkCallsListPage(core: core),
+    );
   }
 
   /// Navigates to call details page.

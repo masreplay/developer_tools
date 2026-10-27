@@ -61,8 +61,8 @@ class _NetworkLogListWidgetState extends State<NetworkLogListWidget> {
             shrinkWrap: true,
             padding: const EdgeInsets.symmetric(vertical: 8),
             itemCount: filteredLogs.length,
-            itemBuilder:
-                (context, i) => _NetworkLogEntryWidget(filteredLogs[i]),
+            itemBuilder: (context, i) =>
+                _NetworkLogEntryWidget(filteredLogs[i]),
           ),
         );
       },
@@ -169,14 +169,14 @@ class _NetworkLogEntryWidget extends StatelessWidget {
   Future<void> _copyToClipboard(BuildContext context) async {
     final String? error = _stringify(log.error);
     final String? stackTrace = _stringify(log.stackTrace);
-    final StringBuffer text =
-        StringBuffer()..writeAll([
-          '${log.timestamp}: ${log.message}\n',
-          if (error != null)
-            '${context.i18n(NetworkTranslationKey.logsItemError)} $error\n',
-          if (stackTrace != null)
-            '${context.i18n(NetworkTranslationKey.logsItemStackTrace)}: $stackTrace\n',
-        ]);
+    final StringBuffer text = StringBuffer()
+      ..writeAll([
+        '${log.timestamp}: ${log.message}\n',
+        if (error != null)
+          '${context.i18n(NetworkTranslationKey.logsItemError)} $error\n',
+        if (stackTrace != null)
+          '${context.i18n(NetworkTranslationKey.logsItemStackTrace)}: $stackTrace\n',
+      ]);
 
     await Clipboard.setData(ClipboardData(text: text.toString()));
 

@@ -24,57 +24,57 @@ class NetworkCallsListScreen extends StatelessWidget {
     NetworkCallsListSortOption.time =>
       sortAscending
           ? (calls..sort(
-            (NetworkHttpCall call1, NetworkHttpCall call2) =>
-                call1.createdTime.compareTo(call2.createdTime),
-          ))
+              (NetworkHttpCall call1, NetworkHttpCall call2) =>
+                  call1.createdTime.compareTo(call2.createdTime),
+            ))
           : (calls..sort(
-            (NetworkHttpCall call1, NetworkHttpCall call2) =>
-                call2.createdTime.compareTo(call1.createdTime),
-          )),
+              (NetworkHttpCall call1, NetworkHttpCall call2) =>
+                  call2.createdTime.compareTo(call1.createdTime),
+            )),
     NetworkCallsListSortOption.responseTime =>
       sortAscending
           ? (calls
-            ..sort()
-            ..sort(
-              (NetworkHttpCall call1, NetworkHttpCall call2) =>
-                  call1.response?.time.compareTo(call2.response!.time) ?? -1,
-            ))
+              ..sort()
+              ..sort(
+                (NetworkHttpCall call1, NetworkHttpCall call2) =>
+                    call1.response?.time.compareTo(call2.response!.time) ?? -1,
+              ))
           : (calls..sort(
-            (NetworkHttpCall call1, NetworkHttpCall call2) =>
-                call2.response?.time.compareTo(call1.response!.time) ?? -1,
-          )),
+              (NetworkHttpCall call1, NetworkHttpCall call2) =>
+                  call2.response?.time.compareTo(call1.response!.time) ?? -1,
+            )),
     NetworkCallsListSortOption.responseCode =>
       sortAscending
           ? (calls..sort(
-            (NetworkHttpCall call1, NetworkHttpCall call2) =>
-                call1.response?.status?.compareTo(call2.response!.status!) ??
-                -1,
-          ))
+              (NetworkHttpCall call1, NetworkHttpCall call2) =>
+                  call1.response?.status?.compareTo(call2.response!.status!) ??
+                  -1,
+            ))
           : (calls..sort(
-            (NetworkHttpCall call1, NetworkHttpCall call2) =>
-                call2.response?.status?.compareTo(call1.response!.status!) ??
-                -1,
-          )),
+              (NetworkHttpCall call1, NetworkHttpCall call2) =>
+                  call2.response?.status?.compareTo(call1.response!.status!) ??
+                  -1,
+            )),
     NetworkCallsListSortOption.responseSize =>
       sortAscending
           ? (calls..sort(
-            (NetworkHttpCall call1, NetworkHttpCall call2) =>
-                call1.response?.size.compareTo(call2.response!.size) ?? -1,
-          ))
+              (NetworkHttpCall call1, NetworkHttpCall call2) =>
+                  call1.response?.size.compareTo(call2.response!.size) ?? -1,
+            ))
           : (calls..sort(
-            (NetworkHttpCall call1, NetworkHttpCall call2) =>
-                call2.response?.size.compareTo(call1.response!.size) ?? -1,
-          )),
+              (NetworkHttpCall call1, NetworkHttpCall call2) =>
+                  call2.response?.size.compareTo(call1.response!.size) ?? -1,
+            )),
     NetworkCallsListSortOption.endpoint =>
       sortAscending
           ? (calls..sort(
-            (NetworkHttpCall call1, NetworkHttpCall call2) =>
-                call1.endpoint.compareTo(call2.endpoint),
-          ))
+              (NetworkHttpCall call1, NetworkHttpCall call2) =>
+                  call1.endpoint.compareTo(call2.endpoint),
+            ))
           : (calls..sort(
-            (NetworkHttpCall call1, NetworkHttpCall call2) =>
-                call2.endpoint.compareTo(call1.endpoint),
-          )),
+              (NetworkHttpCall call1, NetworkHttpCall call2) =>
+                  call2.endpoint.compareTo(call1.endpoint),
+            )),
     _ => calls,
   };
 
@@ -84,11 +84,10 @@ class NetworkCallsListScreen extends StatelessWidget {
       behavior: NetworkScrollBehavior(),
       child: ListView.builder(
         itemCount: calls.length,
-        itemBuilder:
-            (_, int index) => NetworkCallListItemWidget(
-              _sortedCalls[index],
-              onListItemClicked,
-            ),
+        itemBuilder: (_, int index) => NetworkCallListItemWidget(
+          _sortedCalls[index],
+          onListItemClicked,
+        ),
       ),
     );
   }

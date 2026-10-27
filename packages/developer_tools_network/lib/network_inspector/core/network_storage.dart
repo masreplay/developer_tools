@@ -1,12 +1,18 @@
 import 'package:developer_tools_network/network_inspector/model/network_http_call.dart';
+
 import 'dart:async' show FutureOr;
 
 import 'package:developer_tools_network/network_inspector/model/network_http_error.dart';
 import 'package:developer_tools_network/network_inspector/model/network_http_response.dart';
 
 /// Definition of call stats.
-typedef NetworkStats =
-    ({int total, int successes, int redirects, int errors, int loading});
+typedef NetworkStats = ({
+  int total,
+  int successes,
+  int redirects,
+  int errors,
+  int loading,
+});
 
 /// Definition of storage
 abstract interface class NetworkStorage {

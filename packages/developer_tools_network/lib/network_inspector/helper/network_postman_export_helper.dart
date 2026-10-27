@@ -417,6 +417,33 @@ class NetworkPostmanExportHelper {
     };
   }
 
+  /// [body] with every base64 image, video or PDF replaced by a short label,
+  /// so the inspector shows the file in "Files" instead of pages of base64.
+  static dynamic labelBase64Media(dynamic body) {
+    if (body is Map) {
+      return {
+        for (final entry in body.entries)
+          entry.key: labelBase64Media(entry.value),
+      };
+    }
+    if (body is List) return [for (final item in body) labelBase64Media(item)];
+    if (body is! String) return body;
+    String? label;
+    _findBase64Media(body, '', (String key, Uint8List bytes, String ext) {
+      if (key.isEmpty)
+        label =
+            '<$ext file, ${(bytes.length / 1024).toStringAsFixed(1)} kB, see Files>';
+    });
+    if (label != null) return label;
+    final String trimmed = body.trim();
+    if (trimmed.startsWith('{') || trimmed.startsWith('[')) {
+      try {
+        return labelBase64Media(jsonDecode(trimmed));
+      } catch (_) {}
+    }
+    return body;
+  }
+
   static String _pad(int index) => index.toString().padLeft(3, '0');
 
   /// The shared file name of an upload: its call's position, field and name,
