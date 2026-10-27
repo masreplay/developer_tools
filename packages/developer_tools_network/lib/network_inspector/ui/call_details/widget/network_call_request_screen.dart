@@ -1,4 +1,5 @@
 import 'package:developer_tools_network/network_inspector/helper/network_conversion_helper.dart';
+import 'package:developer_tools_network/network_inspector/helper/network_postman_export_helper.dart';
 import 'package:developer_tools_network/network_inspector/model/network_form_data_file.dart';
 import 'package:developer_tools_network/network_inspector/model/network_from_data_field.dart';
 import 'package:developer_tools_network/network_inspector/model/network_http_call.dart';
@@ -36,6 +37,17 @@ class NetworkCallRequestScreen extends StatelessWidget {
         ),
       ),
     ];
+
+    // The uploads and the base64 media in the bodies, as the export shares them.
+    final List<NetworkExportAttachment> attachments =
+        NetworkPostmanExportHelper.buildAttachments([call]);
+    if (attachments.isNotEmpty) {
+      rows.add(const NetworkCallListRow(name: 'Files', value: ''));
+      rows.addAll([
+        for (final NetworkExportAttachment file in attachments)
+          _AttachmentPreview(file: file),
+      ]);
+    }
 
     rows.add(
       NetworkCallListRow(
@@ -78,10 +90,9 @@ class NetworkCallRequestScreen extends StatelessWidget {
     }
 
     final Map<String, dynamic>? headers = call.request?.headers;
-    final String headersContent =
-        headers?.isEmpty ?? true
-            ? context.i18n(NetworkTranslationKey.callRequestHeadersEmpty)
-            : '';
+    final String headersContent = headers?.isEmpty ?? true
+        ? context.i18n(NetworkTranslationKey.callRequestHeadersEmpty)
+        : '';
     rows.add(
       NetworkCallListRow(
         name: context.i18n(NetworkTranslationKey.callRequestHeaders),
@@ -97,12 +108,11 @@ class NetworkCallRequestScreen extends StatelessWidget {
     ]);
 
     final Map<String, dynamic>? queryParameters = call.request?.queryParameters;
-    final String queryParametersContent =
-        queryParameters?.isEmpty ?? true
-            ? context.i18n(
-              NetworkTranslationKey.callRequestQueryParametersEmpty,
-            )
-            : '';
+    final String queryParametersContent = queryParameters?.isEmpty ?? true
+        ? context.i18n(
+            NetworkTranslationKey.callRequestQueryParametersEmpty,
+          )
+        : '';
     rows.add(
       NetworkCallListRow(
         name: context.i18n(NetworkTranslationKey.callRequestQueryParameters),
@@ -129,16 +139,54 @@ class NetworkCallRequestScreen extends StatelessWidget {
 
   /// Returns body content formatted.
   String _getBodyContent({required BuildContext context}) {
-    final dynamic body = call.request?.body;
+    final dynamic body = NetworkPostmanExportHelper.labelBase64Media(
+      call.request?.body,
+    );
     return body != null
         ? NetworkParser.formatBody(
-          context: context,
-          body: body,
-          contentType: NetworkParser.getContentType(
             context: context,
-            headers: call.request?.headers,
-          ),
-        )
+            body: body,
+            contentType: NetworkParser.getContentType(
+              context: context,
+              headers: call.request?.headers,
+            ),
+          )
         : context.i18n(NetworkTranslationKey.callRequestBodyEmpty);
+  }
+}
+
+/// One exported file: its name and size, and the picture when it is an image.
+class _AttachmentPreview extends StatelessWidget {
+  const _AttachmentPreview({required this.file});
+
+  final NetworkExportAttachment file;
+
+  static const Set<String> _images = {'jpg', 'png', 'gif'};
+
+  @override
+  Widget build(BuildContext context) {
+    final String ext = file.name.split('.').last.toLowerCase();
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            '   • ${file.name} (${NetworkConversionHelper.formatBytes(file.bytes.length)})',
+          ),
+          if (_images.contains(ext))
+            Padding(
+              padding: const EdgeInsets.only(left: 16, top: 4),
+              child: Image.memory(
+                file.bytes,
+                key: ValueKey(file.name),
+                height: 140,
+                fit: BoxFit.contain,
+                alignment: Alignment.centerLeft,
+              ),
+            ),
+        ],
+      ),
+    );
   }
 }

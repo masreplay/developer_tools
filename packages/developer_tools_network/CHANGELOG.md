@@ -1,3 +1,10 @@
+## 0.0.7
+
+- Export to Postman shares one `.zip`: the collection plus every uploaded file and every base64 image, video or PDF found in the bodies, side by side. Unzip into Postman's working directory and uploads replay with their real files. Adds `archive`.
+- The Dio adapter keeps a copy of each multipart file (up to 15 MB, read from a clone so the request is untouched) and its form field name.
+- The request screen has a Files section that previews uploads and base64 images, and the body shows a short label instead of pages of base64.
+- Form-data file entries use the field name as the key, not the file name.
+
 ## 0.0.6
 
 - Migrate from `package:flutter/material.dart` to `package:material_ui` (Flutter 3.47 decoupled Material library). Requires Dart 3.13 / Flutter 3.47.

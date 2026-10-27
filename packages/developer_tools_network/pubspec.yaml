@@ -1,6 +1,6 @@
 name: developer_tools_network
 description: "Network HTTP Inspector for developer_tools. Inlined fork of Alice - inspect HTTP requests and responses from the debug overlay."
-version: 0.0.6
+version: 0.0.7
 topics: ["development", "debug", "tools", "network", "http"]
 
 repository: https://github.com/masreplay/developer_tools
@@ -34,6 +34,7 @@ dependencies:
 
   material_ui: ^1.6.0
   cupertino_ui: ^1.1.2
+  archive: ^4.5.2
 dev_dependencies:
   flutter_test:
     sdk: flutter

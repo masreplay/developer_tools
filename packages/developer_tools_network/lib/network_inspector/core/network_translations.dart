@@ -92,7 +92,8 @@ class NetworkTranslations {
         NetworkTranslationKey.callsListDelete: 'Delete',
         NetworkTranslationKey.callsListStats: 'Stats',
         NetworkTranslationKey.callsListSave: 'Save',
-        NetworkTranslationKey.callsListExportPostman: 'Export Postman collection',
+        NetworkTranslationKey.callsListExportPostman:
+            'Export Postman collection',
         NetworkTranslationKey.callsListCopyPostman: 'Copy Postman collection',
         NetworkTranslationKey.logsEmpty: 'There are no logs to show',
         NetworkTranslationKey.logsError: 'Failed to display error',
@@ -241,8 +242,7 @@ class NetworkTranslations {
         NetworkTranslationKey.callResponseBody: 'Body:',
         NetworkTranslationKey.callResponseTooLargeToShow: 'Za duże aby pokazać',
         NetworkTranslationKey.callResponseBodyShow: 'Pokaż body',
-        NetworkTranslationKey.callResponseLargeBodyShowWarning:
-            'Uwaga! Może zająć trochę czasu, zanim uda się wyrenderować output.',
+        NetworkTranslationKey.callResponseLargeBodyShowWarning: 'Uwaga! Może zająć trochę czasu, zanim uda się wyrenderować output.',
         NetworkTranslationKey.callResponseBodyVideo: 'Body: Video',
         NetworkTranslationKey.callResponseBodyVideoWebBrowser:
             'Otwórz video w przeglądarce',
@@ -270,7 +270,8 @@ class NetworkTranslations {
         NetworkTranslationKey.callsListDelete: 'Usuń',
         NetworkTranslationKey.callsListStats: 'Statystyki',
         NetworkTranslationKey.callsListSave: 'Zapis',
-        NetworkTranslationKey.callsListExportPostman: 'Eksportuj kolekcję Postman',
+        NetworkTranslationKey.callsListExportPostman:
+            'Eksportuj kolekcję Postman',
         NetworkTranslationKey.callsListCopyPostman: 'Kopiuj kolekcję Postman',
         NetworkTranslationKey.logsEmpty: 'Brak rezultatów',
         NetworkTranslationKey.logsError: 'Problem z wyświetleniem logów.',

@@ -108,38 +108,35 @@ class NetworkStatsPage extends StatelessWidget {
   int _getTotalRequests() => _calls.length;
 
   /// Returns count of success requests.
-  int _getSuccessRequests() =>
-      _calls
-          .where(
-            (NetworkHttpCall call) =>
-                (call.response?.status.gte(200) ?? false) &&
-                (call.response?.status.lt(300) ?? false),
-          )
-          .toList()
-          .length;
+  int _getSuccessRequests() => _calls
+      .where(
+        (NetworkHttpCall call) =>
+            (call.response?.status.gte(200) ?? false) &&
+            (call.response?.status.lt(300) ?? false),
+      )
+      .toList()
+      .length;
 
   /// Returns count of redirection requests.
-  int _getRedirectionRequests() =>
-      _calls
-          .where(
-            (NetworkHttpCall call) =>
-                (call.response?.status.gte(300) ?? false) &&
-                (call.response?.status.lt(400) ?? false),
-          )
-          .toList()
-          .length;
+  int _getRedirectionRequests() => _calls
+      .where(
+        (NetworkHttpCall call) =>
+            (call.response?.status.gte(300) ?? false) &&
+            (call.response?.status.lt(400) ?? false),
+      )
+      .toList()
+      .length;
 
   /// Returns count of error requests.
-  int _getErrorRequests() =>
-      _calls
-          .where(
-            (NetworkHttpCall call) =>
-                (call.response?.status.gte(400) ?? false) &&
-                    (call.response?.status.lt(600) ?? false) ||
-                const [-1, 0].contains(call.response?.status),
-          )
-          .toList()
-          .length;
+  int _getErrorRequests() => _calls
+      .where(
+        (NetworkHttpCall call) =>
+            (call.response?.status.gte(400) ?? false) &&
+                (call.response?.status.lt(600) ?? false) ||
+            const [-1, 0].contains(call.response?.status),
+      )
+      .toList()
+      .length;
 
   /// Returns count of pending requests.
   int _getPendingRequests() =>

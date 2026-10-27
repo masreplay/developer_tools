@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:developer_tools_network/network_inspector/network_inspector.dart';
 import 'package:dio/dio.dart';
@@ -17,7 +18,10 @@ class NetworkDioAdapter extends InterceptorsWrapper with NetworkAdapter {
   NetworkDioAdapter();
 
   @override
-  void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
+  Future<void> onRequest(
+    RequestOptions options,
+    RequestInterceptorHandler handler,
+  ) async {
     final call = NetworkHttpCall(options.hashCode);
 
     final uri = options.uri;
@@ -57,6 +61,8 @@ class NetworkDioAdapter extends InterceptorsWrapper with NetworkAdapter {
                 entry.value.filename,
                 entry.value.contentType.toString(),
                 entry.value.length,
+                fieldName: entry.key,
+                bytes: await _readBytes(entry.value),
               ),
             );
           }
@@ -81,6 +87,25 @@ class NetworkDioAdapter extends InterceptorsWrapper with NetworkAdapter {
 
     networkCore.addCall(call);
     handler.next(options);
+  }
+
+  // ponytail: holds each upload in memory once more; capped so a large video
+  // upload does not double the app's memory. Raise the cap if exports miss files.
+  static const int _maxCapturedFileBytes = 15 * 1024 * 1024;
+
+  /// Reads a copy of [file] so the export can embed it. Works on a clone, so
+  /// the stream Dio sends is untouched; returns null when that is not possible.
+  static Future<Uint8List?> _readBytes(MultipartFile file) async {
+    if (file.length > _maxCapturedFileBytes) return null;
+    try {
+      final builder = BytesBuilder(copy: false);
+      await for (final chunk in file.clone().finalize()) {
+        builder.add(chunk);
+      }
+      return builder.takeBytes();
+    } catch (_) {
+      return null;
+    }
   }
 
   @override

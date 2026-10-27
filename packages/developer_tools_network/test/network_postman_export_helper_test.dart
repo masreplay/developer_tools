@@ -1,4 +1,4 @@
-import 'dart:convert' show jsonDecode;
+import 'dart:convert' show base64Encode, jsonDecode;
 import 'dart:io' show Cookie;
 
 import 'package:developer_tools_network/network_inspector/helper/network_postman_export_helper.dart';
@@ -121,14 +121,17 @@ void main() {
       expect(query.firstWhere((q) => q['key'] == 'q')['value'], 'john');
     });
 
-    test('uses http scheme when call is not secure and server has no scheme', () {
-      final json = _exportedJson([
-        _call(id: 1, method: 'GET', server: 'plain.local', secure: false),
-      ]);
-      final url = json['item'][0]['request']['url'] as Map<String, dynamic>;
-      expect(url['protocol'], 'http');
-      expect(url['raw'], startsWith('http://plain.local'));
-    });
+    test(
+      'uses http scheme when call is not secure and server has no scheme',
+      () {
+        final json = _exportedJson([
+          _call(id: 1, method: 'GET', server: 'plain.local', secure: false),
+        ]);
+        final url = json['item'][0]['request']['url'] as Map<String, dynamic>;
+        expect(url['protocol'], 'http');
+        expect(url['raw'], startsWith('http://plain.local'));
+      },
+    );
 
     test('encodes a JSON Map body as raw json', () {
       final json = _exportedJson([
@@ -178,9 +181,8 @@ void main() {
         ),
       ]);
 
-      final headers =
-          (json['item'][0]['request']['header'] as List)
-              .cast<Map<String, dynamic>>();
+      final headers = (json['item'][0]['request']['header'] as List)
+          .cast<Map<String, dynamic>>();
       final cookieHeader = headers.firstWhere((h) => h['key'] == 'Cookie');
       expect(cookieHeader['value'], 'session=xyz; theme=dark');
     });
@@ -217,17 +219,80 @@ void main() {
       call.response = NetworkHttpResponse()..status = null;
 
       final json = _exportedJson([call]);
-      final response =
-          (json['item'][0]['response'] as List).cast<Map<String, dynamic>>()[0];
+      final response = (json['item'][0]['response'] as List)
+          .cast<Map<String, dynamic>>()[0];
 
       expect(response.containsKey('status'), isFalse);
       expect(response.containsKey('code'), isFalse);
     });
   });
 
+  group('NetworkPostmanExportHelper.buildAttachments', () {
+    final jpg = Uint8List.fromList([
+      0xFF,
+      0xD8,
+      0xFF,
+      0xE0,
+      ...List.filled(2000, 7),
+    ]);
+
+    test('exports an upload as a real file named like its form-data src', () {
+      final calls = [
+        _call(
+          id: 1,
+          method: 'POST',
+          formFiles: [
+            NetworkFormDataFile(
+              'front_image.jpg',
+              'image/jpeg',
+              jpg.length,
+              fieldName: 'front_image',
+              bytes: jpg,
+            ),
+          ],
+        ),
+      ];
+
+      final file =
+          (_exportedJson(calls)['item'][0]['request']['body']['formdata']
+                  as List)
+              .single;
+      final attachments = NetworkPostmanExportHelper.buildAttachments(calls);
+
+      expect(file['key'], 'front_image');
+      expect(attachments.single.name, file['src']);
+      expect(attachments.single.bytes, jpg);
+    });
+
+    test('decodes a base64 image in a JSON body to a raw file', () {
+      final calls = [
+        _call(
+          id: 1,
+          method: 'POST',
+          body: {'selfie_base64': base64Encode(jpg)},
+        ),
+      ];
+
+      final attachments = NetworkPostmanExportHelper.buildAttachments(calls);
+
+      expect(attachments.single.name, '000_request_selfie_base64.jpg');
+      expect(attachments.single.bytes, jpg);
+    });
+
+    test('ignores long strings that are not media', () {
+      final calls = [
+        _call(id: 1, method: 'POST', body: {'token': 'A' * 3000}),
+      ];
+
+      expect(NetworkPostmanExportHelper.buildAttachments(calls), isEmpty);
+    });
+  });
+
   group('NetworkPostmanExportHelper.copyCalls', () {
     test('returns empty error for no calls', () async {
-      final result = await NetworkPostmanExportHelper.copyCalls(calls: const []);
+      final result = await NetworkPostmanExportHelper.copyCalls(
+        calls: const [],
+      );
       expect(result.success, isFalse);
       expect(result.error, NetworkExportResultError.empty);
     });

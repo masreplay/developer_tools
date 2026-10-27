@@ -87,53 +87,50 @@ class _NetworkCallsListPageState extends State<NetworkCallsListPage>
             icon: const Icon(Icons.arrow_back),
             onPressed: _onBackPressed,
           ),
-          title:
-              _searchEnabled
-                  ? _SearchTextField(
-                    textEditingController: _queryTextEditingController,
-                    onChanged: _updateSearchQuery,
-                  )
-                  : Text(context.i18n(NetworkTranslationKey.networkInspector)),
-          actions:
-              isLoggerTab
-                  ? <Widget>[
-                    IconButton(
-                      icon: const Icon(Icons.terminal),
-                      onPressed: _onLogsChangePressed,
+          title: _searchEnabled
+              ? _SearchTextField(
+                  textEditingController: _queryTextEditingController,
+                  onChanged: _updateSearchQuery,
+                )
+              : Text(context.i18n(NetworkTranslationKey.networkInspector)),
+          actions: isLoggerTab
+              ? <Widget>[
+                  IconButton(
+                    icon: const Icon(Icons.terminal),
+                    onPressed: _onLogsChangePressed,
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.delete),
+                    onPressed: _onClearLogsPressed,
+                  ),
+                ]
+              : <Widget>[
+                  IconButton(
+                    icon: const Icon(Icons.search),
+                    onPressed: _onSearchPressed,
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.copy),
+                    tooltip: context.i18n(
+                      NetworkTranslationKey.callsListCopyPostman,
                     ),
-                    IconButton(
-                      icon: const Icon(Icons.delete),
-                      onPressed: _onClearLogsPressed,
+                    onPressed: _copyPostman,
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.ios_share),
+                    tooltip: context.i18n(
+                      NetworkTranslationKey.callsListExportPostman,
                     ),
-                  ]
-                  : <Widget>[
-                    IconButton(
-                      icon: const Icon(Icons.search),
-                      onPressed: _onSearchPressed,
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.copy),
-                      tooltip: context.i18n(
-                        NetworkTranslationKey.callsListCopyPostman,
-                      ),
-                      onPressed: _copyPostman,
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.ios_share),
-                      tooltip: context.i18n(
-                        NetworkTranslationKey.callsListExportPostman,
-                      ),
-                      onPressed: _exportPostman,
-                    ),
-                    _ContextMenuButton(onMenuItemSelected: _onMenuItemSelected),
-                  ],
+                    onPressed: _exportPostman,
+                  ),
+                  _ContextMenuButton(onMenuItemSelected: _onMenuItemSelected),
+                ],
           bottom: TabBar(
             controller: _tabController,
             indicatorColor: NetworkTheme.lightRed,
-            tabs:
-                NetworkCallsListTabItem.values.map((item) {
-                  return Tab(text: _getTabName(item: item));
-                }).toList(),
+            tabs: NetworkCallsListTabItem.values.map((item) {
+              return Tab(text: _getTabName(item: item));
+            }).toList(),
           ),
         ),
         body: TabBarView(
@@ -153,10 +150,9 @@ class _NetworkCallsListPageState extends State<NetworkCallsListPage>
             ),
           ],
         ),
-        floatingActionButton:
-            isLoggerTab
-                ? _LoggerFloatingActionButtons(scrollLogsList: _scrollLogsList)
-                : const SizedBox(),
+        floatingActionButton: isLoggerTab
+            ? _LoggerFloatingActionButtons(scrollLogsList: _scrollLogsList)
+            : const SizedBox(),
       ),
     );
   }
@@ -272,13 +268,11 @@ class _NetworkCallsListPageState extends State<NetworkCallsListPage>
         description: context
             .i18n(NetworkTranslationKey.saveSuccessDescription)
             .replaceAll('[path]', result.path!),
-        secondButtonTitle:
-            OperatingSystem.isAndroid
-                ? context.i18n(NetworkTranslationKey.saveSuccessView)
-                : null,
-        secondButtonAction:
-            () =>
-                OperatingSystem.isAndroid ? OpenFilex.open(result.path!) : null,
+        secondButtonTitle: OperatingSystem.isAndroid
+            ? context.i18n(NetworkTranslationKey.saveSuccessView)
+            : null,
+        secondButtonAction: () =>
+            OperatingSystem.isAndroid ? OpenFilex.open(result.path!) : null,
       );
     } else {
       final [String title, String description] = switch (result.error) {
@@ -384,11 +378,10 @@ class _NetworkCallsListPageState extends State<NetworkCallsListPage>
   Future<void> _onSortPressed() async {
     NetworkSortDialogResult? result = await showDialog<NetworkSortDialogResult>(
       context: context,
-      builder:
-          (_) => NetworkSortDialog(
-            sortOption: _sortOption,
-            sortAscending: _sortAscending,
-          ),
+      builder: (_) => NetworkSortDialog(
+        sortOption: _sortOption,
+        sortAscending: _sortAscending,
+      ),
     );
     if (result != null) {
       setState(() {
@@ -461,24 +454,23 @@ class _ContextMenuButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return PopupMenuButton<NetworkCallDetailsMenuItemType>(
       onSelected: onMenuItemSelected,
-      itemBuilder:
-          (BuildContext context) => [
-            for (final NetworkCallDetailsMenuItemType item
-                in NetworkCallDetailsMenuItemType.values)
-              PopupMenuItem<NetworkCallDetailsMenuItemType>(
-                value: item,
-                child: Row(
-                  children: [
-                    Icon(
-                      _getIcon(itemType: item),
-                      color: NetworkTheme.lightRed,
-                    ),
-                    const Padding(padding: EdgeInsets.only(left: 10)),
-                    Text(_getTitle(context: context, itemType: item)),
-                  ],
+      itemBuilder: (BuildContext context) => [
+        for (final NetworkCallDetailsMenuItemType item
+            in NetworkCallDetailsMenuItemType.values)
+          PopupMenuItem<NetworkCallDetailsMenuItemType>(
+            value: item,
+            child: Row(
+              children: [
+                Icon(
+                  _getIcon(itemType: item),
+                  color: NetworkTheme.lightRed,
                 ),
-              ),
-          ],
+                const Padding(padding: EdgeInsets.only(left: 10)),
+                Text(_getTitle(context: context, itemType: item)),
+              ],
+            ),
+          ),
+      ],
     );
   }
 

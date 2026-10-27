@@ -41,8 +41,10 @@ calls-list app bar.
 ## Export to Postman
 
 Tap the **share** icon in the inspector calls list to turn every captured call into a
-Postman Collection (v2.1) and open the share sheet. The resulting
-`*.postman_collection.json` file imports directly into Postman.
+Postman Collection (v2.1) and open the share sheet with one `.zip`. It holds the
+`*.postman_collection.json` and, next to it, every uploaded file and every base64 image,
+video or PDF from the bodies. Unzip it into Postman's working directory and import the
+collection: uploads replay with their real files.
 
 Each request item preserves the full captured data:
 

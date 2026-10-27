@@ -29,10 +29,9 @@ class NetworkTheme {
       Brightness.dark;
 
   /// Returns color scheme based on dark mode.
-  static ColorScheme _getColorScheme() =>
-      _isDarkMode
-          ? const ColorScheme.dark(primary: NetworkTheme.lightRed)
-          : const ColorScheme.light(primary: NetworkTheme.lightRed);
+  static ColorScheme _getColorScheme() => _isDarkMode
+      ? const ColorScheme.dark(primary: NetworkTheme.lightRed)
+      : const ColorScheme.light(primary: NetworkTheme.lightRed);
 
   /// Return log text color based on diagnostic [level].
   static Color getLogTextColor(BuildContext context, DiagnosticLevel level) =>

@@ -159,29 +159,29 @@ class NetworkExportHelper {
     required BuildContext context,
     required NetworkHttpCall call,
   }) {
-    final StringBuffer stringBuffer =
-        StringBuffer()..writeAll([
-          '===========================================\n',
-          '${context.i18n(NetworkTranslationKey.saveLogId)} ${call.id}\n',
-          '============================================\n',
-          '--------------------------------------------\n',
-          '${context.i18n(NetworkTranslationKey.saveLogGeneralData)}\n',
-          '--------------------------------------------\n',
-          '${context.i18n(NetworkTranslationKey.saveLogServer)} ${call.server} \n',
-          '${context.i18n(NetworkTranslationKey.saveLogMethod)} ${call.method} \n',
-          '${context.i18n(NetworkTranslationKey.saveLogEndpoint)} ${call.endpoint} \n',
-          '${context.i18n(NetworkTranslationKey.saveLogClient)} ${call.client} \n',
-          '${context.i18n(NetworkTranslationKey.saveLogDuration)} ${NetworkConversionHelper.formatTime(call.duration)}\n',
-          '${context.i18n(NetworkTranslationKey.saveLogSecured)} ${call.secure}\n',
-          '${context.i18n(NetworkTranslationKey.saveLogCompleted)}: ${!call.loading} \n',
-          '--------------------------------------------\n',
-          '${context.i18n(NetworkTranslationKey.saveLogRequest)}\n',
-          '--------------------------------------------\n',
-          '${context.i18n(NetworkTranslationKey.saveLogRequestTime)} ${call.request?.time}\n',
-          '${context.i18n(NetworkTranslationKey.saveLogRequestContentType)}: ${call.request?.contentType}\n',
-          '${context.i18n(NetworkTranslationKey.saveLogRequestCookies)} ${_encoder.convert(call.request?.cookies)}\n',
-          '${context.i18n(NetworkTranslationKey.saveLogRequestHeaders)} ${_encoder.convert(call.request?.headers)}\n',
-        ]);
+    final StringBuffer stringBuffer = StringBuffer()
+      ..writeAll([
+        '===========================================\n',
+        '${context.i18n(NetworkTranslationKey.saveLogId)} ${call.id}\n',
+        '============================================\n',
+        '--------------------------------------------\n',
+        '${context.i18n(NetworkTranslationKey.saveLogGeneralData)}\n',
+        '--------------------------------------------\n',
+        '${context.i18n(NetworkTranslationKey.saveLogServer)} ${call.server} \n',
+        '${context.i18n(NetworkTranslationKey.saveLogMethod)} ${call.method} \n',
+        '${context.i18n(NetworkTranslationKey.saveLogEndpoint)} ${call.endpoint} \n',
+        '${context.i18n(NetworkTranslationKey.saveLogClient)} ${call.client} \n',
+        '${context.i18n(NetworkTranslationKey.saveLogDuration)} ${NetworkConversionHelper.formatTime(call.duration)}\n',
+        '${context.i18n(NetworkTranslationKey.saveLogSecured)} ${call.secure}\n',
+        '${context.i18n(NetworkTranslationKey.saveLogCompleted)}: ${!call.loading} \n',
+        '--------------------------------------------\n',
+        '${context.i18n(NetworkTranslationKey.saveLogRequest)}\n',
+        '--------------------------------------------\n',
+        '${context.i18n(NetworkTranslationKey.saveLogRequestTime)} ${call.request?.time}\n',
+        '${context.i18n(NetworkTranslationKey.saveLogRequestContentType)}: ${call.request?.contentType}\n',
+        '${context.i18n(NetworkTranslationKey.saveLogRequestCookies)} ${_encoder.convert(call.request?.cookies)}\n',
+        '${context.i18n(NetworkTranslationKey.saveLogRequestHeaders)} ${_encoder.convert(call.request?.headers)}\n',
+      ]);
 
     if (call.request?.queryParameters.isNotEmpty ?? false) {
       stringBuffer.write(
@@ -199,7 +199,11 @@ class NetworkExportHelper {
       '${context.i18n(NetworkTranslationKey.saveLogResponseStatus)} ${call.response?.status}\n',
       '${context.i18n(NetworkTranslationKey.saveLogResponseSize)} ${NetworkConversionHelper.formatBytes(call.response?.size ?? 0)}\n',
       '${context.i18n(NetworkTranslationKey.saveLogResponseHeaders)} ${_encoder.convert(call.response?.headers)}\n',
-      '${context.i18n(NetworkTranslationKey.saveLogResponseBody)} ${NetworkParser.formatBody(context: context, body: call.response?.body, contentType: NetworkParser.getContentType(context: context, headers: call.response?.headers))}\n',
+      '${context.i18n(NetworkTranslationKey.saveLogResponseBody)} ${NetworkParser.formatBody(
+        context: context,
+        body: call.response?.body,
+        contentType: NetworkParser.getContentType(context: context, headers: call.response?.headers),
+      )}\n',
     ]);
 
     if (call.error != null) {

@@ -36,31 +36,28 @@ class NetworkMemoryStorage implements NetworkStorage {
 
     return (
       total: calls.length,
-      successes:
-          calls
-              .where(
-                (NetworkHttpCall call) =>
-                    (call.response?.status.gte(200) ?? false) &&
-                    (call.response?.status.lt(300) ?? false),
-              )
-              .length,
-      redirects:
-          calls
-              .where(
-                (NetworkHttpCall call) =>
-                    (call.response?.status.gte(300) ?? false) &&
-                    (call.response?.status.lt(400) ?? false),
-              )
-              .length,
-      errors:
-          calls
-              .where(
-                (NetworkHttpCall call) =>
-                    ((call.response?.status.gte(400) ?? false) &&
-                        (call.response?.status.lt(600) ?? false)) ||
-                    const [-1, 0].contains(call.response?.status),
-              )
-              .length,
+      successes: calls
+          .where(
+            (NetworkHttpCall call) =>
+                (call.response?.status.gte(200) ?? false) &&
+                (call.response?.status.lt(300) ?? false),
+          )
+          .length,
+      redirects: calls
+          .where(
+            (NetworkHttpCall call) =>
+                (call.response?.status.gte(300) ?? false) &&
+                (call.response?.status.lt(400) ?? false),
+          )
+          .length,
+      errors: calls
+          .where(
+            (NetworkHttpCall call) =>
+                ((call.response?.status.gte(400) ?? false) &&
+                    (call.response?.status.lt(600) ?? false)) ||
+                const [-1, 0].contains(call.response?.status),
+          )
+          .length,
       loading: calls.where((NetworkHttpCall call) => call.loading).length,
     );
   }
