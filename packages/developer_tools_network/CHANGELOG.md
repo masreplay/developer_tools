@@ -1,3 +1,9 @@
+## 0.0.7
+
+- Postman export carries the uploaded files. The Dio adapter keeps a copy of each multipart file (up to 15 MB, read from a clone so the request is untouched) and its form field name. Share now sends the collection plus every upload, named as the form-data `src`, so Postman finds the files on replay.
+- Images, videos and PDFs sent or received as base64 inside JSON bodies (e.g. a selfie or a signature) are shared as raw files next to the collection.
+- Form-data file entries use the field name as the key, not the file name.
+
 ## 0.0.6
 
 - Migrate from `package:flutter/material.dart` to `package:material_ui` (Flutter 3.47 decoupled Material library). Requires Dart 3.13 / Flutter 3.47.

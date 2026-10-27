@@ -1,10 +1,12 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'dart:convert' show JsonEncoder;
+import 'dart:convert' show JsonEncoder, base64Decode, jsonDecode;
 import 'dart:io' show Directory, File;
+import 'dart:typed_data' show Uint8List;
 
 import 'package:developer_tools_network/network_inspector/core/network_utils.dart';
 import 'package:developer_tools_network/network_inspector/model/network_export_result.dart';
+import 'package:developer_tools_network/network_inspector/model/network_form_data_file.dart';
 import 'package:developer_tools_network/network_inspector/model/network_http_call.dart';
 import 'package:developer_tools_network/network_inspector/model/network_http_request.dart';
 import 'package:flutter/services.dart' show Clipboard, ClipboardData;
@@ -52,13 +54,50 @@ class NetworkPostmanExportHelper {
         if (description != null) 'description': description,
         'schema': schemaV210,
       },
-      'item': [for (final NetworkHttpCall call in calls) _buildItem(call)],
+      'item': [
+        for (int i = 0; i < calls.length; i++) _buildItem(calls[i], i),
+      ],
     };
   }
 
   /// Encodes a [collection] map to a pretty-printed JSON string.
   static String encode(Map<String, dynamic> collection) =>
       _encoder.convert(collection);
+
+  /// Every file the [calls] carried, as real files to share with the
+  /// collection: multipart uploads (named as the collection's form-data `src`,
+  /// so Postman finds them on replay) and images, videos or PDFs sent or
+  /// received as base64 inside a JSON body (e.g. a selfie or a signature).
+  static List<NetworkExportAttachment> buildAttachments(
+    List<NetworkHttpCall> calls,
+  ) {
+    final List<NetworkExportAttachment> result = [];
+    final Set<String> seen = {};
+    for (int i = 0; i < calls.length; i++) {
+      final NetworkHttpCall call = calls[i];
+      for (final NetworkFormDataFile file
+          in call.request?.formDataFiles ?? const <NetworkFormDataFile>[]) {
+        final Uint8List? bytes = file.bytes;
+        if (bytes != null) {
+          result.add(NetworkExportAttachment(_attachmentName(i, file), bytes));
+        }
+      }
+      void scan(String side, dynamic body) {
+        _findBase64Media(body, '', (String key, Uint8List bytes, String ext) {
+          final String name = _sanitizeFileName(
+            '${_pad(i)}_${side}_${key.isEmpty ? 'body' : key}',
+          );
+          if (seen.add('$name.$ext')) {
+            result.add(NetworkExportAttachment('$name.$ext', bytes));
+          }
+        });
+      }
+
+      scan('request', call.request?.body);
+      scan('response', call.response?.body);
+    }
+    return result;
+  }
 
   /// Builds a Postman collection from [calls], writes it to a
   /// `*.postman_collection.json` file in the application cache directory and
@@ -89,12 +128,24 @@ class NetworkPostmanExportHelper {
         ..createSync(recursive: true)
         ..writeAsStringSync(json);
 
+      final Directory filesDir = Directory(
+        '${dir.path}/${fileName.replaceAll('.postman_collection.json', '_files')}',
+      )..createSync(recursive: true);
+      final List<XFile> shared = [XFile(file.path)];
+      for (final NetworkExportAttachment attachment in buildAttachments(
+        calls,
+      )) {
+        final File out = File('${filesDir.path}/${attachment.name}')
+          ..writeAsBytesSync(attachment.bytes);
+        shared.add(XFile(out.path));
+      }
+
       // sharePositionOrigin is required for the share popover on iPad and is
       // harmless on iPhone.
       final box = context.findRenderObject() as RenderBox?;
       await SharePlus.instance.share(
         ShareParams(
-          files: [XFile(file.path)],
+          files: shared,
           subject: name,
           sharePositionOrigin: box != null && box.hasSize
               ? box.localToGlobal(Offset.zero) & box.size
@@ -159,8 +210,8 @@ class NetworkPostmanExportHelper {
   }
 
   /// Builds a single Postman item (request + saved response) for [call].
-  static Map<String, dynamic> _buildItem(NetworkHttpCall call) {
-    final Map<String, dynamic> request = _buildRequest(call);
+  static Map<String, dynamic> _buildItem(NetworkHttpCall call, int index) {
+    final Map<String, dynamic> request = _buildRequest(call, index);
     final String endpoint = call.endpoint.isNotEmpty ? call.endpoint : call.uri;
     final List<Map<String, dynamic>>? responses = _buildResponses(
       call,
@@ -174,8 +225,8 @@ class NetworkPostmanExportHelper {
     };
   }
 
-  static Map<String, dynamic> _buildRequest(NetworkHttpCall call) {
-    final Map<String, dynamic>? body = _buildBody(call.request);
+  static Map<String, dynamic> _buildRequest(NetworkHttpCall call, int index) {
+    final Map<String, dynamic>? body = _buildBody(call.request, index);
     return <String, dynamic>{
       'method': call.method.isNotEmpty ? call.method : 'GET',
       'header': _buildHeaders(call.request),
@@ -210,7 +261,10 @@ class NetworkPostmanExportHelper {
     return result;
   }
 
-  static Map<String, dynamic>? _buildBody(NetworkHttpRequest? request) {
+  static Map<String, dynamic>? _buildBody(
+    NetworkHttpRequest? request,
+    int index,
+  ) {
     if (request == null) return null;
 
     final fields = request.formDataFields ?? const [];
@@ -227,7 +281,13 @@ class NetworkPostmanExportHelper {
           for (final field in fields)
             {'key': field.name, 'type': 'text', 'value': field.value},
           for (final file in files)
-            {'key': file.fileName ?? 'file', 'type': 'file', 'src': file.fileName ?? ''},
+            {
+              'key': file.fieldName ?? file.fileName ?? 'file',
+              'type': 'file',
+              'src': file.bytes != null
+                  ? _attachmentName(index, file)
+                  : file.fileName ?? '',
+            },
         ],
       };
     }
@@ -276,8 +336,7 @@ class NetworkPostmanExportHelper {
       'path': endpoint.split('/').where((part) => part.isNotEmpty).toList(),
       if (queryParameters.isNotEmpty)
         'query': [
-          for (final MapEntry<String, dynamic> entry
-              in queryParameters.entries)
+          for (final MapEntry<String, dynamic> entry in queryParameters.entries)
             {'key': entry.key, 'value': entry.value?.toString()},
         ],
     };
@@ -358,6 +417,81 @@ class NetworkPostmanExportHelper {
     };
   }
 
+  static String _pad(int index) => index.toString().padLeft(3, '0');
+
+  /// The shared file name of an upload: its call's position, field and name,
+  /// so two calls uploading `front_image.jpg` never overwrite each other.
+  static String _attachmentName(
+    int index,
+    NetworkFormDataFile file,
+  ) => _sanitizeFileName(
+    '${_pad(index)}_${file.fieldName ?? 'file'}_${file.fileName ?? 'upload'}',
+  );
+
+  static const Map<String, List<int>> _signatures = {
+    'jpg': [0xFF, 0xD8, 0xFF],
+    'png': [0x89, 0x50, 0x4E, 0x47],
+    'gif': [0x47, 0x49, 0x46, 0x38],
+    'pdf': [0x25, 0x50, 0x44, 0x46],
+    'webm': [0x1A, 0x45, 0xDF, 0xA3],
+  };
+
+  /// The media type of [bytes] by its magic number, or null when it is not one.
+  static String? _mediaExtension(Uint8List bytes) {
+    if (bytes.length > 8 &&
+        String.fromCharCodes(bytes.sublist(4, 8)) == 'ftyp') {
+      return 'mp4';
+    }
+    for (final MapEntry<String, List<int>> entry in _signatures.entries) {
+      final List<int> magic = entry.value;
+      if (bytes.length > magic.length &&
+          Iterable<int>.generate(magic.length)
+              .every((i) => bytes[i] == magic[i])) {
+        return entry.key;
+      }
+    }
+    return null;
+  }
+
+  static final RegExp _base64Payload = RegExp(
+    r'^(?:data:[\w/+.-]+;base64,)?([A-Za-z0-9+/\r\n]{1000,}={0,2})$',
+  );
+
+  /// Walks a JSON body and reports every string that is a base64 image,
+  /// video or PDF, with the JSON key it was under.
+  static void _findBase64Media(
+    dynamic value,
+    String key,
+    void Function(String key, Uint8List bytes, String ext) found,
+  ) {
+    if (value is String) {
+      final String trimmed = value.trim();
+      if (trimmed.startsWith('{') || trimmed.startsWith('[')) {
+        try {
+          _findBase64Media(jsonDecode(trimmed), key, found);
+        } catch (_) {}
+        return;
+      }
+      final Match? match = _base64Payload.firstMatch(trimmed);
+      if (match == null) return;
+      try {
+        final Uint8List bytes = base64Decode(
+          match.group(1)!.replaceAll(RegExp(r'\s'), ''),
+        );
+        final String? ext = _mediaExtension(bytes);
+        if (ext != null) found(key, bytes, ext);
+      } catch (_) {}
+    } else if (value is Map) {
+      value.forEach(
+        (k, v) => _findBase64Media(v, key.isEmpty ? '$k' : '${key}_$k', found),
+      );
+    } else if (value is List) {
+      for (int i = 0; i < value.length; i++) {
+        _findBase64Media(value[i], '${key}_$i', found);
+      }
+    }
+  }
+
   static String _sanitizeFileName(String value) {
     final String sanitized = value
         .trim()
@@ -366,4 +500,12 @@ class NetworkPostmanExportHelper {
     final String trimmed = sanitized.replaceAll(RegExp(r'^_+|_+$'), '');
     return trimmed.isEmpty ? 'app' : trimmed;
   }
+}
+
+/// A file exported next to the collection.
+class NetworkExportAttachment {
+  const NetworkExportAttachment(this.name, this.bytes);
+
+  final String name;
+  final Uint8List bytes;
 }
